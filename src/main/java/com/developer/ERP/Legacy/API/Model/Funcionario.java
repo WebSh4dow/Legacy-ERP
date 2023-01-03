@@ -1,10 +1,9 @@
 package com.developer.ERP.Legacy.API.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -15,6 +14,7 @@ import static com.developer.ERP.Legacy.API.Messages.FuncionarioMessage.MSG_INFOR
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

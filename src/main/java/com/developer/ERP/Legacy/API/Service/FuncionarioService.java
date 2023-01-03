@@ -6,6 +6,8 @@ import com.developer.ERP.Legacy.API.Repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,15 +23,18 @@ public class FuncionarioService {
                 .stream()
                 .collect(Collectors.toList());
     }
+
     public ResponseEntity <Funcionario>listarPorId(Long id){
        Funcionario pesquisarFuncionario = funcionarioRepository.findById(id)
                .orElseThrow(()-> new HandlerNotFoundExceptionFuncionario(MSG_INFORMATION_NOT_FOUND_FUNCIONARIO+id));
        return ResponseEntity.ok().body(pesquisarFuncionario);
     }
+    @Transactional
     public ResponseEntity <Funcionario>incluir(Funcionario funcionario){
         Funcionario incluirFuncionario = funcionarioRepository.save(funcionario);
         return ResponseEntity.ok().body(incluirFuncionario);
     }
+    @Transactional
     public ResponseEntity <Funcionario>alterar(Funcionario funcionario, Long id){
             Funcionario funcionarioSave = funcionarioRepository.findById(id)
                     .orElseThrow(()-> new HandlerNotFoundExceptionFuncionario(MSG_INFORMATION_NOT_FOUND_FUNCIONARIO+id));
@@ -58,6 +63,7 @@ public class FuncionarioService {
             return ResponseEntity.ok().body(salvarOuAtualizar);
 
     }
+    @Transactional
     public ResponseEntity<Map<String, Boolean>> remover(Long id){
         Funcionario funcionario = funcionarioRepository.findById(id)
                 .orElseThrow(()->new HandlerNotFoundExceptionFuncionario(MSG_INFORMATION_NOT_FOUND_FUNCIONARIO+id));
