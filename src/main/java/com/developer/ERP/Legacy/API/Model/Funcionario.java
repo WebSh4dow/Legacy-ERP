@@ -15,6 +15,7 @@ import static com.developer.ERP.Legacy.API.Messages.FuncionarioMessage.MSG_INFOR
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Table(name = "funcionario_tbl")
 public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

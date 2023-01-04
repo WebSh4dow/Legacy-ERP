@@ -1,6 +1,6 @@
 package com.developer.ERP.Legacy.API.Service;
 
-import com.developer.ERP.Legacy.API.Exceptions.HandlerNotFoundExceptionFuncionario;
+import com.developer.ERP.Legacy.API.Exceptions.HandlerDataIntegrationValidation;
 import com.developer.ERP.Legacy.API.Model.Funcionario;
 import com.developer.ERP.Legacy.API.Repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import static com.developer.ERP.Legacy.API.Messages.FuncionarioMessage.MSG_INFORMATION_NOT_FOUND_FUNCIONARIO;
 
@@ -26,7 +27,7 @@ public class FuncionarioService {
 
     public ResponseEntity <Funcionario>listarPorId(Long id){
        Funcionario pesquisarFuncionario = funcionarioRepository.findById(id)
-               .orElseThrow(()-> new HandlerNotFoundExceptionFuncionario(MSG_INFORMATION_NOT_FOUND_FUNCIONARIO+id));
+               .orElse(null);
        return ResponseEntity.ok().body(pesquisarFuncionario);
     }
     @Transactional
@@ -37,7 +38,7 @@ public class FuncionarioService {
     @Transactional
     public ResponseEntity <Funcionario>alterar(Funcionario funcionario, Long id){
             Funcionario funcionarioSave = funcionarioRepository.findById(id)
-                    .orElseThrow(()-> new HandlerNotFoundExceptionFuncionario(MSG_INFORMATION_NOT_FOUND_FUNCIONARIO+id));
+                    .orElse(null);
 
             funcionarioSave.setTipo(funcionario.getTipo());
             funcionarioSave.setNome(funcionario.getNome());
@@ -66,7 +67,7 @@ public class FuncionarioService {
     @Transactional
     public ResponseEntity<Map<String, Boolean>> remover(Long id){
         Funcionario funcionario = funcionarioRepository.findById(id)
-                .orElseThrow(()->new HandlerNotFoundExceptionFuncionario(MSG_INFORMATION_NOT_FOUND_FUNCIONARIO+id));
+                .orElse(null);
         funcionarioRepository.delete(funcionario);
 
         Map<String,Boolean>response = new HashMap<>();

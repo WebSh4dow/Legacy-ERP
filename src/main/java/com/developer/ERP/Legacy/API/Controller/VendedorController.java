@@ -19,7 +19,7 @@ public class VendedorController {
         return vendedorService.listarTodos();
     }
     @GetMapping("/{id}")
-    public Vendedor buscarPodId(@PathVariable Long id){
+    public Object buscarPodId(@PathVariable Long id){
         return vendedorService.listarPorId(id);
     }
     @PostMapping

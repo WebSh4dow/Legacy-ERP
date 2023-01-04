@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class HandlerNotFoundExceptionFuncionario extends RuntimeException {
+public class HandlerNotFoundException extends  RuntimeException {
     private static final long serialVersionUID = 1L;
-    public HandlerNotFoundExceptionFuncionario(String message){
+
+    public HandlerNotFoundException(String message){
         super(message);
     }
-
 }

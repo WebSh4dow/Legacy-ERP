@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FuncionarioRepository extends JpaRepository <Funcionario,Long> {
@@ -45,4 +46,10 @@ public interface FuncionarioRepository extends JpaRepository <Funcionario,Long> 
             "tipo\n" +
             "FROM funcionario WHERE login = 1 ")
     List <Funcionario> findByAtivoContaining(int login);
+
+    Optional<Funcionario>findByEmail(String email);
+
+    Optional <Funcionario>findByCpf(String cpf);
+
+    Optional <Funcionario>findByLogin(int login);
 }
