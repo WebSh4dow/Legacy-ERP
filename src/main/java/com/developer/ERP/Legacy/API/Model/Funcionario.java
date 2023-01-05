@@ -22,7 +22,7 @@ public class Funcionario {
     private String tipo;
     @NotNull(message = MSG_INFORMATION)
     private String nome;
-    private int login;
+    private boolean login;
     @NotNull(message = MSG_INFORMATION)
     private String senha;
     @NotNull(message = MSG_INFORMATION)

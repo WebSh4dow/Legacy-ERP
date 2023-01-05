@@ -44,8 +44,8 @@ public class FuncionarioController {
         return funcionarioService.incluir(funcionario);
     }
     @PutMapping("/{id}")
-    public ResponseEntity <Funcionario>alterarFuncionario(@RequestBody Funcionario funcionario,@PathVariable Long id){
-        return funcionarioService.alterar(funcionario, id);
+    public Funcionario alterarFuncionario(@RequestBody Funcionario funcionario,@PathVariable Long id){
+        return funcionarioService.editar(funcionario, id);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Boolean>> remover(@PathVariable Long id){

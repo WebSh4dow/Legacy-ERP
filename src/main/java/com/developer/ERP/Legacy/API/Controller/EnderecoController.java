@@ -25,12 +25,14 @@ public class EnderecoController {
     public ResponseEntity <Endereco>listarPor(@PathVariable Long id){
         return enderecoService.listarPor(id);
     }
-
+    @PostMapping
+    public ResponseEntity <Endereco> salvar(@RequestBody Endereco endereco){
+        return enderecoService.salvar(endereco);
+    }
     @PutMapping("/{id}")
     public Endereco editar(@PathVariable Long id,@RequestBody Endereco endereco){
         return enderecoService.editar(endereco, id);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Boolean>> remover(@PathVariable Long id){
         return enderecoService.remover(id);
