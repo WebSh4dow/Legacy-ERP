@@ -8,14 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
-
-
 @RestController
 @RequestMapping("funcionarios")
 public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
-
     @Autowired
     private FuncionarioRepository funcionarioRepository;
     @GetMapping
@@ -31,12 +28,10 @@ public class FuncionarioController {
     public List <Funcionario> findByInativos(@RequestParam(("inativo"))int inativo){
         return funcionarioRepository.findByInativoContaining(inativo);
     }
-
     @GetMapping("/login-ativo")
     public List <Funcionario> findByAtivos(@RequestParam(("ativo"))int ativo){
         return funcionarioRepository.findByAtivoContaining(ativo);
     }
-
     @PostMapping
     public ResponseEntity <Funcionario>salvarFuncionario(@RequestBody Funcionario funcionario){
         return funcionarioService.incluir(funcionario);

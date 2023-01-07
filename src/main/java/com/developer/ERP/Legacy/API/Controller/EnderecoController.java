@@ -20,7 +20,6 @@ public class EnderecoController {
     public List <Endereco>listarTodos(){
         return enderecoService.listarTodos();
     }
-
     @GetMapping("/{id}")
     public ResponseEntity <Endereco>listarPor(@PathVariable Long id){
         return enderecoService.listarPor(id);
