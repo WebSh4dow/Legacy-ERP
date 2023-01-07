@@ -18,7 +18,6 @@ public class Vendedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
