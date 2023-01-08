@@ -17,8 +17,7 @@ public class Cliente {
     private String nome;
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date dataNascimento;
-    private String cpf;
-    private String Cnpj;
+    private String cpfCnpj;
     private String rg;
     private String telefone1;
     private String telefone2;
