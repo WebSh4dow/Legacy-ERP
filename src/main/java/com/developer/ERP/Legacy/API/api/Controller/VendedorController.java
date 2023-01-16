@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("vendedores")
+@RequestMapping("api/vendedores")
 public class VendedorController {
     @Autowired
     private VendedorService vendedorService;

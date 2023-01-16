@@ -55,6 +55,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
         List<ExceptionErrorMessage> error = Arrays.asList(new ExceptionErrorMessage(messageUser,messageDev));
         return handleExceptionInternal(exception,error,new HttpHeaders(),HttpStatus.NOT_FOUND,request);
     }
+
     private List<ExceptionErrorMessage> createListError(BindingResult bindingResult) {
         List<ExceptionErrorMessage> error = new ArrayList<>();
 

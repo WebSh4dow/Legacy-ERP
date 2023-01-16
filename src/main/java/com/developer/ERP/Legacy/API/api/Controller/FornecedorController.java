@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@RestController("/fornecedores")
+@RestController("api/fornecedores")
 public class FornecedorController {
     private FornecedorService fornecedorService;
     public FornecedorService fornecedorService(FornecedorService fornecedorService){
