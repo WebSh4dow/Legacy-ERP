@@ -1,22 +1,16 @@
 package com.developer.ERP.Legacy.API.domain.Service;
 
-import com.developer.ERP.Legacy.API.domain.Exceptions.HandlerNotFoundException;
 import com.developer.ERP.Legacy.API.domain.Model.Venda;
-import com.developer.ERP.Legacy.API.domain.Model.Vendedor;
 import com.developer.ERP.Legacy.API.domain.Repository.VendaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.developer.ERP.Legacy.API.infrastructure.service.Messages.VendedorMessage.MSG_INFORMATION_NOT_FOUND_VENDEDOR;
 
 @Service
 public class VendaService {

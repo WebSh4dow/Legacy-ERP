@@ -17,12 +17,12 @@ public class Setor {
     private String nome;
     @OneToMany
     @JoinColumn(name = "departamentos_id")
-    private Set<Departamentos> departamentos;
+    private Set<Departamentos> departamento;
 
     public Setor(Long id, String nome, Set<Departamentos> departamentos) {
         this.id = id;
         this.nome = nome;
-        this.departamentos = departamentos;
+        this.departamento = departamentos;
     }
 
     public Setor() {
@@ -36,7 +36,7 @@ public class Setor {
         return informationDepartamentos().add(departamentos);
     }
     public Set<Departamentos> informationDepartamentos() {
-        return departamentos;
+        return departamento;
     }
 
 
