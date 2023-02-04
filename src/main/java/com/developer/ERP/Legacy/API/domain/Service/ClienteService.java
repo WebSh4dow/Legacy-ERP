@@ -3,11 +3,24 @@ package com.developer.ERP.Legacy.API.domain.Service;
 import com.developer.ERP.Legacy.API.domain.Exceptions.HandlerNotFoundException;
 import com.developer.ERP.Legacy.API.domain.Model.Cliente;
 import com.developer.ERP.Legacy.API.domain.Repository.ClienteRepository;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.TextAlignment;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +28,11 @@ import java.util.Map;
 public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private ClienteRelatorioService clienteRelatorioService;
+
+
     public List<Cliente>listAll(){
         return clienteRepository.findAll();
     }
