@@ -40,8 +40,6 @@ public class ClienteController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-
     @PostMapping
     public ResponseEntity <Cliente> salvarCliente(@RequestBody Cliente cliente){
         return clienteService.saveCliente(cliente);
