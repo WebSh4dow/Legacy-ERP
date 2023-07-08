@@ -49,22 +49,22 @@ public class ClienteRelatorioService {
         table.addCell("NATURALIDADE");
         table.addCell("ENDEREÇO");
 
-        this.clienteRepository.findAll()
-                .stream()
-                .sorted(Comparator
-                        .comparing((Cliente clientes) -> clientes.getNome())
-                        .thenComparing(Cliente::getNome))
-                .forEach(cliente -> {
-                    table.addCell(cliente.getCpfCnpj());
-                    table.addCell(cliente.getNome());
-                    table.addCell(DateUtils.format(cliente.getDataCadastro(), "dd-MM-yyyy"));
-                    table.addCell(cliente.getCpfCnpj());
-                    table.addCell(cliente.getRg());
-                    table.addCell(cliente.getTelefone1());
-                    table.addCell(cliente.getTelefone2());
-                    table.addCell(cliente.getNaturalidade());
-                    table.addCell(cliente.getEndereco().getRua());
-                });
+//        this.clienteRepository.findAll()
+//                .stream()
+//                .sorted(Comparator
+//                        .comparing((Cliente clientes) -> clientes.get())
+//                        .thenComparing(Cliente::getNome))
+//                .forEach(cliente -> {
+//                    table.addCell(cliente.getCpfCnpj());
+//                    table.addCell(cliente.getNome());
+//                    table.addCell(DateUtils.format(cliente.getDataCadastro(), "dd-MM-yyyy"));
+//                    table.addCell(cliente.getCpfCnpj());
+//                    table.addCell(cliente.getRg());
+//                    table.addCell(cliente.getTelefone1());
+//                    table.addCell(cliente.getTelefone2());
+//                    table.addCell(cliente.getNaturalidade());
+//                    table.addCell(cliente.getEndereco().getRua());
+        //              });
         document.add(table);
         document.close();
         return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());

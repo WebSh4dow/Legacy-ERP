@@ -13,20 +13,20 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String pessoaFisjuridica;
-    private String nome;
+    
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date dataNascimento;
-    private String cpfCnpj;
-    private String rg;
-    private String telefone1;
-    private String telefone2;
-    private String naturalidade;
+   
     @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDate dataCadastro = LocalDate.now();
+    
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+    
+    @ManyToOne
+    @JoinColumn(name = "pessoaJuridica_id")
+    private PessoaJuridica pessoaJuridica;
 
 
 }
