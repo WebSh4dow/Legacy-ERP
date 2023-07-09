@@ -7,6 +7,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.developer.ERP.Legacy.API.domain.Enumerated.Estado;
 import com.developer.ERP.Legacy.API.domain.Enumerated.TipoContato;
 import lombok.Data;
 
@@ -27,7 +29,7 @@ public class Contato {
 	
 	private boolean emailNfse;
 
-	@Embedded
+	@Enumerated(EnumType.STRING)
 	private Estado estado;
 
 	@Enumerated(EnumType.STRING)

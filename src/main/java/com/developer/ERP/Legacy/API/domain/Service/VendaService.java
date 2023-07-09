@@ -16,11 +16,13 @@ import java.util.stream.Collectors;
 public class VendaService {
     @Autowired
     private VendaRepository vendaRepository;
+    
     @Transactional
     public ResponseEntity <Venda> incluir (Venda venda){
         Venda incluir = vendaRepository.save(venda);
         return ResponseEntity.ok().body(incluir);
     }
+    
     @Transactional
     public Venda editar(Long id,Venda venda){
         Venda vendas = vendaRepository.findById(id).get();
@@ -30,11 +32,13 @@ public class VendaService {
         BeanUtils.copyProperties(venda,vendas,"id");
         return vendaRepository.save(vendas);
     }
+    
     public List <Venda>vendas(){
         return vendaRepository.findAll()
                 .stream()
                 .collect(Collectors.toList());
     }
+    
     public ResponseEntity<Venda> buscarVendaLancada(Long id){
         Venda lancamento = vendaRepository.findById(id)
                 .orElse(null);

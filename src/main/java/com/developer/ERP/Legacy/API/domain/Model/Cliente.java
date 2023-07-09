@@ -21,6 +21,10 @@ public class Cliente {
 	@Max(value = 500)
 	@Min(value = 10)
 	private String historico;
+	
+	private String nome;
+	
+	private String sobrenome;
 
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date dataNascimento;
@@ -52,5 +56,10 @@ public class Cliente {
 	
 	@ElementCollection
 	private List<Produto> produtos;
+	
+	@ElementCollection
+	private List<Contratos> contratos;
+	
+	private boolean isAtivo;
 
 }

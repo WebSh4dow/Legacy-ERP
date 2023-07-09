@@ -29,10 +29,6 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    @Autowired
-    private ClienteRelatorioService clienteRelatorioService;
-
-
     public List<Cliente>listAll(){
         return clienteRepository.findAll();
     }
