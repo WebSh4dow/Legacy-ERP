@@ -1,13 +1,12 @@
 package com.developer.ERP.Legacy.API.domain.Model;
 
-import javax.persistence.Embedded;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import com.developer.ERP.Legacy.API.domain.Enumerated.Estado;
 import com.developer.ERP.Legacy.API.domain.Enumerated.TipoContato;
 import lombok.Data;

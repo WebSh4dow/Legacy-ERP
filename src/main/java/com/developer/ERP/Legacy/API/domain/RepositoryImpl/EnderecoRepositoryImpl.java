@@ -33,7 +33,7 @@ public class EnderecoRepositoryImpl {
     	return entityManager.createQuery(countCriteriaQuery).getSingleResult();
     }
     
-    private Pageable listarEnderecos(EnderecoFilter enderecoFilter) {
+    private Pageable getPageable(EnderecoFilter enderecoFilter) {
     	Sort sort = Sort.by(enderecoFilter.getSortDirection(),enderecoFilter.getSortBy());
     	return PageRequest.of(enderecoFilter.getPageNumber(),enderecoFilter.getPageSize(),sort);
     }
@@ -75,7 +75,7 @@ public class EnderecoRepositoryImpl {
     	typedQuery.setFirstResult(enderecoFilter.getPageNumber() * enderecoFilter.getPageSize());
     	typedQuery.setMaxResults(enderecoFilter.getPageSize());
     	
-    	Pageable pageable  = listarEnderecos(enderecoFilter);
+    	Pageable pageable  = getPageable(enderecoFilter);
     	long countEnderecos = getEnderecoCount(predicate);
     	
     	return new PageImpl<>(typedQuery.getResultList(),pageable,countEnderecos);

@@ -2,11 +2,9 @@ package com.developer.ERP.Legacy.API.domain.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -26,25 +24,25 @@ public class Cliente {
 	
 	private String sobrenome;
 
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro = LocalDate.now();
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
 	@JoinColumn(name = "outros_id")
 	private Outros outros;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
 	@JoinColumn(name = "pessoaJuridica_id")
 	private PessoaJuridica pessoaJuridica;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
 	@JoinColumn(name = "pessoaFisica_id")
 	private PessoaFisica pessoaFisica;
 
@@ -61,5 +59,6 @@ public class Cliente {
 	private List<Contratos> contratos;
 	
 	private boolean isAtivo;
+	
 
 }

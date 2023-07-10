@@ -5,16 +5,13 @@ import com.developer.ERP.Legacy.API.domain.Model.CriteriaFilter.EnderecoCriteria
 import com.developer.ERP.Legacy.API.domain.Model.Filter.EnderecoFilter;
 import com.developer.ERP.Legacy.API.domain.Repository.EnderecoRepository;
 import com.developer.ERP.Legacy.API.domain.RepositoryImpl.EnderecoRepositoryImpl;
-
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -24,8 +21,7 @@ public class EnderecoService {
 
 	private final EnderecoRepositoryImpl enderecoRepositoryImpl;
 
-	public EnderecoService(EnderecoRepository enderecoRepository,
-			EnderecoRepositoryImpl endereoEnderecoRepositoryImpl) {
+	public EnderecoService(EnderecoRepository enderecoRepository,EnderecoRepositoryImpl endereoEnderecoRepositoryImpl) {
 		this.enderecoRepositoryImpl = endereoEnderecoRepositoryImpl;
 		this.enderecoRepository = enderecoRepository;
 	}

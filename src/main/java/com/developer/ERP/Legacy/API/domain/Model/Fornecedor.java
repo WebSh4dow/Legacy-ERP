@@ -1,7 +1,6 @@
 package com.developer.ERP.Legacy.API.domain.Model;
 
 import lombok.Data;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 

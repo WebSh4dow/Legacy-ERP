@@ -7,7 +7,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import com.developer.ERP.Legacy.API.domain.Enumerated.CentroCusto;
 import com.developer.ERP.Legacy.API.domain.Enumerated.TipoContrato;
 import com.fasterxml.jackson.annotation.JsonFormat;
