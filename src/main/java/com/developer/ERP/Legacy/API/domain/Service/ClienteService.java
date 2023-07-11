@@ -19,6 +19,7 @@ import static com.developer.ERP.Legacy.API.infrastructure.service.Messages.Clien
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -37,27 +38,38 @@ public class ClienteService {
 	}
 
 	public ResponseEntity<String> cadastrarCliente(Cliente cliente) {
-		Cliente salvarCliente = clienteRepository.save(cliente);
 		try {
+			
 			PessoaJuridica pessoaJuridica = new PessoaJuridica();
+			
 			if (cliente.getPessoaJuridica() != null && !cliente.getPessoaJuridica().getInscricaoEstadual().isBlank()) {
 				pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
 				cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
 				clienteRepository.save(cliente);
 			}
+			
 			PessoaFisica pessoaFisica = new PessoaFisica();
+			
 			if (cliente.getPessoaFisica() != null && !cliente.getPessoaFisica().getInscricaoEstadual().isBlank()) {
 				pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
 				cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
 				clienteRepository.save(cliente);
+				
+			} else if (cliente.getPessoaFisica().getInscricaoEstadual().isBlank() || cliente.getPessoaJuridica().getInscricaoEstadual().isBlank()) {
+				pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
+				pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
+				cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
+				clienteRepository.save(cliente);
 			}
+			
+			
 
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return null;
 	}
-
+	
 	public ResponseEntity<Cliente> findByCliente(Long id) {
 		Cliente cliente = clienteRepository.findById(id)
 				.orElseThrow(() -> new HandlerNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO + id));
