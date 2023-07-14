@@ -22,7 +22,7 @@ public class ClienteController {
 	}
     
     @PostMapping
-    public ResponseEntity<String> salvarCliente(@RequestBody Cliente cliente){
+    public Cliente salvarCliente(@RequestBody Cliente cliente) throws Exception{
     	return clienteService.cadastrarCliente(cliente);
     }
   

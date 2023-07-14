@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import static com.developer.ERP.Legacy.API.infrastructure.service.Messages.ClienteMessage.*;
 
 import java.util.HashMap;
@@ -37,38 +39,42 @@ public class ClienteService {
 		return clienteRepositoryImpl.buscarClientes(clienteFilter, clienteCriteriaFilter);
 	}
 
-	public ResponseEntity<String> cadastrarCliente(Cliente cliente) {
+	public Cliente cadastrarCliente(Cliente cliente) throws Exception {
+
 		try {
 			
-			PessoaJuridica pessoaJuridica = new PessoaJuridica();
-			
-			if (cliente.getPessoaJuridica() != null && !cliente.getPessoaJuridica().getInscricaoEstadual().isBlank()) {
+			Cliente salvarCliente = clienteRepository.save(cliente);
+			PessoaJuridica pessoaJuridica = cliente.getPessoaJuridica();
+			PessoaFisica pessoaFisica = cliente.getPessoaFisica();
+
+			if (pessoaJuridica != null && !pessoaJuridica.getInscricaoEstadual().isBlank()) {
 				pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
 				cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
-				clienteRepository.save(cliente);
+				return salvarCliente;
+
+			} else if (pessoaJuridica != null && pessoaJuridica.getInscricaoEstadual().isBlank()) {
+				pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
+				cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
+				return salvarCliente;
 			}
-			
-			PessoaFisica pessoaFisica = new PessoaFisica();
-			
-			if (cliente.getPessoaFisica() != null && !cliente.getPessoaFisica().getInscricaoEstadual().isBlank()) {
+
+			if (pessoaFisica != null && !pessoaFisica.getInscricaoEstadual().isBlank()) {
 				pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
 				cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
-				clienteRepository.save(cliente);
-				
-			} else if (cliente.getPessoaFisica().getInscricaoEstadual().isBlank() || cliente.getPessoaJuridica().getInscricaoEstadual().isBlank()) {
-				pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
-				pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
-				cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
-				clienteRepository.save(cliente);
-			}
-			
-			
+				return salvarCliente;
 
+			} else if (pessoaFisica != null && pessoaFisica.getInscricaoEstadual().isBlank()) {
+				pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
+				cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
+				return salvarCliente;
+			}
+			return salvarCliente;
 		} catch (Exception e) {
-			// TODO: handle exception
+			throw new Exception("Ocorreu um erro ao tentar salvar o cliente:" + e);
 		}
-		return null;
+
 	}
+	
 	
 	public ResponseEntity<Cliente> findByCliente(Long id) {
 		Cliente cliente = clienteRepository.findById(id)
