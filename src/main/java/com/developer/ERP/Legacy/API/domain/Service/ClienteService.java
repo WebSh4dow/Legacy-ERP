@@ -43,33 +43,31 @@ public class ClienteService {
 
 			PessoaJuridica pessoaJuridica = cliente.getPessoaJuridica();
 			PessoaFisica pessoaFisica = cliente.getPessoaFisica();
-			
+
 			if (pessoaFisica != null) {
-				if (pessoaFisica != null && !pessoaFisica.getInscricaoEstadual().isBlank()) {
+				if (!pessoaFisica.getInscricaoEstadual().isBlank()) {
 					pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
 					cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
 					return validarCadastroOutros(cliente);
-				}
-				else {
+				} else {
 					pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
 					cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
 					return validarCadastroOutros(cliente);
 				}
 			}
-			
+
 			if (pessoaJuridica != null) {
-				if (pessoaJuridica != null && pessoaJuridica.getInscricaoEstadual().isBlank()) {
+				if (pessoaJuridica.getInscricaoEstadual().isBlank()) {
 					pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
 					cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
 					return validarCadastroOutros(cliente);
-				}
-				else {
+				} else {
 					pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
 					cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
 					return validarCadastroOutros(cliente);
 				}
 			}
-			
+
 			return validarCadastroOutros(cliente);
 		} catch (Exception e) {
 			throw new HandlerClienteCadastro("Ocorreu um erro ao tentar salvar o cliente:" + e.getMessage());
@@ -79,10 +77,7 @@ public class ClienteService {
 	
 	public Cliente validarCadastroOutros(Cliente cliente) {
 
-		if (cliente.getOutros() == null)
-			throw new HandlerCadastroOutros("O Cadastro de outros também é um campo obrigatório.");
-		else
-			clienteRepository.save(cliente);
+		clienteRepository.save(cliente);
 		return null;
 	}
 	
