@@ -77,6 +77,7 @@ public class ClienteService {
 
 	}
 	
+	
 	public Cliente validarCadastroCliente(Cliente cliente) {
 		this.validarCadastroOutros(cliente);
 		Cliente clienteSalvo = clienteRepository.save(cliente);
@@ -121,6 +122,7 @@ public class ClienteService {
 			clientes.getContatos().addAll(cliente.getContatos());
 
 		}
+		clienteRepository.saveAll(listarClientesPorid);
 	}
 	
 	public ResponseEntity<Cliente> findByCliente(Long id) {

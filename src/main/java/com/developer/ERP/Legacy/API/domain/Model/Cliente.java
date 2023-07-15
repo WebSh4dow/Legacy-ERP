@@ -46,13 +46,16 @@ public class Cliente {
 	@JoinColumn(name = "cliente_id")
 	private List<Endereco> enderecos;
 
-	@ElementCollection
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "cliente_id")
 	private List<Contato> contatos;
 
-	@ElementCollection
+	@OneToMany(cascade ={ CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "cliente_id")
 	private List<Produto> produtos;
 
-	@ElementCollection
+	@OneToMany(cascade ={ CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "cliente_id")
 	private List<Contratos> contratos;
 
 	private boolean isAtivo;
