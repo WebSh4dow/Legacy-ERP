@@ -34,7 +34,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<ExceptionErrorMessage>error = createListError(ex.getBindingResult());
-        return handleExceptionInternal(ex,error, headers, status.BAD_REQUEST, request);
+        return handleExceptionInternal(ex,error, headers, HttpStatus.BAD_REQUEST, request);
     }
     @org.springframework.web.bind.annotation.ExceptionHandler({DataIntegrityViolationException.class })
     public ResponseEntity<Object>handleDataIntegrityViolationException(DataIntegrityViolationException violationException,WebRequest webRequest){
