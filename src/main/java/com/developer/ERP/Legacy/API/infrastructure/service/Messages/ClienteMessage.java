@@ -8,5 +8,7 @@ public class ClienteMessage {
 	public final static String MSG_CLIENTE_AGENCIA_NAO_INFORMADA = "Informe no cadastro do cliente a agência para prosseguir.";
 	public final static String MSG_CLIENTE_CONTA_BANCO_NAO_INFORMADO = "Informe no cadastro do cliente o banco para prosseguir.";
 	public final static String MSG_CLIENTE_FORMA_PAGAMENTO_NAO_INFORMADO = "Informe no cadastro do cliente a forma de pagamento para prosseguir.";
+	public final static String MSG_CLIENTE_ERRO_ADICIONAR_REFERENCIAS_COMERCIAIS = "Não foi possivel adicionar referências comerciais para esse cliente erro atual:";
+	public final static String MSG_CLIENTE_ERRO_ADICIONAR_ENDERECO_CLIENTE = "Não foi possivel adicionar o endereço atual ao cliente erro atual:";
 	
 }

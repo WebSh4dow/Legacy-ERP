@@ -50,13 +50,17 @@ public class Cliente {
 	@JoinColumn(name = "cliente_id")
 	private List<Contato> contatos;
 
-	@OneToMany(cascade ={ CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
 	private List<Produto> produtos;
 
-	@OneToMany(cascade ={ CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
 	private List<Contratos> contratos;
+	
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "cliente_id")
+	private List<ReferenciasComerciais> referenciasComerciais;
 
 	private boolean isAtivo;
 
