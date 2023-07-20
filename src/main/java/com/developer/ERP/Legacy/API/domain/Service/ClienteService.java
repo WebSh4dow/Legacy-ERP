@@ -1,16 +1,19 @@
 package com.developer.ERP.Legacy.API.domain.Service;
 
 import com.developer.ERP.Legacy.API.domain.Enumerated.IndicadorIE;
-import com.developer.ERP.Legacy.API.domain.Exceptions.HandlerCadastroOutros;
 import com.developer.ERP.Legacy.API.domain.Exceptions.HandlerClienteCadastro;
 import com.developer.ERP.Legacy.API.domain.Exceptions.HandlerNotFoundException;
 import com.developer.ERP.Legacy.API.domain.Model.Cliente;
+import com.developer.ERP.Legacy.API.domain.Model.Endereco;
 import com.developer.ERP.Legacy.API.domain.Model.Outros;
 import com.developer.ERP.Legacy.API.domain.Model.PessoaFisica;
 import com.developer.ERP.Legacy.API.domain.Model.PessoaJuridica;
+import com.developer.ERP.Legacy.API.domain.Model.ReferenciasComerciais;
 import com.developer.ERP.Legacy.API.domain.Model.CriteriaFilter.ClienteCriteriaFilter;
 import com.developer.ERP.Legacy.API.domain.Model.Filter.ClienteFilter;
 import com.developer.ERP.Legacy.API.domain.Repository.ClienteRepository;
+import com.developer.ERP.Legacy.API.domain.Repository.EnderecoRepository;
+import com.developer.ERP.Legacy.API.domain.Repository.ReferenciaHistoricoRepository;
 import com.developer.ERP.Legacy.API.domain.RepositoryImpl.ClienteRepositoryImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -27,12 +30,18 @@ import java.util.Map;
 public class ClienteService {
 
 	private final ClienteRepository clienteRepository;
+	
+	private final ReferenciaHistoricoRepository referenciaHistoricoRepository;
+	
+	private final EnderecoRepository enderecoRepository;
 
 	private final ClienteRepositoryImpl clienteRepositoryImpl;
 
-	public ClienteService(ClienteRepository clienteRepository, ClienteRepositoryImpl clienteRepositoryImpl) {
+	public ClienteService(EnderecoRepository enderecoRepository,ClienteRepository clienteRepository, ClienteRepositoryImpl clienteRepositoryImpl, ReferenciaHistoricoRepository referenciaHistoricoRepository) {
 		this.clienteRepository = clienteRepository;
 		this.clienteRepositoryImpl = clienteRepositoryImpl;
+		this.referenciaHistoricoRepository = referenciaHistoricoRepository;
+		this.enderecoRepository = enderecoRepository;
 	}
 
 	public Page<Cliente> pesquisar(ClienteFilter clienteFilter, ClienteCriteriaFilter clienteCriteriaFilter) {
@@ -99,21 +108,43 @@ public class ClienteService {
 				throw new HandlerClienteCadastro(MSG_CLIENTE_FORMA_PAGAMENTO_NAO_INFORMADO);
 			}
 		}
-		
+
 		if (outrosClientes == null) {
 			throw new HandlerClienteCadastro(MSG_CLIENTE_OUTROS_NAO_INFORMADO);
 		}
-		
-		
+
+	}
+	
+	public void adicionarHistoricoCliente(Cliente cliente, boolean isClienteNovo) {
+
+		try {
+			List<ReferenciasComerciais> referenciasComerciaisList = cliente.getReferenciasComerciais();
+			for (ReferenciasComerciais referenciasComerciais : referenciasComerciaisList) {
+				if (isClienteNovo)
+					referenciasComerciaisList.add(referenciasComerciais);
+				else if (!referenciaHistoricoRepository.existsById(referenciasComerciais.getId()))
+					referenciaHistoricoRepository.save(referenciasComerciais);
+			}
+		} catch (Exception e) {
+			throw new HandlerClienteCadastro(MSG_CLIENTE_ERRO_ADICIONAR_REFERENCIAS_COMERCIAIS + e);
+		}
+
 	}
 	
 	
-	public void adicionarEnderecos(Cliente cliente, Long id) {
-		List<Cliente> listarClientesPorId = clienteRepository.findClientesById(id);
-		for (Cliente clientes : listarClientesPorId) {
-			clientes.getEnderecos().addAll(cliente.getEnderecos());
+	public void adicionarEnderecos(Cliente cliente, boolean isClienteNovo) {
+
+		try {
+			List<Endereco> enderecosList = cliente.getEnderecos();
+			for (Endereco enderecos : enderecosList) {
+				if (isClienteNovo)
+					enderecosList.add(enderecos);
+				else if (!enderecoRepository.existsById(enderecos.getId()));
+					enderecoRepository.save(enderecos);
+			}
+		} catch (Exception e) {
+			throw new HandlerClienteCadastro(MSG_CLIENTE_ERRO_ADICIONAR_ENDERECO_CLIENTE + e);
 		}
-		clienteRepository.saveAll(listarClientesPorId);
 	}
 	
 	public void adicionarContatos(Cliente cliente, Long id) {
