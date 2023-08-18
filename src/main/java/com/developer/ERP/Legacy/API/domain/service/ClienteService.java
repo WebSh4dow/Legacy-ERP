@@ -20,12 +20,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import static com.developer.ERP.Legacy.API.infrastructure.message.ClienteMessage.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.transaction.Transactional;
 
 
 @Service
@@ -43,11 +46,18 @@ public class ClienteService {
 		this.clienteRepository = clienteRepository;
 		this.clienteRepositoryImpl = clienteRepositoryImpl;
 	}
-
+	
+	@Transactional
 	public Page<Cliente> pesquisar(ClienteFilter clienteFilter, ClienteCriteriaFilter clienteCriteriaFilter) {
 		return clienteRepositoryImpl.buscarClientes(clienteFilter, clienteCriteriaFilter);
 	}
-
+	
+	@Transactional
+	public Page<Cliente>buscarContratosClienteByCriteriaFilterPaginator(ClienteCriteriaFilter clienteFilter, Pageable pageable){
+    	return clienteRepositoryImpl.buscarContratosClienteByCriteriaFilterPaginator(clienteFilter, pageable,true);
+    }
+	
+	@Transactional
 	public Cliente cadastrarCliente(Cliente cliente) throws Exception {
 
 		try {
@@ -86,6 +96,7 @@ public class ClienteService {
 
 	}
 	
+	@Transactional
 	public Cliente validarCadastroCliente(Cliente cliente) {
 		this.validarCadastroOutros(cliente);
 		return clienteRepository.save(cliente);
