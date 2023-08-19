@@ -17,23 +17,23 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/clientes")
 public class ClienteController {
-    @Autowired
-    private ClienteService clienteService;
+	@Autowired
+	private ClienteService clienteService;
 
-    @GetMapping
+	@GetMapping("/pesquisar")
 	public ResponseEntity<Page<Cliente>> pesquisar(ClienteFilter clienteFilter,ClienteCriteriaFilter clienteCriteriaFilter) {
-		return new ResponseEntity<>(clienteService.pesquisar(clienteFilter, clienteCriteriaFilter),HttpStatus.OK);
+		return new ResponseEntity<>(clienteService.pesquisar(clienteFilter, clienteCriteriaFilter), HttpStatus.OK);
 	}
-    
-    @PostMapping
-    public Cliente salvarCliente(@RequestBody Cliente cliente) throws Exception{
-    	return clienteService.cadastrarCliente(cliente);
-    }
-    @GetMapping("contratos-vinculados/{id}")
-    public Page<Cliente>buscarContratosClienteByCriteriaFilterPaginator(ClienteCriteriaFilter clienteFilter, Pageable pageable, @PathVariable Long id){
-    	return clienteService.buscarContratosClienteByCriteriaFilterPaginator(clienteFilter, pageable);
-    }
-    
-    
-  
+
+	@PostMapping("/salvar")
+	public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente) throws Exception {
+		return new ResponseEntity<Cliente>(clienteService.cadastrarCliente(cliente), HttpStatus.OK);
+	}
+
+	@GetMapping("/filtrar")
+	public ResponseEntity<Page<Cliente>> buscarClientes(ClienteCriteriaFilter clienteFilter, Pageable pageable) {
+		return new ResponseEntity<>(clienteService.buscarClientesByCriteriaFilter(clienteFilter, pageable),
+				HttpStatus.OK);
+	}
+
 }

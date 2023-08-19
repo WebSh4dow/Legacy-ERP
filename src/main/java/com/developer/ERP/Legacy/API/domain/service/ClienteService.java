@@ -1,38 +1,28 @@
 package com.developer.ERP.Legacy.API.domain.service;
 
 import com.developer.ERP.Legacy.API.domain.enumerated.IndicadorIE;
+import com.developer.ERP.Legacy.API.domain.exceptions.BussinesException;
 import com.developer.ERP.Legacy.API.domain.exceptions.HandlerClienteCadastro;
-import com.developer.ERP.Legacy.API.domain.exceptions.HandlerNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Cliente;
-import com.developer.ERP.Legacy.API.domain.model.Endereco;
 import com.developer.ERP.Legacy.API.domain.model.Outros;
 import com.developer.ERP.Legacy.API.domain.model.PessoaFisica;
 import com.developer.ERP.Legacy.API.domain.model.PessoaJuridica;
-import com.developer.ERP.Legacy.API.domain.model.ReferenciasComerciais;
 import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteCriteriaFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
 import com.developer.ERP.Legacy.API.domain.repository.ClienteRepository;
 import com.developer.ERP.Legacy.API.domain.repository.EnderecoRepository;
-import com.developer.ERP.Legacy.API.domain.repository.ReferenciaHistoricoRepository;
+import com.developer.ERP.Legacy.API.infrastructure.config.RepositoryCustomImpl;
 import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.ClienteRepositoryImpl;
-import com.mysql.cj.xdevapi.Client;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import static com.developer.ERP.Legacy.API.infrastructure.message.ClienteMessage.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.transaction.Transactional;
 
 
 @Service
-public class ClienteService {
+public class ClienteService extends RepositoryCustomImpl {
 
 	private final ClienteRepository clienteRepository;
 	
@@ -53,11 +43,10 @@ public class ClienteService {
 	}
 	
 	@Transactional
-	public Page<Cliente>buscarContratosClienteByCriteriaFilterPaginator(ClienteCriteriaFilter clienteFilter, Pageable pageable){
-    	return clienteRepositoryImpl.buscarContratosClienteByCriteriaFilterPaginator(clienteFilter, pageable,true);
+	public Page<Cliente>buscarClientesByCriteriaFilter(ClienteCriteriaFilter clienteFilter, Pageable pageable){
+    	return clienteRepositoryImpl.buscarClienteByCriteriaFilterPaginator(clienteFilter, pageable,true);
     }
 	
-	@Transactional
 	public Cliente cadastrarCliente(Cliente cliente) throws Exception {
 
 		try {
@@ -99,9 +88,18 @@ public class ClienteService {
 	@Transactional
 	public Cliente validarCadastroCliente(Cliente cliente) {
 		this.validarCadastroOutros(cliente);
+		this.validarClienteMesmoDocumento(cliente);
 		return clienteRepository.save(cliente);
 	}
 	
+	
+	public void validarClienteMesmoDocumento(Cliente cliente) {
+		Cliente clinteComMesmoDocumento = clienteRepositoryImpl.verificarCpfCnpjCliente(cliente);
+		if (clinteComMesmoDocumento != null) {
+			throw new BussinesException("Documento atual já está vinculado a outro cadastro de cliente.");
+		}
+	}
+		
 	public void validarCadastroOutros(Cliente cliente) {
 		Outros outrosClientes = cliente.getOutros();
 		if (outrosClientes != null) {
@@ -123,6 +121,6 @@ public class ClienteService {
 		}
 	}
 
-
+	
 
 }

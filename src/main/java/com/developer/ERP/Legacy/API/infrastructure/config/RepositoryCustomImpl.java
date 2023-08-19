@@ -47,6 +47,12 @@ public class RepositoryCustomImpl {
 			throw new HandlerNotFoundException("Ocorreu algum erro ao tentar obter o totalizador dos registros.");
 		}
 	}
+	
+	@SuppressWarnings("deprecation")
+	protected final Criteria createCriteria(EntityManager em, Class<?> clazz) {
+		return this.getSession(em).createCriteria(clazz);
+				
+	}
 
 	public final void paginar(Criteria query, Pageable pageable) {
 		int size = pageable != null ? pageable.getPageSize() : -1;
