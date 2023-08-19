@@ -39,7 +39,7 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl {
 	
     private final CriteriaBuilder criteriaBuilder;
     
-   
+    private final static boolean CLIENTE_INATIVO = false;
     
     public ClienteRepositoryImpl(EntityManager entityManager) {
 		this.entityManager = entityManager;
@@ -109,10 +109,10 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl {
     }
     
     public Page<Cliente>buscarContratosClienteByCriteriaFilterPaginator(ClienteCriteriaFilter clienteFilter, Pageable pageable){
-    	return this.buscarContratosClienteByCriteriaFilterPaginator(clienteFilter, pageable,true);
+    	return this.buscarClienteByCriteriaFilterPaginator(clienteFilter, pageable,true);
     }
     
-	public Page<Cliente> buscarContratosClienteByCriteriaFilterPaginator(ClienteCriteriaFilter clienteFilter,Pageable pageable, boolean paginar) {
+	public Page<Cliente> buscarClienteByCriteriaFilterPaginator(ClienteCriteriaFilter clienteFilter,Pageable pageable, boolean paginar) {
 		
 		Criteria criteriaContratosByClientes = buscarContratosClienteByCriteriaFilter(clienteFilter.getId());
 		int total = super.rowCount(criteriaContratosByClientes);
@@ -144,5 +144,51 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl {
     	
     	return new PageImpl<>(typedQuery.getResultList(),pageable,countClientes);
     }
+    
+    
+	@SuppressWarnings("unchecked")
+	public Cliente verificarCpfCnpjCliente(Cliente cliente) {
+		Cliente clientes = cliente;
+		if (clientes.getPessoaFisica() != null) {
+			Criteria criteria = super.createCriteria(entityManager, Cliente.class);
+
+			List<Cliente> verficarCpfCliente = new ArrayList<Cliente>();
+
+			criteria.createAlias("pessoaFisica", "pf");
+			criteria.add(Restrictions.eq("pf.cpf", clientes.getPessoaFisica().getCpf()));
+
+			if (cliente.getId() != null)
+				criteria.add(Restrictions.ne("id", cliente.getId()));
+			
+			criteria.add(Restrictions.ne("isAtivo", CLIENTE_INATIVO));
+			
+			verficarCpfCliente = criteria.list();
+			
+			if (verficarCpfCliente.size() != 0) 
+				return verficarCpfCliente.get(0);
+			
+				
+		}else if (clientes.getPessoaJuridica() != null) {
+			Criteria criteria = createCriteria(entityManager, Cliente.class);
+			
+			List<Cliente> verificarCnpjCliente = new ArrayList<Cliente>();
+			
+			criteria.createAlias("pessoaJuridica", "pj");
+			criteria.add(Restrictions.eq("pj.cnpj", clientes.getPessoaJuridica().getCnpj()));
+			
+			if (cliente.getId() != null)
+				criteria.add(Restrictions.ne("id", cliente.getId()));
+			
+			criteria.add(Restrictions.neOrIsNotNull("isAtivo", CLIENTE_INATIVO));
+			verificarCnpjCliente = criteria.list();
+			
+			if (verificarCnpjCliente.size() != 0)
+				return verificarCnpjCliente.get(0);
+				
+			
+			
+		}
+		return null;
+	}
 
 }
