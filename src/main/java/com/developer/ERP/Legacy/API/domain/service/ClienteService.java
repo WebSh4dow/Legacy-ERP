@@ -15,38 +15,49 @@ import com.developer.ERP.Legacy.API.infrastructure.config.RepositoryCustomImpl;
 import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.ClienteRepositoryImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import static com.developer.ERP.Legacy.API.infrastructure.message.ClienteMessage.*;
-import javax.transaction.Transactional;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
 
 @Service
 public class ClienteService extends RepositoryCustomImpl {
 
 	private final ClienteRepository clienteRepository;
-	
 
 	private final ClienteRepositoryImpl clienteRepositoryImpl;
 
-	public ClienteService(EnderecoRepository enderecoRepository,
-						  ClienteRepository clienteRepository,
-						  ClienteRepositoryImpl clienteRepositoryImpl
-	) {
+	public ClienteService(EnderecoRepository enderecoRepository, ClienteRepository clienteRepository,
+			ClienteRepositoryImpl clienteRepositoryImpl) {
 		this.clienteRepository = clienteRepository;
 		this.clienteRepositoryImpl = clienteRepositoryImpl;
 	}
-	
+
 	@Transactional
 	public Page<Cliente> pesquisar(ClienteFilter clienteFilter, ClienteCriteriaFilter clienteCriteriaFilter) {
 		return clienteRepositoryImpl.buscarClientes(clienteFilter, clienteCriteriaFilter);
 	}
 	
-	@Transactional
-	public Page<Cliente>buscarClientesByCriteriaFilter(ClienteCriteriaFilter clienteFilter, Pageable pageable){
-    	return clienteRepositoryImpl.buscarClienteByCriteriaFilterPaginator(clienteFilter, pageable,true);
-    }
+	public List<Cliente> buscarClienteCpf(String cpf) {
+		return clienteRepositoryImpl.buscarClienteCpf(cpf);
+	}
 	
+	public List<Cliente> buscarClienteCnpj(String cnpj) {
+		return clienteRepositoryImpl.buscarClienteCnpj(cnpj);
+	}
+	
+	public Page<Cliente> buscarClienteCnpjPageable(ClienteFilter clienteFilter,
+			ClienteCriteriaFilter clienteCriteriaFilter, String cnpj) {
+		return clienteRepositoryImpl.buscarClienteCnpjPageable(clienteFilter, clienteCriteriaFilter, cnpj);
+	}
+	
+	public Page<Cliente> buscarClienteCpfPageable(ClienteFilter clienteFilter,
+			ClienteCriteriaFilter clienteCriteriaFilter, String cpf) {
+		return clienteRepositoryImpl.buscarClienteCpfPageable(clienteFilter, clienteCriteriaFilter, cpf);
+	}
+
 	public Cliente cadastrarCliente(Cliente cliente) throws Exception {
 
 		try {
@@ -85,21 +96,23 @@ public class ClienteService extends RepositoryCustomImpl {
 
 	}
 	
+
 	@Transactional
 	public Cliente validarCadastroCliente(Cliente cliente) {
 		this.validarCadastroOutros(cliente);
 		this.validarClienteMesmoDocumento(cliente);
 		return clienteRepository.save(cliente);
 	}
-	
-	
+
 	public void validarClienteMesmoDocumento(Cliente cliente) {
 		Cliente clinteComMesmoDocumento = clienteRepositoryImpl.verificarCpfCnpjCliente(cliente);
 		if (clinteComMesmoDocumento != null) {
 			throw new BussinesException("Documento atual já está vinculado a outro cadastro de cliente.");
 		}
 	}
-		
+	
+	
+
 	public void validarCadastroOutros(Cliente cliente) {
 		Outros outrosClientes = cliente.getOutros();
 		if (outrosClientes != null) {
@@ -121,6 +134,6 @@ public class ClienteService extends RepositoryCustomImpl {
 		}
 	}
 
-	
+
 
 }

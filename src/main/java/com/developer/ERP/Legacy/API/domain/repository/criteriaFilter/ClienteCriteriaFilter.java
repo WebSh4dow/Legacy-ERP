@@ -17,7 +17,7 @@ public class ClienteCriteriaFilter {
 	private String historico;
 	private PessoaFisica pessoaFisica;
 	private PessoaJuridica pessoaJuridica;
-	private Contratos contratos;
-	private boolean isAtivo;
+	private List <Contratos> contratos;
 	private List<Endereco> enderecos;
+	private boolean isAtivo;
 }
