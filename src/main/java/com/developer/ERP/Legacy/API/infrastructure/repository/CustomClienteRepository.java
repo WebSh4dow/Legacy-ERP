@@ -15,6 +15,8 @@ public interface CustomClienteRepository {
 	
 	List<Cliente> buscarClienteCpf(String cpf);
 	
+	List<Cliente> buscarClientePorId(Long id);
+	
 	List<Cliente> buscarClienteCnpj(String cnpj);
 	
 	Long getClienteCount(Predicate predicate);
@@ -30,6 +32,8 @@ public interface CustomClienteRepository {
 	Page<Cliente> buscarClienteCpfPageable(ClienteFilter clienteFilter,ClienteCriteriaFilter clienteCriteriaFilter, String cpf);
 	
 	Page<Cliente> buscarClientes(ClienteFilter clienteFilter,ClienteCriteriaFilter clienteCriteriaFilter);
+	
+	Page<Cliente> buscarClientesPorIdPageable(ClienteFilter clienteFilter, ClienteCriteriaFilter clienteCriteriaFilter, Long id);
 	
 	Cliente verificarCpfCnpjCliente(Cliente cliente);
 	
