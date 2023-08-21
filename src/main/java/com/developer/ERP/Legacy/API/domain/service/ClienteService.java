@@ -17,9 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import static com.developer.ERP.Legacy.API.infrastructure.message.ClienteMessage.*;
-
 import java.util.List;
-
 import javax.transaction.Transactional;
 
 @Service
@@ -39,23 +37,28 @@ public class ClienteService extends RepositoryCustomImpl {
 	public Page<Cliente> pesquisar(ClienteFilter clienteFilter, ClienteCriteriaFilter clienteCriteriaFilter) {
 		return clienteRepositoryImpl.buscarClientes(clienteFilter, clienteCriteriaFilter);
 	}
-	
+
 	public List<Cliente> buscarClienteCpf(String cpf) {
 		return clienteRepositoryImpl.buscarClienteCpf(cpf);
 	}
-	
+
 	public List<Cliente> buscarClienteCnpj(String cnpj) {
 		return clienteRepositoryImpl.buscarClienteCnpj(cnpj);
 	}
-	
+
 	public Page<Cliente> buscarClienteCnpjPageable(ClienteFilter clienteFilter,
 			ClienteCriteriaFilter clienteCriteriaFilter, String cnpj) {
 		return clienteRepositoryImpl.buscarClienteCnpjPageable(clienteFilter, clienteCriteriaFilter, cnpj);
 	}
-	
+
 	public Page<Cliente> buscarClienteCpfPageable(ClienteFilter clienteFilter,
 			ClienteCriteriaFilter clienteCriteriaFilter, String cpf) {
 		return clienteRepositoryImpl.buscarClienteCpfPageable(clienteFilter, clienteCriteriaFilter, cpf);
+	}
+
+	public Page<Cliente> buscarClientesPorIdPageable(ClienteFilter clienteFilter,
+			ClienteCriteriaFilter clienteCriteriaFilter, Long id) {
+		return clienteRepositoryImpl.buscarClientesPorIdPageable(clienteFilter, clienteCriteriaFilter, id);
 	}
 
 	public Cliente cadastrarCliente(Cliente cliente) throws Exception {
@@ -95,7 +98,6 @@ public class ClienteService extends RepositoryCustomImpl {
 		}
 
 	}
-	
 
 	@Transactional
 	public Cliente validarCadastroCliente(Cliente cliente) {
@@ -110,8 +112,6 @@ public class ClienteService extends RepositoryCustomImpl {
 			throw new BussinesException("Documento atual já está vinculado a outro cadastro de cliente.");
 		}
 	}
-	
-	
 
 	public void validarCadastroOutros(Cliente cliente) {
 		Outros outrosClientes = cliente.getOutros();
@@ -133,7 +133,5 @@ public class ClienteService extends RepositoryCustomImpl {
 			throw new HandlerClienteCadastro(MSG_CLIENTE_OUTROS_NAO_INFORMADO);
 		}
 	}
-
-
 
 }

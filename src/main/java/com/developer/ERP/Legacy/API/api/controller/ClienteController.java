@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/clientes")
 public class ClienteController {
+	
 	@Autowired
 	private ClienteService clienteService;
 
@@ -38,6 +39,12 @@ public class ClienteController {
 	public Page<Cliente> buscarClienteCnpjPageable(ClienteFilter clienteFilter,
 			ClienteCriteriaFilter clienteCriteriaFilter, @PathVariable String cnpj) {
 		return clienteService.buscarClienteCnpjPageable(clienteFilter, clienteCriteriaFilter, cnpj);
+	}
+	
+	@GetMapping("/buscar-cliente/{id}")
+	public Page<Cliente> buscarClientePorId(ClienteFilter clienteFilter, ClienteCriteriaFilter clienteCriteriaFilter,
+			@PathVariable Long id) {
+		return clienteService.buscarClientesPorIdPageable(clienteFilter, clienteCriteriaFilter, id);
 	}
 
 

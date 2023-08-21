@@ -30,13 +30,13 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl implements Custo
 	
 
 	private final EntityManager entityManager;
-	
-    private final CriteriaBuilder criteriaBuilder;
-    
-    private final static boolean CLIENTE_INATIVO = false;
-    
-    private final static boolean CLIENTE_ATIVO = true;
-    
+
+	private final CriteriaBuilder criteriaBuilder;
+
+	private final static boolean CLIENTE_INATIVO = false;
+
+	private final static boolean CLIENTE_ATIVO = true;
+
     public ClienteRepositoryImpl(EntityManager entityManager) {
 		this.entityManager = entityManager;
 		this.criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -216,6 +216,44 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl implements Custo
 
 		List<Cliente> listarClientes = detachedCriteria.list();
 		return listarClientes;
+	}
+
+	@Override
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List<Cliente> buscarClientePorId(Long id) {
+		
+		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Cliente.class);
+		Root<Cliente> root = criteriaQuery.from(Cliente.class);
+		
+		Criteria criteria =super.createCriteria(entityManager, Cliente.class);
+		
+		criteria.add(Restrictions.eq("id", id));
+		List<Cliente> listClientes = criteria.list();
+	
+		return listClientes;
+	}
+
+	@Override
+	public Page<Cliente> buscarClientesPorIdPageable(ClienteFilter clienteFilter,
+			ClienteCriteriaFilter clienteCriteriaFilter, Long id) {
+		CriteriaQuery<Cliente> criteriaQuery = criteriaBuilder.createQuery(Cliente.class);
+		Root<Cliente> clienteRoot = criteriaQuery.from(Cliente.class);
+		Predicate predicate = getPredicate(clienteCriteriaFilter, clienteRoot);
+
+		criteriaQuery.where(predicate);
+		setOrder(clienteFilter, criteriaQuery, clienteRoot);
+
+		TypedQuery<Cliente> typedQuery = entityManager.createQuery(criteriaQuery);
+
+		typedQuery.setFirstResult(clienteFilter.getPageNumber() * clienteFilter.getPageSize());
+		typedQuery.setMaxResults(clienteFilter.getPageSize());
+
+		Pageable pageable = getPageable(clienteFilter);
+		List<Cliente> buscarCliente = buscarClientePorId(id);
+
+		long countClientes = getClienteCount(predicate);
+
+		return new PageImpl<>(buscarCliente, pageable, countClientes);
 	}
 
 }
