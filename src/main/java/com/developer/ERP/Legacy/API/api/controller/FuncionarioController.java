@@ -13,8 +13,7 @@ import java.util.Map;
 public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
+    
     @GetMapping
     public List <Funcionario> listarTodos(){
         return funcionarioService.listarTodos();
@@ -24,14 +23,6 @@ public class FuncionarioController {
         return funcionarioService.listarPorId(id);
     }
 
-    @GetMapping("/login-inativo")
-    public List <Funcionario> findByInativos(@RequestParam(("inativo"))int inativo){
-        return funcionarioRepository.findByInativoContaining(inativo);
-    }
-    @GetMapping("/login-ativo")
-    public List <Funcionario> findByAtivos(@RequestParam(("ativo"))int ativo){
-        return funcionarioRepository.findByAtivoContaining(ativo);
-    }
     @PostMapping
     public ResponseEntity <Funcionario>salvarFuncionario(@RequestBody Funcionario funcionario){
         return funcionarioService.incluir(funcionario);
