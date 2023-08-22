@@ -31,20 +31,25 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/buscar-cliente/por-cpf/{cpf}")
-	public Page<Cliente> buscarClienteCpfPageable(ClienteFilter clienteFilter,
+	public ResponseEntity<Page<Cliente>> buscarClienteCpfPageable(ClienteFilter clienteFilter,
 			ClienteCriteriaFilter clienteCriteriaFilter, @PathVariable String cpf) {
-		return clienteService.buscarClienteCpfPageable(clienteFilter, clienteCriteriaFilter, cpf);
+
+		Page<Cliente> buscarClientePorCpf = clienteService.buscarClienteCpfPageable(clienteFilter, clienteCriteriaFilter, cpf);
+		return new ResponseEntity<Page<Cliente>>(buscarClientePorCpf,HttpStatus.OK);
 	}
 	@GetMapping("/buscar-cliente/por-cnpj/{cnpj}")
-	public Page<Cliente> buscarClienteCnpjPageable(ClienteFilter clienteFilter,
+	public ResponseEntity<Page<Cliente>> buscarClienteCnpjPageable(ClienteFilter clienteFilter,
 			ClienteCriteriaFilter clienteCriteriaFilter, @PathVariable String cnpj) {
-		return clienteService.buscarClienteCnpjPageable(clienteFilter, clienteCriteriaFilter, cnpj);
+
+		Page<Cliente> buscarClientePorCpf = clienteService.buscarClienteCnpjPageable(clienteFilter, clienteCriteriaFilter, cnpj);
+		return new ResponseEntity<Page<Cliente>>(buscarClientePorCpf,HttpStatus.OK);
 	}
 	
 	@GetMapping("/buscar-cliente/{id}")
-	public Page<Cliente> buscarClientePorId(ClienteFilter clienteFilter, ClienteCriteriaFilter clienteCriteriaFilter,
+	public ResponseEntity<Page<Cliente>> buscarClientePorId(ClienteFilter clienteFilter, ClienteCriteriaFilter clienteCriteriaFilter,
 			@PathVariable Long id) {
-		return clienteService.buscarClientesPorIdPageable(clienteFilter, clienteCriteriaFilter, id);
+		Page<Cliente> buscarClientesPorId = clienteService.buscarClientesPorIdPageable(clienteFilter, clienteCriteriaFilter, id);
+		return new ResponseEntity<Page<Cliente>>(buscarClientesPorId,HttpStatus.OK);
 	}
 
 

@@ -38,11 +38,11 @@ public class ClienteService extends RepositoryCustomImpl {
 		return clienteRepositoryImpl.buscarClientes(clienteFilter, clienteCriteriaFilter);
 	}
 
-	public List<Cliente> buscarClienteCpf(String cpf) {
+	public List<Cliente> buscaSimplesClienteby(String cpf) {
 		return clienteRepositoryImpl.buscarClienteCpf(cpf);
 	}
 
-	public List<Cliente> buscarClienteCnpj(String cnpj) {
+	public List<Cliente> buscaSimplesClienteBy(String cnpj) {
 		return clienteRepositoryImpl.buscarClienteCnpj(cnpj);
 	}
 
@@ -114,22 +114,22 @@ public class ClienteService extends RepositoryCustomImpl {
 	}
 
 	public void validarCadastroOutros(Cliente cliente) {
-		Outros outrosClientes = cliente.getOutros();
-		if (outrosClientes != null) {
-			if (StringUtils.isBlank(outrosClientes.getAgencia())) {
+		Outros terceiros = cliente.getOutros();
+		if (terceiros != null) {
+			if (StringUtils.isBlank(terceiros.getAgencia())) {
 				throw new HandlerClienteCadastro(MSG_CLIENTE_AGENCIA_NAO_INFORMADA);
 			}
 
-			if (StringUtils.isBlank(outrosClientes.getBanco())) {
+			if (StringUtils.isBlank(terceiros.getBanco())) {
 				throw new HandlerClienteCadastro(MSG_CLIENTE_CONTA_BANCO_NAO_INFORMADO);
 			}
 
-			if (StringUtils.isBlank(outrosClientes.getFormaPagamento())) {
+			if (StringUtils.isBlank(terceiros.getFormaPagamento())) {
 				throw new HandlerClienteCadastro(MSG_CLIENTE_FORMA_PAGAMENTO_NAO_INFORMADO);
 			}
 		}
 
-		if (outrosClientes == null) {
+		if (terceiros == null) {
 			throw new HandlerClienteCadastro(MSG_CLIENTE_OUTROS_NAO_INFORMADO);
 		}
 	}
