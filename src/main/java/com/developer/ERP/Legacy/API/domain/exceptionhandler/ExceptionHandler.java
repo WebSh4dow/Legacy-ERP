@@ -66,4 +66,14 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
         }
         return error;
     }
+    
+    @org.springframework.web.bind.annotation.ExceptionHandler({java.util.NoSuchElementException.class })
+    public ResponseEntity<Object>NoSuchElementException(java.util.NoSuchElementException notFoundElement,WebRequest webRequest){
+
+        String messageUser = messageSource.getMessage("elemento.nao.encontrato",null,LocaleContextHolder.getLocale());
+        String messageDev = notFoundElement.toString();
+
+        List<ExceptionErrorMessage> error = Arrays.asList(new ExceptionErrorMessage(messageUser,messageDev));
+        return handleExceptionInternal(notFoundElement,error,new HttpHeaders(),HttpStatus.BAD_REQUEST,webRequest);
+    }
 }

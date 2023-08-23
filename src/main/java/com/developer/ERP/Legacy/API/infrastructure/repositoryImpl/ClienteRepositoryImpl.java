@@ -1,7 +1,9 @@
 package com.developer.ERP.Legacy.API.infrastructure.repositoryImpl;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.EntityManager;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import com.developer.ERP.Legacy.API.domain.model.Cliente;
+import com.developer.ERP.Legacy.API.domain.model.Contratos;
 import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteCriteriaFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
 import com.developer.ERP.Legacy.API.infrastructure.config.RepositoryCustomImpl;
@@ -232,6 +235,26 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl implements Custo
 	
 		return listClientes;
 	}
+	
+
+    public List<Contratos> clientePossuiContratosExpirados(Long idCliente) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Contratos> cq = cb.createQuery(Contratos.class);
+        Root<Contratos> contratoRoot = cq.from(Contratos.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (idCliente != null) {
+            predicates.add(cb.equal(contratoRoot.get("cliente").get("id"), idCliente));
+        }
+        
+        predicates.add(cb.lessThan(contratoRoot.get("dataVencimento"), LocalDate.now()));
+        predicates.add(cb.lessThan(contratoRoot.get("dataInicial"), LocalDate.now()));
+
+        cq.where(predicates.toArray(new Predicate[0]));
+
+        return entityManager.createQuery(cq).getResultList();
+    }
 
 	@Override
 	public Page<Cliente> buscarClientesPorIdPageable(ClienteFilter clienteFilter,
@@ -255,5 +278,7 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl implements Custo
 
 		return new PageImpl<>(buscarCliente, pageable, countClientes);
 	}
+
+
 
 }
