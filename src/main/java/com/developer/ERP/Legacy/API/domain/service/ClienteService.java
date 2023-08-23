@@ -3,7 +3,9 @@ package com.developer.ERP.Legacy.API.domain.service;
 import com.developer.ERP.Legacy.API.domain.enumerated.IndicadorIE;
 import com.developer.ERP.Legacy.API.domain.exceptions.BussinesException;
 import com.developer.ERP.Legacy.API.domain.exceptions.HandlerClienteCadastro;
+import com.developer.ERP.Legacy.API.domain.exceptions.HandlerNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Cliente;
+import com.developer.ERP.Legacy.API.domain.model.Contratos;
 import com.developer.ERP.Legacy.API.domain.model.Outros;
 import com.developer.ERP.Legacy.API.domain.model.PessoaFisica;
 import com.developer.ERP.Legacy.API.domain.model.PessoaJuridica;
@@ -15,9 +17,15 @@ import com.developer.ERP.Legacy.API.infrastructure.config.RepositoryCustomImpl;
 import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.ClienteRepositoryImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import static com.developer.ERP.Legacy.API.infrastructure.message.ClienteMessage.*;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import javax.transaction.Transactional;
 
 @Service
@@ -112,6 +120,16 @@ public class ClienteService extends RepositoryCustomImpl {
 			throw new BussinesException("Documento atual já está vinculado a outro cadastro de cliente.");
 		}
 	}
+	
+	public void validarExclusaoCliente(Cliente cliente) {
+		List<Contratos> clientePossuiContratoDataExpirada = clienteRepositoryImpl.clientePossuiContratosExpirados(cliente.getId());
+		if (!clientePossuiContratoDataExpirada.isEmpty()) {
+			throw new BussinesException(MSG_CLIENTE_CONTRATOS_EXPIRADOS);
+		}
+		else {
+			clienteRepository.deleteById(cliente.getId());
+		}
+	}
 
 	public void validarCadastroOutros(Cliente cliente) {
 		Outros terceiros = cliente.getOutros();
@@ -132,6 +150,22 @@ public class ClienteService extends RepositoryCustomImpl {
 		if (terceiros == null) {
 			throw new HandlerClienteCadastro(MSG_CLIENTE_OUTROS_NAO_INFORMADO);
 		}
+	}
+	
+	
+	public Cliente remover(Long idCliente) {
+		try {
+			Cliente cliente = clienteRepository.findById(idCliente).get();
+			if (idCliente != null)
+				this.validarExclusaoCliente(cliente);
+		} catch (Exception e) {
+			Cliente clienteExcluido = clienteRepository.findById(idCliente).get();
+			if (clienteExcluido.getId() == null) {
+				throw new NoSuchElementException();
+			}
+		}
+		return null;
+		
 	}
 
 }

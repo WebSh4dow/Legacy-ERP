@@ -24,6 +24,12 @@ public class ClienteController {
 	public ResponseEntity<Page<Cliente>> pesquisar(ClienteFilter clienteFilter,ClienteCriteriaFilter clienteCriteriaFilter) {
 		return new ResponseEntity<>(clienteService.pesquisar(clienteFilter, clienteCriteriaFilter), HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/remover/cliente/{id}")
+	public ResponseEntity<Cliente> remover(@PathVariable Long id) {
+		
+		return new ResponseEntity<Cliente>(clienteService.remover(id), HttpStatus.OK);
+	}
 
 	@PostMapping("/salvar")
 	public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente) throws Exception {
@@ -52,7 +58,7 @@ public class ClienteController {
 		return new ResponseEntity<Page<Cliente>>(buscarClientesPorId,HttpStatus.OK);
 	}
 
-
+	
 	
 
 }

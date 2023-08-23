@@ -10,5 +10,7 @@ public class ClienteMessage {
 	public final static String MSG_CLIENTE_FORMA_PAGAMENTO_NAO_INFORMADO = "Informe no cadastro do cliente a forma de pagamento para prosseguir.";
 	public final static String MSG_CLIENTE_ERRO_ADICIONAR_REFERENCIAS_COMERCIAIS = "Não foi possivel adicionar referências comerciais para esse cliente erro atual:";
 	public final static String MSG_CLIENTE_ERRO_ADICIONAR_ENDERECO_CLIENTE = "Não foi possivel adicionar o endereço atual ao cliente erro atual:";
+	public final static String MSG_CLIENTE_CONTRATOS_EXPIRADOS = "Não foi possivel remover o cliente atual pois o mesmo possui contratos expirados, verificar os contratos expirados e renovar.";
+	public final static String MSG_CLIENTE_ERRO_REMOVER = "Não foi possivel remover o cliente atual.";
 	
 }
