@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.api.controller;
+package com.developer.ERP.Legacy.API.api.v1.controller;
 
 import com.developer.ERP.Legacy.API.domain.model.Fornecedor;
 import com.developer.ERP.Legacy.API.domain.service.FornecedorService;
