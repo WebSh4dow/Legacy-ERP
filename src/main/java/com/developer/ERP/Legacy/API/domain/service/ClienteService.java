@@ -1,9 +1,11 @@
 package com.developer.ERP.Legacy.API.domain.service;
 
+import com.developer.ERP.Legacy.API.api.v1.assembler.ClienteAssembler;
+import com.developer.ERP.Legacy.API.api.v1.disasembler.ClienteDisassembler;
+import com.developer.ERP.Legacy.API.api.v1.request.ClienteRequest;
 import com.developer.ERP.Legacy.API.domain.enumerated.IndicadorIE;
 import com.developer.ERP.Legacy.API.domain.exceptions.BussinesException;
 import com.developer.ERP.Legacy.API.domain.exceptions.HandlerClienteCadastro;
-import com.developer.ERP.Legacy.API.domain.exceptions.HandlerNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Cliente;
 import com.developer.ERP.Legacy.API.domain.model.Contratos;
 import com.developer.ERP.Legacy.API.domain.model.Outros;
@@ -17,12 +19,8 @@ import com.developer.ERP.Legacy.API.infrastructure.config.RepositoryCustomImpl;
 import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.ClienteRepositoryImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import static com.developer.ERP.Legacy.API.infrastructure.message.ClienteMessage.*;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -35,23 +33,21 @@ public class ClienteService extends RepositoryCustomImpl {
 
 	private final ClienteRepositoryImpl clienteRepositoryImpl;
 
+	private final ClienteDisassembler clienteDisassembler;
+
+	private final ClienteAssembler clienteAssembler;
+
 	public ClienteService(EnderecoRepository enderecoRepository, ClienteRepository clienteRepository,
-			ClienteRepositoryImpl clienteRepositoryImpl) {
+			ClienteRepositoryImpl clienteRepositoryImpl,ClienteDisassembler clienteDisassembler,ClienteAssembler clienteAssembler) {
 		this.clienteRepository = clienteRepository;
 		this.clienteRepositoryImpl = clienteRepositoryImpl;
+		this.clienteDisassembler = clienteDisassembler;
+		this.clienteAssembler = clienteAssembler;
 	}
 
 	@Transactional
 	public Page<Cliente> pesquisar(ClienteFilter clienteFilter, ClienteCriteriaFilter clienteCriteriaFilter) {
 		return clienteRepositoryImpl.buscarClientes(clienteFilter, clienteCriteriaFilter);
-	}
-
-	public List<Cliente> buscaSimplesClienteby(String cpf) {
-		return clienteRepositoryImpl.buscarClienteCpf(cpf);
-	}
-
-	public List<Cliente> buscaSimplesClienteBy(String cnpj) {
-		return clienteRepositoryImpl.buscarClienteCnpj(cnpj);
 	}
 
 	public Page<Cliente> buscarClienteCnpjPageable(ClienteFilter clienteFilter,
@@ -68,7 +64,11 @@ public class ClienteService extends RepositoryCustomImpl {
 			ClienteCriteriaFilter clienteCriteriaFilter, Long id) {
 		return clienteRepositoryImpl.buscarClientesPorIdPageable(clienteFilter, clienteCriteriaFilter, id);
 	}
-
+	public Cliente buscarCliente(Long id) {
+		return clienteRepository.findById(id)
+				.orElseThrow(() -> new BussinesException(
+						String.format(MSG_CLIENTE_NAO_ENCONTRADO, id)));
+	}
 	public Cliente cadastrarCliente(Cliente cliente) throws Exception {
 
 		try {
@@ -106,6 +106,13 @@ public class ClienteService extends RepositoryCustomImpl {
 		}
 
 	}
+	public ClienteRequest editarCliente(Long id, ClienteRequest clienteRequest) {
+		Cliente clienteAtual = buscarCliente(id);
+		validarClienteMesmoDocumento(clienteAtual);
+		clienteDisassembler.copyToDomainObject(clienteRequest,clienteAtual);
+		clienteAtual = this.clienteRepository.save(clienteAtual);
+		return clienteAssembler.toModel(clienteAtual);
+	}
 
 	@Transactional
 	public Cliente validarCadastroCliente(Cliente cliente) {
@@ -120,13 +127,13 @@ public class ClienteService extends RepositoryCustomImpl {
 			throw new BussinesException("Documento atual já está vinculado a outro cadastro de cliente.");
 		}
 	}
-	
+
 	public void validarExclusaoCliente(Cliente cliente) {
-		List<Contratos> clientePossuiContratoDataExpirada = clienteRepositoryImpl.clientePossuiContratosExpirados(cliente.getId());
+		List<Contratos> clientePossuiContratoDataExpirada = clienteRepositoryImpl
+				.clientePossuiContratosExpirados(cliente.getId());
 		if (!clientePossuiContratoDataExpirada.isEmpty()) {
 			throw new BussinesException(MSG_CLIENTE_CONTRATOS_EXPIRADOS);
-		}
-		else {
+		} else {
 			clienteRepository.deleteById(cliente.getId());
 		}
 	}
@@ -151,13 +158,11 @@ public class ClienteService extends RepositoryCustomImpl {
 			throw new HandlerClienteCadastro(MSG_CLIENTE_OUTROS_NAO_INFORMADO);
 		}
 	}
-	
-	
+
 	public Cliente remover(Long idCliente) {
 		try {
 			Cliente cliente = clienteRepository.findById(idCliente).get();
-			if (idCliente != null)
-				this.validarExclusaoCliente(cliente);
+			this.validarExclusaoCliente(cliente);
 		} catch (Exception e) {
 			Cliente clienteExcluido = clienteRepository.findById(idCliente).get();
 			if (clienteExcluido.getId() == null) {
@@ -165,7 +170,7 @@ public class ClienteService extends RepositoryCustomImpl {
 			}
 		}
 		return null;
-		
+
 	}
 
 }

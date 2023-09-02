@@ -1,7 +1,11 @@
 package com.developer.ERP.Legacy.API.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -11,6 +15,8 @@ import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,10 +65,6 @@ public class Cliente {
 	@JoinColumn(name = "cliente_id")
 	private List<Contratos> contratos;
 	
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
-	@JoinColumn(name = "cliente_id")
-	private List<ReferenciasComerciais> referenciasComerciais;
 
-	private boolean isAtivo;
 
 }
