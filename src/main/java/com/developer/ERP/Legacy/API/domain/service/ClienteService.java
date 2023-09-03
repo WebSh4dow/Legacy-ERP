@@ -23,7 +23,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import static com.developer.ERP.Legacy.API.core.validation.message.ClienteMessage.*;
 import java.util.List;
-
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
@@ -39,8 +38,8 @@ public class ClienteService extends RepositoryCustomImpl {
 	private final ClienteAssembler clienteAssembler;
 
 
-	public ClienteService(EnderecoRepository enderecoRepository, ClienteRepository clienteRepository,
-			ClienteRepositoryImpl clienteRepositoryImpl,ClienteDisassembler clienteDisassembler,ClienteAssembler clienteAssembler
+	public ClienteService(ClienteRepository clienteRepository, ClienteRepositoryImpl clienteRepositoryImpl,
+						  ClienteDisassembler clienteDisassembler,ClienteAssembler clienteAssembler
 	) {
 
 		this.clienteRepository = clienteRepository;
@@ -74,7 +73,6 @@ public class ClienteService extends RepositoryCustomImpl {
 						String.format(MSG_CLIENTE_NAO_ENCONTRADO, id)));
 	}
 	public ClienteRepresentationModel cadastrarCliente(ClienteRequest clienteRequest) {
-
 		try {
 			Cliente cliente = clienteDisassembler.toDomainObject(clienteRequest);
 			validarClienteMesmoDocumento(cliente);
@@ -93,7 +91,7 @@ public class ClienteService extends RepositoryCustomImpl {
 
 			return clienteRepresentationModel;
 
-		}catch (EntityNotFoundException ex){
+		}catch (EntityNotFoundException ex) {
 			throw new BussinesException(ex.getMessage(),ex);
 		}
 	}
@@ -152,7 +150,7 @@ public class ClienteService extends RepositoryCustomImpl {
 		}catch (EmptyResultDataAccessException e){
 			throw new EntityNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO);
 
-		}catch (DataIntegrityViolationException e){
+		}catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
 					String.format(MSG_CLIENTE_ERRO_REMOVER,id));
 		}
