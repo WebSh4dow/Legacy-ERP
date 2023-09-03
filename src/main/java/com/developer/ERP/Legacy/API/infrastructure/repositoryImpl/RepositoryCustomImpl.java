@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.infrastructure.config;
+package com.developer.ERP.Legacy.API.infrastructure.repositoryImpl;
 
 import java.util.Iterator;
 
@@ -13,8 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.util.Assert;
 
-import com.developer.ERP.Legacy.API.domain.exceptions.HandlerNotFoundException;
-import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteCriteriaFilter;
+import com.developer.ERP.Legacy.API.domain.exceptions.runtime.HandlerNotFoundException;
 
 public class RepositoryCustomImpl {
 	

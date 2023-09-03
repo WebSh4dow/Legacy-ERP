@@ -1,7 +1,9 @@
-package com.developer.ERP.Legacy.API.domain.exceptionhandler;
+package com.developer.ERP.Legacy.API.api.exceptionhandler;
 
-import com.developer.ERP.Legacy.API.domain.exceptions.BussinesException;
-import com.developer.ERP.Legacy.API.domain.exceptions.HandlerNotFoundException;
+import com.developer.ERP.Legacy.API.domain.exceptions.response.ProblemApi;
+import com.developer.ERP.Legacy.API.domain.exceptions.runtime.BussinesException;
+import com.developer.ERP.Legacy.API.domain.exceptions.runtime.EntidadeEmUsoException;
+import com.developer.ERP.Legacy.API.domain.exceptions.runtime.HandlerNotFoundException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -24,7 +26,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import java.nio.file.AccessDeniedException;
 import java.time.OffsetDateTime;
 import java.util.List;

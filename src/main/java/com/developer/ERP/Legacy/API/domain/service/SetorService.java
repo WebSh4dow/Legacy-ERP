@@ -1,6 +1,6 @@
 package com.developer.ERP.Legacy.API.domain.service;
 
-import com.developer.ERP.Legacy.API.domain.exceptions.HandlerNotFoundException;
+import com.developer.ERP.Legacy.API.domain.exceptions.runtime.HandlerNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Departamentos;
 import com.developer.ERP.Legacy.API.domain.model.Setor;
 import com.developer.ERP.Legacy.API.domain.repository.SetorRepository;
