@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
-import static com.developer.ERP.Legacy.API.infrastructure.message.FuncionarioMessage.MSG_INFORMATION;
+import static com.developer.ERP.Legacy.API.core.validation.message.FuncionarioMessage.MSG_INFORMATION;
 @Entity
 @Getter
 @Setter

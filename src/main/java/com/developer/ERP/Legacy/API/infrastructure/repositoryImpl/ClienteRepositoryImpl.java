@@ -3,7 +3,6 @@ package com.developer.ERP.Legacy.API.infrastructure.repositoryImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.EntityManager;
@@ -24,7 +23,6 @@ import com.developer.ERP.Legacy.API.domain.model.Cliente;
 import com.developer.ERP.Legacy.API.domain.model.Contratos;
 import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteCriteriaFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
-import com.developer.ERP.Legacy.API.infrastructure.config.RepositoryCustomImpl;
 import com.developer.ERP.Legacy.API.infrastructure.repository.CustomClienteRepository;
 
 

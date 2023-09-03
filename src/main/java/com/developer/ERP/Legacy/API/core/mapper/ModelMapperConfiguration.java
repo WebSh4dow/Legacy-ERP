@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.infrastructure.config;
+package com.developer.ERP.Legacy.API.core.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

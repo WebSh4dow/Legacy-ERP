@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.infrastructure.util;
+package com.developer.ERP.Legacy.API.core.report;
 
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.PageSize;

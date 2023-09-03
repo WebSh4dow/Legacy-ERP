@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.domain.exceptionhandler;
+package com.developer.ERP.Legacy.API.domain.exceptions.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

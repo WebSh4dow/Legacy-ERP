@@ -36,34 +36,36 @@ public class Cliente {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro = LocalDate.now();
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "outros_id")
 	private Outros outros;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "pessoaJuridica_id")
 	private PessoaJuridica pessoaJuridica;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "pessoaFisica_id")
 	private PessoaFisica pessoaFisica;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "cliente_id")
 	private List<Endereco> enderecos;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "cliente_id")
 	private List<Contato> contatos;
 
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "cliente_id")
 	private List<Produto> produtos;
 
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@Column(name = "contrato_id")
 	@JoinColumn(name = "cliente_id")
 	private List<Contratos> contratos;
+
+	private boolean isAtivo;
 	
 
 

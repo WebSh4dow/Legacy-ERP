@@ -1,6 +1,6 @@
 package com.developer.ERP.Legacy.API.domain.service;
 
-import com.developer.ERP.Legacy.API.domain.exceptions.HandlerNotFoundException;
+import com.developer.ERP.Legacy.API.domain.exceptions.runtime.HandlerNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Vendedor;
 import com.developer.ERP.Legacy.API.domain.repository.VendedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import static com.developer.ERP.Legacy.API.infrastructure.message.VendedorMessage.MSG_INFORMATION_NOT_FOUND_VENDEDOR;
+import static com.developer.ERP.Legacy.API.core.validation.message.VendedorMessage.MSG_INFORMATION_NOT_FOUND_VENDEDOR;
 @Service
 public class VendedorService {
     @Autowired

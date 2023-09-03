@@ -2,28 +2,29 @@ package com.developer.ERP.Legacy.API.domain.service;
 
 import com.developer.ERP.Legacy.API.api.v1.assembler.ClienteAssembler;
 import com.developer.ERP.Legacy.API.api.v1.disasembler.ClienteDisassembler;
+import com.developer.ERP.Legacy.API.api.v1.helper.ResourceUriHelper;
 import com.developer.ERP.Legacy.API.api.v1.request.ClienteRequest;
 import com.developer.ERP.Legacy.API.domain.enumerated.IndicadorIE;
-import com.developer.ERP.Legacy.API.domain.exceptions.BussinesException;
-import com.developer.ERP.Legacy.API.domain.exceptions.HandlerClienteCadastro;
-import com.developer.ERP.Legacy.API.domain.model.Cliente;
-import com.developer.ERP.Legacy.API.domain.model.Contratos;
-import com.developer.ERP.Legacy.API.domain.model.Outros;
-import com.developer.ERP.Legacy.API.domain.model.PessoaFisica;
-import com.developer.ERP.Legacy.API.domain.model.PessoaJuridica;
+import com.developer.ERP.Legacy.API.domain.exceptions.runtime.BussinesException;
+import com.developer.ERP.Legacy.API.domain.exceptions.runtime.EntidadeEmUsoException;
+import com.developer.ERP.Legacy.API.domain.exceptions.runtime.HandlerClienteCadastro;
+import com.developer.ERP.Legacy.API.domain.model.*;
 import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteCriteriaFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
 import com.developer.ERP.Legacy.API.domain.repository.ClienteRepository;
 import com.developer.ERP.Legacy.API.domain.repository.EnderecoRepository;
-import com.developer.ERP.Legacy.API.infrastructure.config.RepositoryCustomImpl;
+import com.developer.ERP.Legacy.API.domain.representation.ClienteRepresentationModel;
+import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.RepositoryCustomImpl;
 import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.ClienteRepositoryImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import static com.developer.ERP.Legacy.API.infrastructure.message.ClienteMessage.*;
+import static com.developer.ERP.Legacy.API.core.validation.message.ClienteMessage.*;
 import java.util.List;
-import java.util.NoSuchElementException;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -37,8 +38,11 @@ public class ClienteService extends RepositoryCustomImpl {
 
 	private final ClienteAssembler clienteAssembler;
 
+
 	public ClienteService(EnderecoRepository enderecoRepository, ClienteRepository clienteRepository,
-			ClienteRepositoryImpl clienteRepositoryImpl,ClienteDisassembler clienteDisassembler,ClienteAssembler clienteAssembler) {
+			ClienteRepositoryImpl clienteRepositoryImpl,ClienteDisassembler clienteDisassembler,ClienteAssembler clienteAssembler
+	) {
+
 		this.clienteRepository = clienteRepository;
 		this.clienteRepositoryImpl = clienteRepositoryImpl;
 		this.clienteDisassembler = clienteDisassembler;
@@ -69,56 +73,62 @@ public class ClienteService extends RepositoryCustomImpl {
 				.orElseThrow(() -> new BussinesException(
 						String.format(MSG_CLIENTE_NAO_ENCONTRADO, id)));
 	}
-	public Cliente cadastrarCliente(Cliente cliente) throws Exception {
+	public ClienteRepresentationModel cadastrarCliente(ClienteRequest clienteRequest) {
 
 		try {
+			Cliente cliente = clienteDisassembler.toDomainObject(clienteRequest);
+			validarClienteMesmoDocumento(cliente);
 
-			PessoaJuridica pessoaJuridica = cliente.getPessoaJuridica();
-			PessoaFisica pessoaFisica = cliente.getPessoaFisica();
-
-			if (pessoaFisica != null) {
-				if (!StringUtils.isBlank(pessoaFisica.getInscricaoEstadual())) {
-					pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
-					cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
-					return validarCadastroCliente(cliente);
-				} else {
-					pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
-					cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
-					return validarCadastroCliente(cliente);
-				}
+			if (cliente.getPessoaFisica() != null){
+				isPessoaFisicaContribuinte(cliente.getPessoaFisica(), cliente);
 			}
 
-			if (pessoaJuridica != null) {
-				if (StringUtils.isBlank(pessoaJuridica.getInscricaoEstadual())) {
-					pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
-					cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
-					return validarCadastroCliente(cliente);
-				} else {
-					pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
-					cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
-					return validarCadastroCliente(cliente);
-				}
-			}
+			isPessoaJuridicaContribuinte(cliente.getPessoaJuridica(), cliente);
+			validarCadastroOutros(cliente);
 
-			return validarCadastroCliente(cliente);
-		} catch (Exception e) {
-			throw new HandlerClienteCadastro(MSG_CLIENTE_ERRO_INTERNO + e.getMessage());
+			cliente = clienteRepository.save(cliente);
+
+			ClienteRepresentationModel clienteRepresentationModel = clienteAssembler.toModel(cliente);
+			ResourceUriHelper.addUriResponseHeader(clienteRepresentationModel.getId());
+
+			return clienteRepresentationModel;
+
+		}catch (EntityNotFoundException ex){
+			throw new BussinesException(ex.getMessage(),ex);
 		}
-
 	}
-	public ClienteRequest editarCliente(Long id, ClienteRequest clienteRequest) {
+	public ClienteRepresentationModel editarCliente(Long id, ClienteRequest clienteRequest) {
 		Cliente clienteAtual = buscarCliente(id);
+
 		validarClienteMesmoDocumento(clienteAtual);
+		validarCadastroOutros(clienteAtual);
+
 		clienteDisassembler.copyToDomainObject(clienteRequest,clienteAtual);
 		clienteAtual = this.clienteRepository.save(clienteAtual);
 		return clienteAssembler.toModel(clienteAtual);
 	}
 
-	@Transactional
-	public Cliente validarCadastroCliente(Cliente cliente) {
-		this.validarCadastroOutros(cliente);
-		this.validarClienteMesmoDocumento(cliente);
-		return clienteRepository.save(cliente);
+	public void isPessoaFisicaContribuinte(PessoaFisica pessoaFisica, Cliente cliente){
+		if (pessoaFisica != null){
+			if (!StringUtils.isBlank(pessoaFisica.getInscricaoEstadual())) {
+				cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
+				pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
+			} else {
+				pessoaFisica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
+				cliente.getPessoaFisica().setIndicadorIe(pessoaFisica.getIndicadorIe());
+			}
+		}
+	}
+	public void isPessoaJuridicaContribuinte(PessoaJuridica pessoaJuridica, Cliente cliente){
+		if (pessoaJuridica != null) {
+			if (StringUtils.isBlank(pessoaJuridica.getInscricaoEstadual())) {
+				pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
+				cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
+			} else {
+				pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
+				cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
+			}
+		}
 	}
 
 	public void validarClienteMesmoDocumento(Cliente cliente) {
@@ -128,13 +138,23 @@ public class ClienteService extends RepositoryCustomImpl {
 		}
 	}
 
-	public void validarExclusaoCliente(Cliente cliente) {
-		List<Contratos> clientePossuiContratoDataExpirada = clienteRepositoryImpl
-				.clientePossuiContratosExpirados(cliente.getId());
-		if (!clientePossuiContratoDataExpirada.isEmpty()) {
-			throw new BussinesException(MSG_CLIENTE_CONTRATOS_EXPIRADOS);
-		} else {
-			clienteRepository.deleteById(cliente.getId());
+	public void excluir(Cliente cliente, Long id) {
+		try {
+			List<Contratos> clientePossuiContratoDataExpirada = clienteRepositoryImpl
+					.clientePossuiContratosExpirados(cliente.getId());
+
+			if (!clientePossuiContratoDataExpirada.isEmpty())
+				throw new BussinesException(MSG_CLIENTE_CONTRATOS_EXPIRADOS);
+
+			else
+				clienteRepository.deleteById(id);
+
+		}catch (EmptyResultDataAccessException e){
+			throw new EntityNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO);
+
+		}catch (DataIntegrityViolationException e){
+			throw new EntidadeEmUsoException(
+					String.format(MSG_CLIENTE_ERRO_REMOVER,id));
 		}
 	}
 
@@ -159,18 +179,5 @@ public class ClienteService extends RepositoryCustomImpl {
 		}
 	}
 
-	public Cliente remover(Long idCliente) {
-		try {
-			Cliente cliente = clienteRepository.findById(idCliente).get();
-			this.validarExclusaoCliente(cliente);
-		} catch (Exception e) {
-			Cliente clienteExcluido = clienteRepository.findById(idCliente).get();
-			if (clienteExcluido.getId() == null) {
-				throw new NoSuchElementException();
-			}
-		}
-		return null;
-
-	}
 
 }

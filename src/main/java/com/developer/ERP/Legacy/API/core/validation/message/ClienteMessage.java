@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.infrastructure.message;
+package com.developer.ERP.Legacy.API.core.validation.message;
 
 public class ClienteMessage {
 	public final static String MSG_INFORME_CADASTRO_CLIENTE = "Porfavor informe no cadsatro de cliente se você é uma pessoa fisica ou juridica.";
@@ -11,6 +11,8 @@ public class ClienteMessage {
 	public final static String MSG_CLIENTE_ERRO_ADICIONAR_REFERENCIAS_COMERCIAIS = "Não foi possivel adicionar referências comerciais para esse cliente erro atual:";
 	public final static String MSG_CLIENTE_ERRO_ADICIONAR_ENDERECO_CLIENTE = "Não foi possivel adicionar o endereço atual ao cliente erro atual:";
 	public final static String MSG_CLIENTE_CONTRATOS_EXPIRADOS = "Não foi possivel remover o cliente atual pois o mesmo possui contratos expirados, verificar os contratos expirados e renovar.";
-	public final static String MSG_CLIENTE_ERRO_REMOVER = "Não foi possivel remover o cliente atual.";
+	public final static String MSG_CLIENTE_ERRO_REMOVER = "Não foi possivel remover o cliente atual.Pois está em uso";
+
+	public final static String MSG_CLIENTE_CADASTRO_JA_EXISTE = "O cliente que está tentando salvar não pode ser salvo pois o mesmo, possui terceiros vinculados ou o cadastro já existente";
 	
 }
