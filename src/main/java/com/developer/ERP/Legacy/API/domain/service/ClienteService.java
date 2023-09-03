@@ -147,7 +147,7 @@ public class ClienteService extends RepositoryCustomImpl {
 			else
 				clienteRepository.deleteById(id);
 
-		}catch (EmptyResultDataAccessException e){
+		}catch (EmptyResultDataAccessException e) {
 			throw new EntityNotFoundException(MSG_CLIENTE_NAO_ENCONTRADO);
 
 		}catch (DataIntegrityViolationException e) {
