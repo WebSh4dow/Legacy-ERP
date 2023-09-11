@@ -1,19 +1,26 @@
 package com.developer.ERP.Legacy.API.domain.representation;
 
 import com.developer.ERP.Legacy.API.domain.model.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 @Getter
 @Setter
-public class ClienteRepresentationModel {
+@Relation(collectionRelation = "cliente")
+public class ClienteModel extends RepresentationModel<ClienteModel> {
     private Long id;
     private String nome;
     private String sobrenome;
-    private Date dataNascimento;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataNascimento;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro = LocalDate.now();
     private Outros outros;
     private PessoaJuridica pessoaJuridica;

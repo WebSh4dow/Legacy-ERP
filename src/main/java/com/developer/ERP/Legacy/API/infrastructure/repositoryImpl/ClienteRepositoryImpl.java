@@ -21,7 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import com.developer.ERP.Legacy.API.domain.model.Cliente;
 import com.developer.ERP.Legacy.API.domain.model.Contratos;
-import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteCriteriaFilter;
+import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteSpecFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
 import com.developer.ERP.Legacy.API.infrastructure.repository.CustomClienteRepository;
 
@@ -67,7 +67,7 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl implements Custo
     }
     
     @Override
-    public Predicate getPredicate(ClienteCriteriaFilter clienteCriteriaFilter, Root<Cliente>clienteRoot) {
+    public Predicate getPredicate(ClienteSpecFilter clienteCriteriaFilter, Root<Cliente>clienteRoot) {
     	List<Predicate> predicates = new ArrayList<>();
     	if (Objects.nonNull(clienteCriteriaFilter.getNome())) {
 			predicates.add(
@@ -85,7 +85,7 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl implements Custo
     }
     
     @Override
-    public Page<Cliente> buscarClientes(ClienteFilter clienteFilter,ClienteCriteriaFilter clienteCriteriaFilter) {
+    public Page<Cliente> buscarClientes(ClienteFilter clienteFilter,ClienteSpecFilter clienteCriteriaFilter) {
     	CriteriaQuery<Cliente>criteriaQuery = criteriaBuilder.createQuery(Cliente.class);
     	Root<Cliente> clienteRoot = criteriaQuery.from(Cliente.class);
     	Predicate predicate = getPredicate(clienteCriteriaFilter, clienteRoot);
@@ -105,7 +105,7 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl implements Custo
     }
     
     @Override
-	public Page<Cliente> buscarClienteCnpjPageable(ClienteFilter clienteFilter,ClienteCriteriaFilter clienteCriteriaFilter, String cnpj) {
+	public Page<Cliente> buscarClienteCnpjPageable(ClienteFilter clienteFilter,ClienteSpecFilter clienteCriteriaFilter, String cnpj) {
     	
     	CriteriaQuery<Cliente>criteriaQuery = criteriaBuilder.createQuery(Cliente.class);
     	Root<Cliente> clienteRoot = criteriaQuery.from(Cliente.class);
@@ -129,7 +129,7 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl implements Custo
 
 	@Override
 	public Page<Cliente> buscarClienteCpfPageable(ClienteFilter clienteFilter,
-			ClienteCriteriaFilter clienteCriteriaFilter, String cpf) {
+			ClienteSpecFilter clienteCriteriaFilter, String cpf) {
 		
 		CriteriaQuery<Cliente>criteriaQuery = criteriaBuilder.createQuery(Cliente.class);
     	Root<Cliente> clienteRoot = criteriaQuery.from(Cliente.class);
@@ -256,7 +256,7 @@ public class ClienteRepositoryImpl extends RepositoryCustomImpl implements Custo
 
 	@Override
 	public Page<Cliente> buscarClientesPorIdPageable(ClienteFilter clienteFilter,
-			ClienteCriteriaFilter clienteCriteriaFilter, Long id) {
+			ClienteSpecFilter clienteCriteriaFilter, Long id) {
 		CriteriaQuery<Cliente> criteriaQuery = criteriaBuilder.createQuery(Cliente.class);
 		Root<Cliente> clienteRoot = criteriaQuery.from(Cliente.class);
 		Predicate predicate = getPredicate(clienteCriteriaFilter, clienteRoot);

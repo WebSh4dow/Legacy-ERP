@@ -9,11 +9,11 @@ import com.developer.ERP.Legacy.API.domain.exceptions.runtime.BussinesException;
 import com.developer.ERP.Legacy.API.domain.exceptions.runtime.EntidadeEmUsoException;
 import com.developer.ERP.Legacy.API.domain.exceptions.runtime.HandlerClienteCadastro;
 import com.developer.ERP.Legacy.API.domain.model.*;
-import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteCriteriaFilter;
+import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteSpecFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
 import com.developer.ERP.Legacy.API.domain.repository.ClienteRepository;
 import com.developer.ERP.Legacy.API.domain.repository.EnderecoRepository;
-import com.developer.ERP.Legacy.API.domain.representation.ClienteRepresentationModel;
+import com.developer.ERP.Legacy.API.domain.representation.ClienteModel;
 import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.RepositoryCustomImpl;
 import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.ClienteRepositoryImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -48,23 +48,18 @@ public class ClienteService extends RepositoryCustomImpl {
 		this.clienteAssembler = clienteAssembler;
 	}
 
-	@Transactional
-	public Page<Cliente> pesquisar(ClienteFilter clienteFilter, ClienteCriteriaFilter clienteCriteriaFilter) {
-		return clienteRepositoryImpl.buscarClientes(clienteFilter, clienteCriteriaFilter);
-	}
-
 	public Page<Cliente> buscarClienteCnpjPageable(ClienteFilter clienteFilter,
-			ClienteCriteriaFilter clienteCriteriaFilter, String cnpj) {
+			ClienteSpecFilter clienteCriteriaFilter, String cnpj) {
 		return clienteRepositoryImpl.buscarClienteCnpjPageable(clienteFilter, clienteCriteriaFilter, cnpj);
 	}
 
 	public Page<Cliente> buscarClienteCpfPageable(ClienteFilter clienteFilter,
-			ClienteCriteriaFilter clienteCriteriaFilter, String cpf) {
+			ClienteSpecFilter clienteCriteriaFilter, String cpf) {
 		return clienteRepositoryImpl.buscarClienteCpfPageable(clienteFilter, clienteCriteriaFilter, cpf);
 	}
 
 	public Page<Cliente> buscarClientesPorIdPageable(ClienteFilter clienteFilter,
-			ClienteCriteriaFilter clienteCriteriaFilter, Long id) {
+			ClienteSpecFilter clienteCriteriaFilter, Long id) {
 		return clienteRepositoryImpl.buscarClientesPorIdPageable(clienteFilter, clienteCriteriaFilter, id);
 	}
 	public Cliente buscarCliente(Long id) {
@@ -72,7 +67,7 @@ public class ClienteService extends RepositoryCustomImpl {
 				.orElseThrow(() -> new BussinesException(
 						String.format(MSG_CLIENTE_NAO_ENCONTRADO, id)));
 	}
-	public ClienteRepresentationModel cadastrarCliente(ClienteRequest clienteRequest) {
+	public ClienteModel cadastrarCliente(ClienteRequest clienteRequest) {
 		try {
 			Cliente cliente = clienteDisassembler.toDomainObject(clienteRequest);
 			validarClienteMesmoDocumento(cliente);
@@ -86,7 +81,7 @@ public class ClienteService extends RepositoryCustomImpl {
 
 			cliente = clienteRepository.save(cliente);
 
-			ClienteRepresentationModel clienteRepresentationModel = clienteAssembler.toModel(cliente);
+			ClienteModel clienteRepresentationModel = clienteAssembler.toModel(cliente);
 			ResourceUriHelper.addUriResponseHeader(clienteRepresentationModel.getId());
 
 			return clienteRepresentationModel;
@@ -95,7 +90,7 @@ public class ClienteService extends RepositoryCustomImpl {
 			throw new BussinesException(ex.getMessage(),ex);
 		}
 	}
-	public ClienteRepresentationModel editarCliente(Long id, ClienteRequest clienteRequest) {
+	public ClienteModel editarCliente(Long id, ClienteRequest clienteRequest) {
 		Cliente clienteAtual = buscarCliente(id);
 
 		validarClienteMesmoDocumento(clienteAtual);

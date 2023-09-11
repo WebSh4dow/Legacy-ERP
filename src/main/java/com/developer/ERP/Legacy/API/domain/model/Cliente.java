@@ -31,7 +31,7 @@ public class Cliente {
 	private String sobrenome;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dataNascimento;
+	private LocalDate dataNascimento;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro = LocalDate.now();

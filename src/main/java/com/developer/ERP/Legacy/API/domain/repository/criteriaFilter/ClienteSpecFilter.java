@@ -10,7 +10,7 @@ import com.developer.ERP.Legacy.API.domain.model.PessoaJuridica;
 import lombok.Data;
 
 @Data
-public class ClienteCriteriaFilter {
+public class ClienteSpecFilter {
 	private Long id;
 	private String nome;
 	private String sobreNome;
