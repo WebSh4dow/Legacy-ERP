@@ -7,6 +7,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +22,7 @@ public class FornecedorService {
         this.fornecedorRepository = fornecedorRepository;
     }
     public List <Fornecedor>listarFornecedor(){
-        return fornecedorRepository.findAll()
-                .stream()
-                .collect(Collectors.toList());
+        return new ArrayList<>(fornecedorRepository.findAll());
     }
     public ResponseEntity<Fornecedor> salvarFornecedor(Fornecedor fornecedor){
         Fornecedor salvarFornecedor = fornecedorRepository.save(fornecedor);

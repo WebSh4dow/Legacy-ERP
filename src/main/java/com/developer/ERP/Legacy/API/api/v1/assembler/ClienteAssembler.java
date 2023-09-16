@@ -1,7 +1,6 @@
 package com.developer.ERP.Legacy.API.api.v1.assembler;
 
 
-import com.developer.ERP.Legacy.API.ApiLinks;
 import com.developer.ERP.Legacy.API.api.v1.controller.ClienteController;
 import com.developer.ERP.Legacy.API.domain.model.Cliente;
 import com.developer.ERP.Legacy.API.domain.representation.ClienteModel;
@@ -9,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,7 +1,6 @@
 package com.developer.ERP.Legacy.API.api.v1.controller;
 
 import com.developer.ERP.Legacy.API.domain.model.Funcionario;
-import com.developer.ERP.Legacy.API.domain.repository.FuncionarioRepository;
 import com.developer.ERP.Legacy.API.domain.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

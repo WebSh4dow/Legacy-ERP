@@ -2,24 +2,19 @@ package com.developer.ERP.Legacy.API.api.v1.controller;
 
 import com.developer.ERP.Legacy.API.api.v1.assembler.ClienteAssembler;
 import com.developer.ERP.Legacy.API.api.v1.request.ClienteRequest;
-import com.developer.ERP.Legacy.API.core.data.PageWrapper;
-import com.developer.ERP.Legacy.API.core.data.PageableTranslator;
 import com.developer.ERP.Legacy.API.domain.model.Cliente;
 import com.developer.ERP.Legacy.API.domain.repository.ClienteRepository;
 import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteSpecFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
+import com.developer.ERP.Legacy.API.domain.repository.specs.ClienteSpecification;
 import com.developer.ERP.Legacy.API.domain.representation.ClienteModel;
 import com.developer.ERP.Legacy.API.domain.service.ClienteService;
-import com.developer.ERP.Legacy.API.infrastructure.repository.ClienteSpecs;
-
-import java.util.Map;
-
+import com.developer.ERP.Legacy.API.infrastructure.specification.PesquisarCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,25 +36,17 @@ public class ClienteController {
 	@Autowired
 	private ClienteAssembler clienteAssembler;
 	
-	@GetMapping("/pesquisar")
-	public PagedModel<ClienteModel> pesquisar(@PageableDefault(size = 10) Pageable pageable,
-			ClienteSpecFilter clienteCriteriaFilter) {
+	@PostMapping("/filtrar")
+	public PagedModel<ClienteModel> filtar(@RequestBody PesquisarCriteria<ClienteSpecFilter> clienteSpecFilter){
+		ClienteSpecification clienteSpecification = new ClienteSpecification(clienteSpecFilter);
+		Page<Cliente> page = clienteRepository.findAll(clienteSpecification, clienteSpecification.getPageable());
+		return pagedResourcesAssembler.toModel(page,clienteAssembler);
 
-		Pageable pageableTraduzido = traduzirPageable(pageable);
-
-		Page<Cliente> clientePage = clienteRepository.findAll(ClienteSpecs.clienteFilter(clienteCriteriaFilter),
-				pageableTraduzido);
-
-		clientePage = new PageWrapper<>(clientePage, pageable);
-
-		return pagedResourcesAssembler.toModel(clientePage, clienteAssembler);
 	}
-
 	@GetMapping
 	public PagedModel<ClienteModel> listar(@PageableDefault(size = 10) Pageable pageable) {
 		Page<Cliente> clientePage = clienteRepository.findAll(pageable);
-		PagedModel<ClienteModel> clientePageModel = pagedResourcesAssembler.toModel(clientePage, clienteAssembler);
-		return clientePageModel;
+		return pagedResourcesAssembler.toModel(clientePage, clienteAssembler);
 	}
 	
 	@DeleteMapping("/remover/cliente/{id}")
@@ -102,17 +89,5 @@ public class ClienteController {
 				clienteCriteriaFilter, id);
 		return new ResponseEntity<Page<Cliente>>(buscarClientesPorId, HttpStatus.OK);
 	}
-	
-	private Pageable traduzirPageable(Pageable apiPageable) {
-		var mapeamento = Map.of(
-				"id", "id",
-				"nome", "nome",
-				"sobreNome", "sobreNome",
-				"outros", "outros",
-				"pessoaFisica", "pessoaFisica",
-				"pessoaJuridica", "pessoaJuridica"
-			);
-		
-		return PageableTranslator.translate(apiPageable, mapeamento);
-	}
+
 }
