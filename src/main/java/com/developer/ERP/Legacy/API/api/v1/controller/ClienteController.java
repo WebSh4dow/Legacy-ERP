@@ -41,8 +41,8 @@ public class ClienteController {
 		ClienteSpecification clienteSpecification = new ClienteSpecification(clienteSpecFilter);
 		Page<Cliente> page = clienteRepository.findAll(clienteSpecification, clienteSpecification.getPageable());
 		return pagedResourcesAssembler.toModel(page,clienteAssembler);
-
 	}
+
 	@GetMapping
 	public PagedModel<ClienteModel> listar(@PageableDefault(size = 10) Pageable pageable) {
 		Page<Cliente> clientePage = clienteRepository.findAll(pageable);
