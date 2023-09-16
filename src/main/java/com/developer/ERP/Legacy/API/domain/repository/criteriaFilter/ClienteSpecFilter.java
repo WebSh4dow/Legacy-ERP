@@ -15,8 +15,8 @@ public class ClienteSpecFilter {
 	private String nome;
 	private String sobreNome;
 	private String historico;
-	private PessoaFisica pessoaFisica;
-	private PessoaJuridica pessoaJuridica;
+	private String cpf;
+	private String cnpj;
 	private List <Contratos> contratos;
 	private List<Endereco> enderecos;
 	private boolean isAtivo;
