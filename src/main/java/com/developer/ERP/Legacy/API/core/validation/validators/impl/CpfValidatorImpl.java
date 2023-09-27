@@ -33,6 +33,7 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
                 .map(CpfAndCnpjUtils::charToInt)
                 .boxed().collect(Collectors.toList());
     }
+
     public CpfValidatorImpl(){}
 
     public CpfValidatorImpl(List<Integer> cpfAsIntegerList, String cpf){
