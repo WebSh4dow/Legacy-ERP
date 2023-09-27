@@ -59,6 +59,7 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
         return LIST_CPF_REGEX.stream()
                 .anyMatch(regex -> Pattern.matches(regex,in));
     }
+
     public static boolean isValidCpf(String in) throws InvalidCpfException {
         return isCpf(in) && new CpfValidatorImpl(in).isValid();
     }
@@ -68,18 +69,22 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
         int expectedFirstCheckDigitCpf = 11 - (sum % 11);
         return Integer.toString(expectedFirstCheckDigitCpf >= 10 ? 0 : expectedFirstCheckDigitCpf);
     }
+
     public String getSecondCheckDigitCpf(){
         int sum = CpfAndCnpjUtils.sumWgth(cpfAsIntegerList.subList(0,10),CHECK_SECOND_DIGIT);
         int expectedSecondDigitCpf = 11 - (sum % 11);
         return Integer.toString(expectedSecondDigitCpf >= 10 ? 0 : expectedSecondDigitCpf);
     }
+
     public boolean isValid(){
         String actualDigits = getFirstCheckDigitCpf() + getSecondCheckDigitCpf();
         return actualDigits.equals(getCheckDigits());
     }
+
     private String getCheckDigits() {
         return cpf.substring(9);
     }
+
     private String getCpfFormated(){
         return cpf.substring(0,3) +
                 "." + cpf.substring(3,6) +
@@ -90,6 +95,7 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
     public String getCpf() {
         return cpf;
     }
+
     @Override
     public String toString() {
         return getCpf();
