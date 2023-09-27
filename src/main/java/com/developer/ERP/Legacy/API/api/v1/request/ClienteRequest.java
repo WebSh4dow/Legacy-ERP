@@ -35,7 +35,7 @@ public class ClienteRequest {
     private Outros outros;
 
     private PessoaJuridica pessoaJuridica;
-    @Valid
+
     private PessoaFisica pessoaFisica;
 
     private List<Endereco> enderecos;

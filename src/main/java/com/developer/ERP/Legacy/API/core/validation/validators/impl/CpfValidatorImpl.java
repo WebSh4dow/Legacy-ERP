@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 
 public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
+
     private static final String REGEX_PATTERN = "\\d{11}";
     private static final String REGEX_FORMATED = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}";
     private static final List<String> LIST_CPF_REGEX = Arrays.asList(REGEX_PATTERN,REGEX_FORMATED);
@@ -22,6 +23,7 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
     private static final String DEFAULT_MESSAGE = "CPF invalido";
     private  List<Integer> cpfAsIntegerList;
     private  String cpf;
+
     public CpfValidatorImpl(String in) throws InvalidCpfException {
         if (!isCpf(in)){
             throw new InvalidCpfException(in);
@@ -32,15 +34,18 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
                 .boxed().collect(Collectors.toList());
     }
     public CpfValidatorImpl(){}
+
     public CpfValidatorImpl(List<Integer> cpfAsIntegerList, String cpf){
 
         this.cpfAsIntegerList = cpfAsIntegerList;
         this.cpf = cpf;
     }
+
     @Override
     public void initialize(Cpf constraintAnnotation) {
 
     }
+
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         try {
@@ -49,6 +54,7 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
             throw new InvalidCpfException(DEFAULT_MESSAGE + e);
         }
     }
+
     public static boolean isCpf(String in){
         return LIST_CPF_REGEX.stream()
                 .anyMatch(regex -> Pattern.matches(regex,in));
@@ -56,6 +62,7 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
     public static boolean isValidCpf(String in) throws InvalidCpfException {
         return isCpf(in) && new CpfValidatorImpl(in).isValid();
     }
+
     public String getFirstCheckDigitCpf(){
         int sum = CpfAndCnpjUtils.sumWgth(cpfAsIntegerList.subList(0,9),CHECK_FIRST_DIGIT);
         int expectedFirstCheckDigitCpf = 11 - (sum % 11);
@@ -79,6 +86,7 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
                 "." + cpf.substring(6,9) +
                 "." + cpf.substring(9);
     }
+
     public String getCpf() {
         return cpf;
     }
@@ -86,6 +94,7 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
     public String toString() {
         return getCpf();
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,6 +102,7 @@ public class CpfValidatorImpl implements ConstraintValidator<Cpf, String> {
         CpfValidatorImpl cpfValidator = (CpfValidatorImpl) o;
         return cpf.equals(cpfValidator.cpf);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(cpf);
