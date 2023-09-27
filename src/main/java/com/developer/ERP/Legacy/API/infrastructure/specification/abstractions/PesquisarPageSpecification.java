@@ -9,9 +9,11 @@ public abstract class PesquisarPageSpecification<S extends PesquisarPageable,T> 
 
     private static final String DEFAULT_SORT_ASC = "asc";
     private static final String DEFAULT_SORT_DESC = "desc";
+    
     public PesquisarPageSpecification(S search) {
         super(search);
     }
+    
     protected String sortProperty(String sortField){
         return sortField;
     }
@@ -22,6 +24,7 @@ public abstract class PesquisarPageSpecification<S extends PesquisarPageable,T> 
             default -> Sort.by(Sort.Order.asc(sortField));
         };
     }
+    
     public Pageable getPageable(){
         PesquisarPageable pesquisarPageable = super.getSearch();
 

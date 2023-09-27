@@ -22,6 +22,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -31,6 +32,8 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
+
+import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -146,7 +149,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                                                             HttpStatus httpStatus, WebRequest webRequest,
                                                             BindingResult bindingResult){
         ProblemType problemType = ProblemType.DADOS_INVALIDOS;
-        String detailsMessage = "Um ou mias campos estão inválidos. Faça o preenchimento correto porfavor.";
+        String detailsMessage = "Um ou mais campos estão inválidos. Faça o preenchimento correto porfavor.";
 
         List<ProblemApi.Object> problemObjects = bindingResult.getAllErrors().stream()
                 .map(objectError -> {
@@ -167,6 +170,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
         return handleExceptionInternal(exception,problemApi,httpHeaders,httpStatus,webRequest);
     }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request){
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -194,6 +198,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(exception, problemApi, new HttpHeaders(), status, webRequest);
     }
+
     @ExceptionHandler(HandlerNotFoundException.class)
     public ResponseEntity<?>handleEntidadeNaoEncontrada(HandlerNotFoundException exception, WebRequest webRequest){
         HttpStatus status = HttpStatus.NOT_FOUND;
@@ -234,6 +239,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(exception, problemApi, new HttpHeaders(), status, webRequest);
 
     }
+
     private ProblemApi.ProblemApiBuilder createProblemBuilder(HttpStatus httpStatus, ProblemType problemType, String detailsMessage) {
         return ProblemApi.builder()
                 .timestamp(OffsetDateTime.now())

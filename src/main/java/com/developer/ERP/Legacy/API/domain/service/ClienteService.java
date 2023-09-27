@@ -5,6 +5,7 @@ import com.developer.ERP.Legacy.API.api.v1.disasembler.ClienteDisassembler;
 import com.developer.ERP.Legacy.API.api.v1.helper.ResourceUriHelper;
 import com.developer.ERP.Legacy.API.api.v1.request.ClienteRequest;
 import com.developer.ERP.Legacy.API.domain.enumerated.IndicadorIE;
+import com.developer.ERP.Legacy.API.domain.enumerated.RegimeTributacao;
 import com.developer.ERP.Legacy.API.domain.exceptions.runtime.BussinesException;
 import com.developer.ERP.Legacy.API.domain.exceptions.runtime.EntidadeEmUsoException;
 import com.developer.ERP.Legacy.API.domain.exceptions.runtime.HandlerClienteCadastro;
@@ -37,7 +38,6 @@ public class ClienteService extends RepositoryCustomImpl {
 
 	private final ClienteAssembler clienteAssembler;
 
-
 	public ClienteService(ClienteRepository clienteRepository, ClienteRepositoryImpl clienteRepositoryImpl,
 						  ClienteDisassembler clienteDisassembler,ClienteAssembler clienteAssembler
 	) {
@@ -48,30 +48,21 @@ public class ClienteService extends RepositoryCustomImpl {
 		this.clienteAssembler = clienteAssembler;
 	}
 
-	public Page<Cliente> buscarClienteCnpjPageable(ClienteFilter clienteFilter,
-			ClienteSpecFilter clienteCriteriaFilter, String cnpj) {
-		return clienteRepositoryImpl.buscarClienteCnpjPageable(clienteFilter, clienteCriteriaFilter, cnpj);
-	}
-
-	public Page<Cliente> buscarClienteCpfPageable(ClienteFilter clienteFilter,
-			ClienteSpecFilter clienteCriteriaFilter, String cpf) {
-		return clienteRepositoryImpl.buscarClienteCpfPageable(clienteFilter, clienteCriteriaFilter, cpf);
-	}
-
 	public Page<Cliente> buscarClientesPorIdPageable(ClienteFilter clienteFilter,
 			ClienteSpecFilter clienteCriteriaFilter, Long id) {
 		return clienteRepositoryImpl.buscarClientesPorIdPageable(clienteFilter, clienteCriteriaFilter, id);
 	}
+	
 	public Cliente buscarCliente(Long id) {
 		return clienteRepository.findById(id)
 				.orElseThrow(() -> new BussinesException(
 						String.format(MSG_CLIENTE_NAO_ENCONTRADO, id)));
 	}
+	
 	public ClienteModel cadastrarCliente(ClienteRequest clienteRequest) {
 		try {
 			Cliente cliente = clienteDisassembler.toDomainObject(clienteRequest);
-			validarClienteMesmoDocumento(cliente);
-
+	
 			if (cliente.getPessoaFisica() != null){
 				isPessoaFisicaContribuinte(cliente.getPessoaFisica(), cliente);
 			}
@@ -90,10 +81,9 @@ public class ClienteService extends RepositoryCustomImpl {
 			throw new BussinesException(ex.getMessage(),ex);
 		}
 	}
+	
 	public ClienteModel editarCliente(Long id, ClienteRequest clienteRequest) {
 		Cliente clienteAtual = buscarCliente(id);
-
-		validarClienteMesmoDocumento(clienteAtual);
 		validarCadastroOutros(clienteAtual);
 
 		clienteDisassembler.copyToDomainObject(clienteRequest,clienteAtual);
@@ -112,25 +102,20 @@ public class ClienteService extends RepositoryCustomImpl {
 			}
 		}
 	}
+	
 	public void isPessoaJuridicaContribuinte(PessoaJuridica pessoaJuridica, Cliente cliente){
 		if (pessoaJuridica != null) {
 			if (StringUtils.isBlank(pessoaJuridica.getInscricaoEstadual())) {
 				pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ISENTO);
 				cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
+				
 			} else {
 				pessoaJuridica.setIndicadorIe(IndicadorIE.CONTRIBUINTE_ICMS);
 				cliente.getPessoaJuridica().setIndicadorIe(pessoaJuridica.getIndicadorIe());
 			}
 		}
 	}
-
-	public void validarClienteMesmoDocumento(Cliente cliente) {
-		Cliente clinteComMesmoDocumento = clienteRepositoryImpl.verificarCpfCnpjCliente(cliente);
-		if (clinteComMesmoDocumento != null) {
-			throw new BussinesException("Documento atual já está vinculado a outro cadastro de cliente.");
-		}
-	}
-
+	
 	public void excluir(Cliente cliente, Long id) {
 		try {
 			List<Contratos> clientePossuiContratoDataExpirada = clienteRepositoryImpl

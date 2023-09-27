@@ -1,5 +1,6 @@
 package com.developer.ERP.Legacy.API.domain.representation;
 
+
 import com.developer.ERP.Legacy.API.domain.model.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -11,11 +12,14 @@ import java.util.List;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
 @Relation(collectionRelation = "cliente")
 public class ClienteModel extends RepresentationModel<ClienteModel> {
     private Long id;
+    @NotBlank
     private String nome;
     private String sobrenome;
     @JsonFormat(pattern = "dd/MM/yyyy")

@@ -1,5 +1,6 @@
 package com.developer.ERP.Legacy.API.domain.model;
 
+import com.developer.ERP.Legacy.API.domain.enumerated.RegimeTributacao;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -10,7 +11,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -57,13 +57,12 @@ public class Cliente {
 	private List<Contato> contatos;
 
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name = "cliente_id")
-	private List<Produto> produtos;
-
-	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@Column(name = "contrato_id")
 	@JoinColumn(name = "cliente_id")
 	private List<Contratos> contratos;
+	
+	@Enumerated(EnumType.STRING)
+	private RegimeTributacao regimeTributacao;
 
 	private boolean isAtivo;
 	

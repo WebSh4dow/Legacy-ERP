@@ -13,11 +13,8 @@ import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
 
 public interface CustomClienteRepository {
 	
-	List<Cliente> buscarClienteCpf(String cpf);
-	
+
 	List<Cliente> buscarClientePorId(Long id);
-	
-	List<Cliente> buscarClienteCnpj(String cnpj);
 	
 	Long getClienteCount(Predicate predicate);
 	
@@ -27,15 +24,9 @@ public interface CustomClienteRepository {
 	
 	Predicate getPredicate(ClienteSpecFilter clienteCriteriaFilter, Root<Cliente>clienteRoot);
 	
-	Page<Cliente> buscarClienteCnpjPageable(ClienteFilter clienteFilter,ClienteSpecFilter clienteCriteriaFilter,String cpnj);
-	
-	Page<Cliente> buscarClienteCpfPageable(ClienteFilter clienteFilter,ClienteSpecFilter clienteCriteriaFilter, String cpf);
-	
 	Page<Cliente> buscarClientes(ClienteFilter clienteFilter,ClienteSpecFilter clienteCriteriaFilter);
 	
 	Page<Cliente> buscarClientesPorIdPageable(ClienteFilter clienteFilter, ClienteSpecFilter clienteCriteriaFilter, Long id);
-	
-	Cliente verificarCpfCnpjCliente(Cliente cliente);
-	
+		
 	
 }

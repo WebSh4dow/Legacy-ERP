@@ -6,7 +6,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
+import com.developer.ERP.Legacy.API.core.annotations.Cpf;
 import com.developer.ERP.Legacy.API.domain.enumerated.CentroCusto;
 import com.developer.ERP.Legacy.API.domain.enumerated.IndicadorIE;
 
@@ -18,9 +20,12 @@ public class PessoaFisica {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@NotBlank
 	private String nome;
-	
+
+	@NotBlank
+	@Cpf
 	private String cpf;
 	
 	private String rg;

@@ -18,7 +18,10 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/clientes")
@@ -37,13 +40,13 @@ public class ClienteController {
 	private ClienteAssembler clienteAssembler;
 	
 	@PostMapping("/filtrar")
-	public PagedModel<ClienteModel> filtar(@RequestBody PesquisarCriteria<ClienteSpecFilter> clienteSpecFilter){
+	public PagedModel<ClienteModel> filtrar(@RequestBody PesquisarCriteria<ClienteSpecFilter> clienteSpecFilter){
 		ClienteSpecification clienteSpecification = new ClienteSpecification(clienteSpecFilter);
 		Page<Cliente> page = clienteRepository.findAll(clienteSpecification, clienteSpecification.getPageable());
 		return pagedResourcesAssembler.toModel(page,clienteAssembler);
 	}
 
-	@GetMapping
+	@GetMapping("/pesquisar")
 	public PagedModel<ClienteModel> listar(@PageableDefault(size = 10) Pageable pageable) {
 		Page<Cliente> clientePage = clienteRepository.findAll(pageable);
 		return pagedResourcesAssembler.toModel(clientePage, clienteAssembler);
@@ -55,31 +58,13 @@ public class ClienteController {
 	}
 	
 	@PostMapping("/salvar")
-	public ClienteModel salvarCliente(@RequestBody ClienteRequest cliente) {
+	public ClienteModel salvarCliente(@Validated @RequestBody ClienteRequest cliente) {
 		return clienteService.cadastrarCliente(cliente);
 	}
 	
 	@PutMapping("/editar/{id}")
 	public ClienteModel atualizar(@PathVariable Long id, @RequestBody ClienteRequest clienteRequest){
 		return clienteService.editarCliente(id,clienteRequest);
-	}
-	
-	@GetMapping("/buscar-cliente/por-cpf/{cpf}")
-	public ResponseEntity<Page<Cliente>> buscarClienteCpfPageable(ClienteFilter clienteFilter,
-			ClienteSpecFilter clienteCriteriaFilter, @PathVariable String cpf) {
-
-		Page<Cliente> buscarClientePorCpf = clienteService.buscarClienteCpfPageable(clienteFilter,
-				clienteCriteriaFilter, cpf);
-		return new ResponseEntity<Page<Cliente>>(buscarClientePorCpf, HttpStatus.OK);
-	}
-	
-	@GetMapping("/buscar-cliente/por-cnpj/{cnpj}")
-	public ResponseEntity<Page<Cliente>> buscarClienteCnpjPageable(ClienteFilter clienteFilter,
-			ClienteSpecFilter clienteCriteriaFilter, @PathVariable String cnpj) {
-
-		Page<Cliente> buscarClientePorCpf = clienteService.buscarClienteCnpjPageable(clienteFilter,
-				clienteCriteriaFilter, cnpj);
-		return new ResponseEntity<Page<Cliente>>(buscarClientePorCpf, HttpStatus.OK);
 	}
 	
 	@GetMapping("/buscar-cliente/{id}")
