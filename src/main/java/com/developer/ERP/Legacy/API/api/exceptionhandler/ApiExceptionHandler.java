@@ -33,8 +33,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 
-import javax.validation.ConstraintViolationException;
-
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @Autowired

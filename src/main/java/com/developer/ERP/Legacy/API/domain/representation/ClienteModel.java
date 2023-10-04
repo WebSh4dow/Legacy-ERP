@@ -14,6 +14,7 @@ import org.springframework.hateoas.server.core.Relation;
 
 import javax.validation.constraints.NotBlank;
 
+
 @Getter
 @Setter
 @Relation(collectionRelation = "cliente")

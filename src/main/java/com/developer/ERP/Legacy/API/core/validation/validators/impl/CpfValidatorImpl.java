@@ -1,6 +1,6 @@
 package com.developer.ERP.Legacy.API.core.validation.validators.impl;
 
-import com.developer.ERP.Legacy.API.core.validation.validators.cpf.CpfAndCnpjUtils;
+import com.developer.ERP.Legacy.API.core.validation.validators.documentos.CpfAndCnpjUtils;
 import com.developer.ERP.Legacy.API.core.annotations.Cpf;
 import com.developer.ERP.Legacy.API.domain.exceptions.runtime.InvalidCpfException;
 import javax.validation.ConstraintValidator;

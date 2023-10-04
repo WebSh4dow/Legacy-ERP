@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.time.LocalDate;
@@ -42,10 +43,12 @@ public class Cliente {
 
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "pessoaJuridica_id")
+	@Valid
 	private PessoaJuridica pessoaJuridica;
 
 	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "pessoaFisica_id")
+	@Valid
 	private PessoaFisica pessoaFisica;
 
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})

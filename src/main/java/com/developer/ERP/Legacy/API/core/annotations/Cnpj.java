@@ -1,17 +1,16 @@
 package com.developer.ERP.Legacy.API.core.annotations;
 
-import com.developer.ERP.Legacy.API.core.validation.validators.impl.CpfValidatorImpl;
-
+import com.developer.ERP.Legacy.API.core.validation.validators.impl.CnpjValidatorImpl;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Constraint(validatedBy = {CpfValidatorImpl.class})
+@Constraint(validatedBy = {CnpjValidatorImpl.class})
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(value = RetentionPolicy.RUNTIME)
 @Documented
-public @interface Cpf {
-    String message() default "O CPF informado não é valido, porfavor informe um cpf valido!";
+public @interface Cnpj {
+    String message() default "O CNPJ informado não é valido, porfavor informe um cnpj valido!";
     Class <?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

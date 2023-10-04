@@ -3,6 +3,7 @@ package com.developer.ERP.Legacy.API.api.v1.controller;
 import com.developer.ERP.Legacy.API.api.v1.assembler.ClienteAssembler;
 import com.developer.ERP.Legacy.API.api.v1.request.ClienteRequest;
 import com.developer.ERP.Legacy.API.domain.model.Cliente;
+import com.developer.ERP.Legacy.API.domain.model.PessoaFisica;
 import com.developer.ERP.Legacy.API.domain.repository.ClienteRepository;
 import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteSpecFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
@@ -22,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("api/clientes")
