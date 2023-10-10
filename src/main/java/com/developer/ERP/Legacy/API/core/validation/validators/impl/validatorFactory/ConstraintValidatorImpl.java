@@ -22,7 +22,9 @@ import java.util.List;
 public class ConstraintValidatorImpl implements ConstraintValidator<UniqueKeyValidator, Serializable>, EntityManagerAwareValidator {
     @PersistenceContext
     private EntityManager entityManager;
+
     private String [] nomePropriedades;
+
     @Override
     public void initialize(UniqueKeyValidator constraintAnnotation) {
        this.nomePropriedades = constraintAnnotation.nomePropiedades();

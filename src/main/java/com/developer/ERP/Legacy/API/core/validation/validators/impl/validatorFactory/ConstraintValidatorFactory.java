@@ -9,9 +9,11 @@ public class ConstraintValidatorFactory implements javax.validation.ConstraintVa
 
     private EntityManagerFactory entityManagerFactory;
 
+
     public ConstraintValidatorFactory(EntityManagerFactory entityManagerFactory){
         this.entityManagerFactory = entityManagerFactory;
     }
+
     @Override
     public <T extends ConstraintValidator<?, ?>> T getInstance(Class<T> key) {
         T instace = null;
