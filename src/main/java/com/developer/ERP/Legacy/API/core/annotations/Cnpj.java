@@ -1,6 +1,6 @@
 package com.developer.ERP.Legacy.API.core.annotations;
 
-import com.developer.ERP.Legacy.API.core.validation.validators.impl.CnpjValidatorImpl;
+import com.developer.ERP.Legacy.API.core.validation.validators.impl.cnpj.CnpjValidatorImpl;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;

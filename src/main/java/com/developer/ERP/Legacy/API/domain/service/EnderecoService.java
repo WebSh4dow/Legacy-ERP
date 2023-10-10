@@ -4,7 +4,7 @@ import com.developer.ERP.Legacy.API.domain.model.Endereco;
 import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.EnderecoCriteriaFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.EnderecoFilter;
 import com.developer.ERP.Legacy.API.domain.repository.EnderecoRepository;
-import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.EnderecoRepositoryImpl;
+import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.endereco.EnderecoRepositoryImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;

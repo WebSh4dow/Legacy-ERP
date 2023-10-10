@@ -5,8 +5,6 @@ import com.developer.ERP.Legacy.API.domain.model.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.validation.annotation.Validated;
-
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -32,9 +30,7 @@ public class ClienteRequest {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro = LocalDate.now();
-
     private Outros outros;
-
     @Valid
     private PessoaJuridica pessoaJuridica;
     @Valid

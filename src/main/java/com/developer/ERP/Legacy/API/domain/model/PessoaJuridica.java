@@ -7,18 +7,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-
 import com.developer.ERP.Legacy.API.core.annotations.Cnpj;
+import com.developer.ERP.Legacy.API.core.annotations.UniqueKeyValidator;
 import com.developer.ERP.Legacy.API.domain.enumerated.CentroCusto;
 import com.developer.ERP.Legacy.API.domain.enumerated.IndicadorIE;
 import lombok.*;
+
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PessoaJuridica {
+@UniqueKeyValidator(nomePropiedades = "cnpj")
+public class PessoaJuridica implements Serializable {
+	private static final long serialversionUID = 129348938L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -35,8 +39,8 @@ public class PessoaJuridica {
 	@NotBlank
 	private String inscricaoMunicipal;
 
-	@NotBlank
 	@Cnpj
+	@NotBlank
 	private String cnpj;
 
 	@Enumerated(EnumType.STRING)

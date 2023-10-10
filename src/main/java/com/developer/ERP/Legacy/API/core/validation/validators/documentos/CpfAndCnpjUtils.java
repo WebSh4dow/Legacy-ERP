@@ -1,6 +1,6 @@
 package com.developer.ERP.Legacy.API.core.validation.validators.documentos;
 
-import com.developer.ERP.Legacy.API.core.validation.validators.impl.CpfValidatorImpl;
+import com.developer.ERP.Legacy.API.core.validation.validators.impl.cpf.CpfValidatorImpl;
 
 import java.util.List;
 

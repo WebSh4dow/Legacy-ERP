@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.infrastructure.repositoryImpl;
+package com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.endereco;
 
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;

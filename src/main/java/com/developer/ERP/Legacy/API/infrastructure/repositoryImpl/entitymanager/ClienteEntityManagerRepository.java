@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.infrastructure.repositoryImpl;
+package com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.entitymanager;
 
 
 import java.time.LocalDate;
@@ -11,6 +11,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.entitymanager.EntityManagerCustomRepository;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.data.domain.Page;
@@ -27,18 +29,15 @@ import com.developer.ERP.Legacy.API.infrastructure.repository.CustomClienteRepos
 
 
 @Repository
-public class ClienteRepositoryImpl extends RepositoryCustomImpl implements CustomClienteRepository {
+public class ClienteEntityManagerRepository extends EntityManagerCustomRepository implements CustomClienteRepository {
 	
 
 	private final EntityManager entityManager;
 
 	private final CriteriaBuilder criteriaBuilder;
 
-	private final static boolean CLIENTE_INATIVO = false;
 
-	private final static boolean CLIENTE_ATIVO = true;
-
-    public ClienteRepositoryImpl(EntityManager entityManager) {
+    public ClienteEntityManagerRepository(EntityManager entityManager) {
 		this.entityManager = entityManager;
 		this.criteriaBuilder = entityManager.getCriteriaBuilder();
 	}

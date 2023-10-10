@@ -5,7 +5,6 @@ import com.developer.ERP.Legacy.API.api.v1.disasembler.ClienteDisassembler;
 import com.developer.ERP.Legacy.API.api.v1.helper.ResourceUriHelper;
 import com.developer.ERP.Legacy.API.api.v1.request.ClienteRequest;
 import com.developer.ERP.Legacy.API.domain.enumerated.IndicadorIE;
-import com.developer.ERP.Legacy.API.domain.enumerated.RegimeTributacao;
 import com.developer.ERP.Legacy.API.domain.exceptions.runtime.BussinesException;
 import com.developer.ERP.Legacy.API.domain.exceptions.runtime.EntidadeEmUsoException;
 import com.developer.ERP.Legacy.API.domain.exceptions.runtime.HandlerClienteCadastro;
@@ -13,10 +12,9 @@ import com.developer.ERP.Legacy.API.domain.model.*;
 import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteSpecFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
 import com.developer.ERP.Legacy.API.domain.repository.ClienteRepository;
-import com.developer.ERP.Legacy.API.domain.repository.EnderecoRepository;
 import com.developer.ERP.Legacy.API.domain.representation.ClienteModel;
-import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.RepositoryCustomImpl;
-import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.ClienteRepositoryImpl;
+import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.entitymanager.EntityManagerCustomRepository;
+import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.entitymanager.ClienteEntityManagerRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -25,20 +23,19 @@ import org.springframework.stereotype.Service;
 import static com.developer.ERP.Legacy.API.core.validation.message.ClienteMessage.*;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 
 @Service
-public class ClienteService extends RepositoryCustomImpl {
+public class ClienteService extends EntityManagerCustomRepository {
 
 	private final ClienteRepository clienteRepository;
 
-	private final ClienteRepositoryImpl clienteRepositoryImpl;
+	private final ClienteEntityManagerRepository clienteRepositoryImpl;
 
 	private final ClienteDisassembler clienteDisassembler;
 
 	private final ClienteAssembler clienteAssembler;
 
-	public ClienteService(ClienteRepository clienteRepository, ClienteRepositoryImpl clienteRepositoryImpl,
+	public ClienteService(ClienteRepository clienteRepository, ClienteEntityManagerRepository clienteRepositoryImpl,
 						  ClienteDisassembler clienteDisassembler,ClienteAssembler clienteAssembler
 	) {
 
@@ -62,13 +59,18 @@ public class ClienteService extends RepositoryCustomImpl {
 	public ClienteModel cadastrarCliente(ClienteRequest clienteRequest) {
 		try {
 			Cliente cliente = clienteDisassembler.toDomainObject(clienteRequest);
-	
+
+			if (cliente == null)
+				return null;
+
 			if (cliente.getPessoaFisica() != null){
 				isPessoaFisicaContribuinte(cliente.getPessoaFisica(), cliente);
+
 			}
 
 			isPessoaJuridicaContribuinte(cliente.getPessoaJuridica(), cliente);
 			validarCadastroOutros(cliente);
+
 
 			cliente = clienteRepository.save(cliente);
 
@@ -81,12 +83,13 @@ public class ClienteService extends RepositoryCustomImpl {
 			throw new BussinesException(ex.getMessage(),ex);
 		}
 	}
-	
+
 	public ClienteModel editarCliente(Long id, ClienteRequest clienteRequest) {
 		Cliente clienteAtual = buscarCliente(id);
 		validarCadastroOutros(clienteAtual);
 
 		clienteDisassembler.copyToDomainObject(clienteRequest,clienteAtual);
+
 		clienteAtual = this.clienteRepository.save(clienteAtual);
 		return clienteAssembler.toModel(clienteAtual);
 	}
