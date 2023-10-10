@@ -20,6 +20,7 @@ import java.util.List;
 
 @Component
 public class ConstraintValidatorImpl implements ConstraintValidator<UniqueKeyValidator, Serializable>, EntityManagerAwareValidator {
+
     @PersistenceContext
     private EntityManager entityManager;
 
