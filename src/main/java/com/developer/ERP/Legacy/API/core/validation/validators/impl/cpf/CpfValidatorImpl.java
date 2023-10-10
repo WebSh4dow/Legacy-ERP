@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.core.validation.validators.impl;
+package com.developer.ERP.Legacy.API.core.validation.validators.impl.cpf;
 
 import com.developer.ERP.Legacy.API.core.validation.validators.documentos.CpfAndCnpjUtils;
 import com.developer.ERP.Legacy.API.core.annotations.Cpf;

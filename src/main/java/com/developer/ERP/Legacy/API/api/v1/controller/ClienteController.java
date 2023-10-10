@@ -3,7 +3,6 @@ package com.developer.ERP.Legacy.API.api.v1.controller;
 import com.developer.ERP.Legacy.API.api.v1.assembler.ClienteAssembler;
 import com.developer.ERP.Legacy.API.api.v1.request.ClienteRequest;
 import com.developer.ERP.Legacy.API.domain.model.Cliente;
-import com.developer.ERP.Legacy.API.domain.model.PessoaFisica;
 import com.developer.ERP.Legacy.API.domain.repository.ClienteRepository;
 import com.developer.ERP.Legacy.API.domain.repository.criteriaFilter.ClienteSpecFilter;
 import com.developer.ERP.Legacy.API.domain.repository.filter.ClienteFilter;
@@ -21,9 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-
 
 @RestController
 @RequestMapping("api/clientes")
@@ -65,7 +61,7 @@ public class ClienteController {
 	}
 	
 	@PutMapping("/editar/{id}")
-	public ClienteModel atualizar(@PathVariable Long id, @RequestBody ClienteRequest clienteRequest){
+	public ClienteModel atualizar(@PathVariable Long id, @RequestBody @Validated ClienteRequest clienteRequest){
 		return clienteService.editarCliente(id,clienteRequest);
 	}
 	
