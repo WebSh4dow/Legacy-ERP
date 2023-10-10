@@ -60,9 +60,6 @@ public class ClienteService extends EntityManagerCustomRepository {
 		try {
 			Cliente cliente = clienteDisassembler.toDomainObject(clienteRequest);
 
-			if (cliente == null)
-				return null;
-
 			if (cliente.getPessoaFisica() != null){
 				isPessoaFisicaContribuinte(cliente.getPessoaFisica(), cliente);
 
@@ -70,7 +67,6 @@ public class ClienteService extends EntityManagerCustomRepository {
 
 			isPessoaJuridicaContribuinte(cliente.getPessoaJuridica(), cliente);
 			validarCadastroOutros(cliente);
-
 
 			cliente = clienteRepository.save(cliente);
 
@@ -159,6 +155,4 @@ public class ClienteService extends EntityManagerCustomRepository {
 			throw new HandlerClienteCadastro(MSG_CLIENTE_OUTROS_NAO_INFORMADO);
 		}
 	}
-
-
 }

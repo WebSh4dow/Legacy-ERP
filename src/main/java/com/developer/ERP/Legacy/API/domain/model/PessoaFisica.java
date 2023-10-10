@@ -12,7 +12,6 @@ import java.io.Serializable;
 @Entity
 @Data
 @UniqueKeyValidator(nomePropiedades = "cpf")
-
 public class PessoaFisica implements Serializable {
 
 	private static final long serialversionUID = 129348938L;
