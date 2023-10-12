@@ -1,9 +1,12 @@
 package com.developer.ERP.Legacy.API.api.v1.request;
 
+import com.developer.ERP.Legacy.API.domain.enumerated.RegimeTributacao;
 import com.developer.ERP.Legacy.API.domain.model.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -42,6 +45,9 @@ public class ClienteRequest {
     private List<Produto> produtos;
 
     private List<Contratos> contratos;
+
+    @Enumerated(EnumType.STRING)
+    private RegimeTributacao regimeTributacao;
 
     private boolean isAtivo;
 }

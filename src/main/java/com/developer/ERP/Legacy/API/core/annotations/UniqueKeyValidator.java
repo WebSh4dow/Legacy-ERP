@@ -11,7 +11,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface UniqueKeyValidator {
     String [] nomePropiedades();
-    String message() default "Registro único ocorreu violação de dados!";
+    String message() default "Registro único ocorreu violação de dados.";
     Class<?>[] groups() default {};
     Class < ? extends Payload[]> [] payload() default {};
 
