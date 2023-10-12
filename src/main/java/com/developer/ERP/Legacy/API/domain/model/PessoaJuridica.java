@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@UniqueKeyValidator(nomePropiedades = "cnpj")
+@UniqueKeyValidator(nomePropiedades = "cnpj",message = "O CNPJ Não pode ser usado pois já existe um cadastro com o mesmo cnpj")
 public class PessoaJuridica implements Serializable {
 	private static final long serialversionUID = 129348938L;
 	@Id
