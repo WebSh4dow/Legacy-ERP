@@ -1,6 +1,5 @@
 package com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.entitymanager;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +10,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import com.developer.ERP.Legacy.API.infrastructure.repositoryImpl.entitymanager.EntityManagerCustomRepository;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.data.domain.Page;

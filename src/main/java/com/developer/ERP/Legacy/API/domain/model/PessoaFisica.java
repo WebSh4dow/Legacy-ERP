@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@UniqueKeyValidator(nomePropiedades = "cpf")
+@UniqueKeyValidator(nomePropiedades = "cpf",message = "O CPF Não pode ser usado pois já existe um cadastro com o mesmo CPF")
 public class PessoaFisica implements Serializable {
 
 	private static final long serialversionUID = 129348938L;

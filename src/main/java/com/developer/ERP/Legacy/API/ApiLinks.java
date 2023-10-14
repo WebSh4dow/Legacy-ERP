@@ -1,14 +1,10 @@
 package com.developer.ERP.Legacy.API;
 
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.TemplateVariable;
 import org.springframework.hateoas.TemplateVariable.VariableType;
 import org.springframework.hateoas.TemplateVariables;
 import org.springframework.stereotype.Component;
-import com.developer.ERP.Legacy.API.api.v1.controller.EnderecoController;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import org.springframework.hateoas.IanaLinkRelations;
+
 
 @Component
 public class ApiLinks {

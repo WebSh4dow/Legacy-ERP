@@ -12,7 +12,6 @@ import com.developer.ERP.Legacy.API.core.annotations.UniqueKeyValidator;
 import com.developer.ERP.Legacy.API.domain.enumerated.CentroCusto;
 import com.developer.ERP.Legacy.API.domain.enumerated.IndicadorIE;
 import lombok.*;
-
 import java.io.Serializable;
 
 @Entity

@@ -4,7 +4,6 @@ import com.developer.ERP.Legacy.API.core.annotations.Cnpj;
 import com.developer.ERP.Legacy.API.core.validation.validators.documentos.CpfAndCnpjUtils;
 import com.developer.ERP.Legacy.API.core.validation.validators.impl.cpf.CpfValidatorImpl;
 import com.developer.ERP.Legacy.API.domain.exceptions.runtime.InvalidCnpjException;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintViolationException;

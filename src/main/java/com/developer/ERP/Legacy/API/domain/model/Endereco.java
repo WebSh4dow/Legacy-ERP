@@ -1,9 +1,7 @@
 package com.developer.ERP.Legacy.API.domain.model;
 
 import lombok.Data;
-
 import javax.persistence.*;
-
 import com.developer.ERP.Legacy.API.domain.enumerated.Estado;
 
 @Entity

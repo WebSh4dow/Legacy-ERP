@@ -1,13 +1,12 @@
 package com.developer.ERP.Legacy.API.domain.repository.criteriaFilter;
 
 import java.util.List;
-
+import com.developer.ERP.Legacy.API.domain.enumerated.RegimeTributacao;
 import com.developer.ERP.Legacy.API.domain.model.Contratos;
 import com.developer.ERP.Legacy.API.domain.model.Endereco;
-import com.developer.ERP.Legacy.API.domain.model.PessoaFisica;
-import com.developer.ERP.Legacy.API.domain.model.PessoaJuridica;
-
 import lombok.Data;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Data
 public class ClienteSpecFilter {
@@ -19,5 +18,7 @@ public class ClienteSpecFilter {
 	private String cnpj;
 	private List <Contratos> contratos;
 	private List<Endereco> enderecos;
+	@Enumerated(EnumType.STRING)
+	private RegimeTributacao regimeTributacao;
 	private boolean isAtivo;
 }
