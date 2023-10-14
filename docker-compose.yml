@@ -1,0 +1,26 @@
+version: "3.9"
+
+networks:
+  erp-api-network:
+    driver: bridge
+
+services:
+  erp-api-mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - "3306:3306"
+    networks:
+      - erp-api-network
+
+  erp-application-api:
+    image: erp-application-api
+    environment:
+     DATABASE_HOST: erp-api-mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - erp-api-network
+    depends_on:
+      - erp-api-mysql

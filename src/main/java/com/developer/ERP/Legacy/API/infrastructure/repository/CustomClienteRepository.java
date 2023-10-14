@@ -1,7 +1,6 @@
 package com.developer.ERP.Legacy.API.infrastructure.repository;
 
 import java.util.List;
-
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;

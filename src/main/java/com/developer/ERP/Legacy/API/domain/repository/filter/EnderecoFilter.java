@@ -1,7 +1,6 @@
 package com.developer.ERP.Legacy.API.domain.repository.filter;
 
 import org.springframework.data.domain.Sort;
-
 import lombok.Data;
 
 @Data

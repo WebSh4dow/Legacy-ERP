@@ -4,15 +4,12 @@ package com.developer.ERP.Legacy.API.domain.representation;
 import com.developer.ERP.Legacy.API.domain.enumerated.RegimeTributacao;
 import com.developer.ERP.Legacy.API.domain.model.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;

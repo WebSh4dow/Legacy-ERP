@@ -1,12 +1,10 @@
 package com.developer.ERP.Legacy.API.domain.repository.criteriaFilter;
 
 import java.time.LocalDate;
-
 import com.developer.ERP.Legacy.API.domain.enumerated.CentroCusto;
 import com.developer.ERP.Legacy.API.domain.enumerated.TipoContrato;
 import com.developer.ERP.Legacy.API.domain.model.Cliente;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.Data;
 
 @Data

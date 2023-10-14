@@ -2,11 +2,9 @@ package com.developer.ERP.Legacy.API.domain.model;
 
 import com.developer.ERP.Legacy.API.domain.enumerated.RegimeTributacao;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
