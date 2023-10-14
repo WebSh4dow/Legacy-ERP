@@ -25,3 +25,13 @@ services:
       - erp-api-network
     depends_on:
       - erp-api-mysql
+
+  erp-application-proxy:
+    build: ./nginx
+    image: erp-application-proxy
+    ports:
+      - "80:80"
+    networks:
+      - erp-api-network
+    depends_on:
+      - erp-application-api
