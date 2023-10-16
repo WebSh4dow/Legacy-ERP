@@ -16,6 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "cliente")
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +67,6 @@ public class Cliente {
 	private RegimeTributacao regimeTributacao;
 
 	private boolean isAtivo;
-	
 
 
 }

@@ -26,7 +26,6 @@ import javax.persistence.EntityNotFoundException;
 
 @Service
 public class ClienteService extends EntityManagerCustomRepository {
-
 	private final ClienteRepository clienteRepository;
 
 	private final ClienteEntityManagerRepository clienteRepositoryImpl;

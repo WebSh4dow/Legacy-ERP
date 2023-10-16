@@ -50,4 +50,6 @@ public class ClienteRequest {
     private RegimeTributacao regimeTributacao;
 
     private boolean isAtivo;
+
+
 }
