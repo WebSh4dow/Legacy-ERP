@@ -5,6 +5,7 @@ networks:
     driver: bridge
 
 services:
+
   erp-api-mysql:
     image: mysql:8.0
     environment:
