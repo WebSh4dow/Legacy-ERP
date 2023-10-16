@@ -24,7 +24,7 @@ public class ApiLinks {
 				.pesquisar(null,contratoId,null,null)).withRel(rel);
 	}
 
-	public  Link linkToContratos(Long contratoId) {
+	public Link linkToContratos(Long contratoId) {
 		return linkToContratos(contratoId, IanaLinkRelations.SELF.value());
 	}
 

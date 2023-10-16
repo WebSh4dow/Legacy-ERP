@@ -68,8 +68,5 @@ public class Cliente {
 
 	private boolean isAtivo;
 
-	private boolean teste;
-	
-
 
 }

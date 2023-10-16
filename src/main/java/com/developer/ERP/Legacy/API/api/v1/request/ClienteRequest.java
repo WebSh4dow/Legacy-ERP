@@ -51,5 +51,5 @@ public class ClienteRequest {
 
     private boolean isAtivo;
 
-    private boolean teste;
+
 }
