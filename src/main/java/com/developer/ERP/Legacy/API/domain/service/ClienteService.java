@@ -48,6 +48,10 @@ public class ClienteService extends EntityManagerCustomRepository {
 			ClienteSpecFilter clienteCriteriaFilter, Long id) {
 		return clienteRepositoryImpl.buscarClientesPorIdPageable(clienteFilter, clienteCriteriaFilter, id);
 	}
+
+	public List<Cliente> buscarTodosCliente(){
+		return clienteRepository.findAll();
+	}
 	
 	public Cliente buscarCliente(Long id) {
 		return clienteRepository.findById(id)

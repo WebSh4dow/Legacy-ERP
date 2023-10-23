@@ -37,4 +37,5 @@ public class ClienteModel extends RepresentationModel<ClienteModel> {
     @Enumerated(EnumType.STRING)
     private RegimeTributacao regimeTributacao;
     private boolean isAtivo;
+    private boolean pesquisarContratos;
 }
