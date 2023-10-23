@@ -19,14 +19,6 @@ public class ApiLinks {
 	public static final TemplateVariables VARIAVEIS_DE_PROJECOES = new TemplateVariables(
 			new TemplateVariable("projecao",VariableType.REQUEST_PARAM));
 
-	public Link linkToContratos(Long contratoId, String rel){
-		return linkTo(methodOn(ClienteController.class)
-				.pesquisar(null,contratoId,null,null)).withRel(rel);
-	}
-
-	public Link linkToContratos(Long contratoId) {
-		return linkToContratos(contratoId, IanaLinkRelations.SELF.value());
-	}
 
 				
 }
