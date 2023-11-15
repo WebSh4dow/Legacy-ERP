@@ -10,7 +10,7 @@ Este é um projeto de sistema ERP (Enterprise Resource Planning) que utiliza Doc
 2. [Docker](#docker)
 3. [Tecnologias Utilizadas](#tecnologias-utilizadas)
 4. [Recursos](#recursos)
-5 -[Clientes](#clientes)
+5. [Clientes](#clientes)
 6. [Usando HATEOS](#link-com-json)
 7. [Modelo de Banco de Dados](#modelo-de-banco-de-dados)
 
