@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClienteRepository extends JpaRepository <Cliente,Long>, JpaSpecificationExecutor<Cliente> {
-    @Query(value = "SELECT c FROM Cliente c LEFT JOIN c.contratos co where co.id = :contrato_id and c.id = :cliente_id")
-    List<Cliente> findContratosVinculateCliente(@Param("contrato_id") Long contrato_id,@Param("cliente_id") Long cliente_id);
+    @Query(value = "SELECT c FROM Cliente c LEFT JOIN c.contratos co where c.id = :cliente_id and co.id = :contrato_id")
+    List<Cliente> findContratosVinculateCliente(@Param("cliente_id") Long cliente_id,@Param("contrato_id") Long contrato_id);
 
 }

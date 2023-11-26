@@ -34,10 +34,5 @@ public class Contratos {
 	
 	@Enumerated(EnumType.STRING)
 	private TipoContrato tipoContratos;
-	
-	@ManyToOne
-    @JoinColumn(name = "contrato_id")
-	private Cliente cliente;
-	
-	
+
 }
