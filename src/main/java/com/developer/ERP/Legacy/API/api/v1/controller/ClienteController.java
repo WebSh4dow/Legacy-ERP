@@ -67,9 +67,9 @@ public class ClienteController {
 		return pagedResourcesAssembler.toModel(page,clienteAssembler);
 	}
 
-	@GetMapping("/buscar/contratos/{idContrato}/{idCliente}")
+	@GetMapping("/buscar/contratos/{idCliente}/{idContrato}")
 	public List<Cliente> listarContratosVinculados(@PathVariable Long idCliente,  @PathVariable Long idContrato){
-		return contratoService.buscarContrato(idContrato,idCliente);
+		return contratoService.buscarContrato(idCliente,idContrato);
 	}
 
 	@GetMapping("/pesquisar")

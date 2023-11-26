@@ -73,17 +73,17 @@ public class CnpjValidatorImpl implements ConstraintValidator<Cnpj, String> {
     }
 
     public boolean isValid() {
-        String expectedCheckDigits = getFirstDigitCnpj() + getSecondDigitCnpj();
+        String expectedCheckDigits = getPrimeiroDigitoCnpj() + getSecundoDigitoCnpj();
         return expectedCheckDigits.equals(getCheckDigits());
     }
 
-    private String getFirstDigitCnpj() {
+    private String getPrimeiroDigitoCnpj() {
         int sum = CpfAndCnpjUtils.sumWgth(cnpjList.subList(0, 12), WGHT_FIRST_DIGIT_CNPJ);
         int expectedFirstDigit = 11 - (sum % 11);
         return Integer.toString(expectedFirstDigit >= 10 ? 0 : expectedFirstDigit);
     }
 
-    private String getSecondDigitCnpj() {
+    private String getSecundoDigitoCnpj() {
         int sum = CpfAndCnpjUtils.sumWgth(cnpjList.subList(0, 13), WGHT_SECOND_DIGIT_CNPJ);
         int expectedSecondDigit = 11 - (sum % 11);
         return Integer.toString(expectedSecondDigit >= 10 ? 0 : expectedSecondDigit);

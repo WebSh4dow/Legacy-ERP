@@ -20,7 +20,7 @@ public class ContratoService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public List<Cliente> buscarContrato(Long contratoId,Long clienteId){
+    public List<Cliente> buscarContrato(Long clienteId,Long contratoId){
        List<Cliente> buscarContratos = clienteRepository.findContratosVinculateCliente(contratoId,clienteId);
 
        if (buscarContratos.size() == 0){

@@ -59,8 +59,17 @@ public class Cliente {
 	private List<Contato> contatos;
 
 	@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@Column(name = "contrato_id")
-	@JoinColumn(name = "cliente_id")
+	@JoinTable(name = "contratos_cliente",
+			uniqueConstraints =
+			@UniqueConstraint (columnNames = {"cliente_id","contrato_id"} , name = "unique_contrato_id"),
+			joinColumns = @JoinColumn (name = "cliente_id",
+
+					referencedColumnName = "id", table = "cliente", unique = false,
+					foreignKey = @ForeignKey(name = "cliente_fk", value = ConstraintMode.CONSTRAINT)),
+			inverseJoinColumns = @JoinColumn (name = "contrato_id", unique = false,
+
+					referencedColumnName = "id", table = "contrato",
+					foreignKey = @ForeignKey(name = "contrato_fk", value = ConstraintMode.CONSTRAINT)))
 	private List<Contratos> contratos;
 	
 	@Enumerated(EnumType.STRING)

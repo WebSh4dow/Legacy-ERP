@@ -16,7 +16,6 @@ public class ClienteSpecFilter {
 	private String historico;
 	private String cpf;
 	private String cnpj;
-	private List <Contratos> contratos;
 	private List<Endereco> enderecos;
 	@Enumerated(EnumType.STRING)
 	private RegimeTributacao regimeTributacao;
