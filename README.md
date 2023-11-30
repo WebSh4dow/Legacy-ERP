@@ -1,4 +1,4 @@
-# Projeto ERP
+# ERP
 
 ![Diagrama da Arquitetura ERP](https://github.com/WebSh4dow/Legacy-ERP/blob/main/DIAGRAM-ERP.png)
 
