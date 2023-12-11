@@ -149,7 +149,3 @@ Aqui está um exemplo de código JSON representando uma resposta com paginação
   "number": 1,
   "empty": false
 }
-
-
-
-
