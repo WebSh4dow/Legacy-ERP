@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,9 +21,12 @@ public class Perfil implements Serializable {
     @NotBlank(message = "O tipo de perfil é um campo obrigatório")
     private String tipoPerfil;
 
-    private String descricaoPerfil;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "perfil_itemperfil",
+            joinColumns = @JoinColumn(name = "perfil_id"),
+            inverseJoinColumns = @JoinColumn(name = "itemperfil_id"))
+    private List<ItemPerfil> items;
 
     private boolean visivelSite;
-
 
 }
