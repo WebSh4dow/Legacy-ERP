@@ -2,6 +2,7 @@ package com.developer.ERP.Legacy.API.infrastructure.adapters.config;
 
 import com.developer.ERP.Legacy.API.domain.service.ProprietarioService;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.ProprietarioPersistenceAdapter;
+import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.mapper.ContaBancariaMapper;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.mapper.ProprietarioMapper;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.repository.ProprietarioRepository;
 import org.modelmapper.ModelMapper;
@@ -19,6 +20,11 @@ public class BeanConfiguration {
     @Bean
     public ProprietarioMapper proprietarioMapper() {
         return new ProprietarioMapper();
+    }
+
+    @Bean
+    public ContaBancariaMapper contaBancariaMapper() {
+        return new ContaBancariaMapper();
     }
 
     @Bean

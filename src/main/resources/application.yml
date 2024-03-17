@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/estatedb
+    url: jdbc:mysql://localhost:3306/sakila
     username: root
-    password: 223925643925
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

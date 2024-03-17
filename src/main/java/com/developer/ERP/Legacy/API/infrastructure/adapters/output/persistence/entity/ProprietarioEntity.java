@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -43,6 +44,10 @@ public class ProprietarioEntity implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "codigo_honorario")
     private HonorarioEntity honorario;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "proprietario_codigo")
+    private List<ContaBancariaEntity> contasBancarias;
 
 
 }
