@@ -1,7 +1,6 @@
 package com.developer.ERP.Legacy.API.application.ports.output;
 
 import com.developer.ERP.Legacy.API.domain.model.Proprietario;
-
 import java.util.List;
 import java.util.Optional;
 

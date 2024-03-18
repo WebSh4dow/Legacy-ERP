@@ -22,7 +22,6 @@ public class Proprietario {
     private String profissao;
     private String natura;
     private Nacionalidade nacionalidade;
-    @Column(name = "honorario")
     private Honorario honorario;
 
 }
