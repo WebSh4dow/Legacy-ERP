@@ -4,4 +4,6 @@ import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.e
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProprietarioRepository extends JpaRepository<ProprietarioEntity, Long> {
+    boolean existsProprietarioByCpfAndRgIgnoreCase(String cpf, String rg);
+
 }

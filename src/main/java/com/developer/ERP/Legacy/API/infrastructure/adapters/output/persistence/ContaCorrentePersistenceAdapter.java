@@ -2,6 +2,7 @@ package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence;
 
 import com.developer.ERP.Legacy.API.application.ports.output.ContaCorrenteOutputPort;
 import com.developer.ERP.Legacy.API.domain.exception.ContaCorrenteNotFoundException;
+import com.developer.ERP.Legacy.API.domain.exception.ExisteUmaContaCadastradaException;
 import com.developer.ERP.Legacy.API.domain.model.ContaCorrente;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.entity.ContaCorrenteEntity;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.mapper.ContaCorrenteMapper;
@@ -15,11 +16,22 @@ import java.util.stream.Collectors;
 public class ContaCorrentePersistenceAdapter implements ContaCorrenteOutputPort {
 
     private final ContaCorrenteRepository repository;
+
+
     private final ContaCorrenteMapper contaCorrenteMapper;
+
+    private final static String MSG_AGENCIA_E_CONTA_CORRENTES_EXISTENTES = "Verifique se o número da agência e o número da conta já foram cadastrados em um cadastro anterior.";
+
+    private final static String MSG_CODIGO_CONTA_CORRENTE = "Não existe uma conta corrente com o código: ";
 
     @Override
     public ContaCorrente saveContaCorrente(ContaCorrente contaCorrente) {
         ContaCorrenteEntity contaCorrenteEntity = contaCorrenteMapper.toEntity(contaCorrente);
+
+        if (repository.existsContaCorrenteByAgenciaAndNumeroContaCorrenteIgnoreCase
+                (contaCorrenteEntity.getAgencia(), contaCorrenteEntity.getNumeroContaCorrente())) {
+            throw new ExisteUmaContaCadastradaException(MSG_AGENCIA_E_CONTA_CORRENTES_EXISTENTES);
+        }
 
         repository.save(contaCorrenteEntity);
         return contaCorrenteMapper.toContaBancaria(contaCorrenteEntity);
@@ -31,7 +43,7 @@ public class ContaCorrentePersistenceAdapter implements ContaCorrenteOutputPort 
         Optional<ContaCorrenteEntity> optionalContaCorrente = repository.findById(codigo);
 
         if (optionalContaCorrente.isEmpty()) {
-            throw new ContaCorrenteNotFoundException("Não existe uma conta corrente com o código: " + codigo);
+            throw new ContaCorrenteNotFoundException(MSG_CODIGO_CONTA_CORRENTE + codigo);
         }
         ContaCorrente contaCorrente = contaCorrenteMapper.toContaBancaria(optionalContaCorrente.get());
 
@@ -40,7 +52,7 @@ public class ContaCorrentePersistenceAdapter implements ContaCorrenteOutputPort 
 
     @Override
     public List<ContaCorrente> getContasCorrentes() {
-        return repository.findAll().stream().map(contaCorrenteMapper :: toContaBancaria)
+        return repository.findAll().stream().map(contaCorrenteMapper::toContaBancaria)
                 .collect(Collectors.toList());
     }
 }

@@ -13,6 +13,9 @@ import java.util.List;
 public class ContaCorrenteService implements CreateContaCorrenteUseCase, GetContasCorrenteUseCase, GetContaCorrenteByCodigoUseCase {
 
     private final ContaCorrenteOutputPort contaCorrenteOutputPort;
+
+    private final static String MSG_CONTA_CORRENTE = "Não foi possivel encontrar uma conta corrente com o código:  ";
+
     @Override
     public ContaCorrente createContaBancaria(ContaCorrente contaCorrente) {
         return contaCorrenteOutputPort.saveContaCorrente(contaCorrente);
@@ -21,7 +24,7 @@ public class ContaCorrenteService implements CreateContaCorrenteUseCase, GetCont
     @Override
     public ContaCorrente getContaCorrenteByCodigo(Long codigo) {
         return contaCorrenteOutputPort.getContaCorrenteByCodigo(codigo)
-                .orElseThrow(()-> new ProprietarioNotFoundException("Não foi possivel encontrar uma conta corrente com o código:  " + codigo));
+                .orElseThrow(()-> new ProprietarioNotFoundException(MSG_CONTA_CORRENTE + codigo));
     }
 
     @Override
