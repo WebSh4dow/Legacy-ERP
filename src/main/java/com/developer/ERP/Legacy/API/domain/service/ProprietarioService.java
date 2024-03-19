@@ -7,13 +7,15 @@ import com.developer.ERP.Legacy.API.application.ports.output.ProprietarioOutputP
 import com.developer.ERP.Legacy.API.domain.exception.ProprietarioNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Proprietario;
 import lombok.AllArgsConstructor;
-
 import java.util.List;
 
 @AllArgsConstructor
 public class ProprietarioService implements CreateProprietarioUseCase, GetProprietarioByCodigoUseCase, GetProprietariosUseCase {
 
     private final ProprietarioOutputPort proprietarioOutputPort;
+
+    private final static String MSG_CODIGO_PROPRIETARIO = "Não foi possivel encontrar o proprietario com o codigo atual: ";
+
     @Override
     public Proprietario createProprietario(Proprietario proprietario) {
         return proprietarioOutputPort.saveProprietario(proprietario);
@@ -22,7 +24,7 @@ public class ProprietarioService implements CreateProprietarioUseCase, GetPropri
     @Override
     public Proprietario getProprietarioByCodigo(Long codigo) {
         return proprietarioOutputPort.getProprietarioByCodigo(codigo)
-                .orElseThrow(()-> new ProprietarioNotFoundException("Não foi possivel encontrar o proprietario com o codigo atual:  " + codigo));
+                .orElseThrow(()-> new ProprietarioNotFoundException(MSG_CODIGO_PROPRIETARIO + codigo));
     }
 
     @Override

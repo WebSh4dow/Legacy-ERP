@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class ProprietarioNotFoundException extends RuntimeException {
+public class ContaCorrenteNotFoundException extends RuntimeException {
 
-    public ProprietarioNotFoundException(String message) {
+    public ContaCorrenteNotFoundException(String message) {
         super(message);
     }
 }

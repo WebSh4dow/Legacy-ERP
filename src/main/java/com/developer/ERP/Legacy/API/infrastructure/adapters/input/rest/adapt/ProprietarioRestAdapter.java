@@ -29,9 +29,9 @@ public class ProprietarioRestAdapter {
 
     private final ModelMapper mapper;
 
-    @PostMapping(value = "/proprietarios",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProprietarioResponse> createProprietario(@RequestBody ProprietarioRequest proprietarioToCreate) {
-        Proprietario proprietario = mapper.map(proprietarioToCreate, Proprietario.class);
+    @PostMapping(value = "/proprietarios/cadastrar",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProprietarioResponse> createProprietario(@RequestBody ProprietarioRequest proprietarioRequest) {
+        Proprietario proprietario = mapper.map(proprietarioRequest, Proprietario.class);
         proprietario = createProprietarioUseCase.createProprietario(proprietario);
         return new ResponseEntity<>(mapper.map(proprietario,ProprietarioResponse.class), HttpStatus.CREATED);
     }

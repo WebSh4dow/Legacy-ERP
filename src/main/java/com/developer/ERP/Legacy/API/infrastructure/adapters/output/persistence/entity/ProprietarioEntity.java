@@ -1,14 +1,13 @@
 package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.entity;
 
 import com.developer.ERP.Legacy.API.domain.enums.Nacionalidade;
-import com.developer.ERP.Legacy.API.domain.model.Honorario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -43,6 +42,10 @@ public class ProprietarioEntity implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "codigo_honorario")
     private HonorarioEntity honorario;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "proprietario_codigo")
+    private List<ContaCorrenteEntity> contasBancarias;
 
 
 }
