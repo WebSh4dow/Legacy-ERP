@@ -1,5 +1,6 @@
 package com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.request;
 
+import com.developer.ERP.Legacy.API.domain.enums.Genero;
 import com.developer.ERP.Legacy.API.domain.enums.Nacionalidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,4 +39,6 @@ public class ProprietarioRequest {
     private Nacionalidade nacionalidade;
 
     private HonorarioRequest honorario;
+
+    private Genero genero;
 }

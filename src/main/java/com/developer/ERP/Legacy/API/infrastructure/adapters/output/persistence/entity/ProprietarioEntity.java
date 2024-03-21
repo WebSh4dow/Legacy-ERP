@@ -1,5 +1,6 @@
 package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.entity;
 
+import com.developer.ERP.Legacy.API.domain.enums.Genero;
 import com.developer.ERP.Legacy.API.domain.enums.Nacionalidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,6 +47,9 @@ public class ProprietarioEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "proprietario_codigo")
     private List<ContaCorrenteEntity> contasBancarias;
+
+    @Enumerated(EnumType.STRING)
+    private Genero genero;
 
 
 }

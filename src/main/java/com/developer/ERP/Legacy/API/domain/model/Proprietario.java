@@ -1,5 +1,6 @@
 package com.developer.ERP.Legacy.API.domain.model;
 
+import com.developer.ERP.Legacy.API.domain.enums.Genero;
 import com.developer.ERP.Legacy.API.domain.enums.Nacionalidade;
 import lombok.*;
 
@@ -23,5 +24,6 @@ public class Proprietario {
     private String natura;
     private Nacionalidade nacionalidade;
     private Honorario honorario;
+    private Genero genero;
 
 }
