@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @RestController
 @RequestMapping(value = "/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
@@ -42,7 +41,7 @@ public class ProprietarioRestAdapter {
         return new ResponseEntity<>(mapper.map(proprietario, ProprietarioResponse.class),HttpStatus.OK);
     }
 
-    @GetMapping("/listar-proprietarios")
+    @GetMapping(value = "/proprietarios/listar-proprietarios", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProprietarioResponse>> getProprietarios() {
 
         List<Proprietario> proprietarios = getProprietariosUseCase.getProprietarios();
