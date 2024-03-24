@@ -24,6 +24,8 @@ public class Proprietario {
     private String natura;
     private Nacionalidade nacionalidade;
     private Honorario honorario;
+    private DadosPessoais dadosPessoais;
+    private Endereco endereco;
     private Genero genero;
 
 }
