@@ -44,6 +44,14 @@ public class ProprietarioEntity implements Serializable {
     @JoinColumn(name = "codigo_honorario")
     private HonorarioEntity honorario;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "codigo_endereco")
+    private EnderecoEntity endereco;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "codigo_dados_pessoais")
+    private DadosPessoaisEntity dadosPessoais;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "proprietario_codigo")
     private List<ContaCorrenteEntity> contasBancarias;

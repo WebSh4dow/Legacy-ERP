@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  mysql:
+    container_name: imobilize_prod
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=imobilize
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 3306:3306
+    networks:
+      - imobilize_network
+
+  mysql_test:
+    container_name: imobilize_test
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=imobilize_test
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 3307:3306
+    networks:
+      - imobilize_network
+
+networks:
+  imobilize_network:

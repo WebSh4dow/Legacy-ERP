@@ -40,5 +40,9 @@ public class ProprietarioRequest {
 
     private HonorarioRequest honorario;
 
+    private DadosPessoaisRequest dadosPessoais;
+
+    private EnderecoRequest endereco;
+
     private Genero genero;
 }
