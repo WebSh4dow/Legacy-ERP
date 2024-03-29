@@ -8,6 +8,8 @@ import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.e
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.mapper.ContaCorrenteMapper;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.repository.ContaCorrenteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +25,8 @@ public class ContaCorrentePersistenceAdapter implements ContaCorrenteOutputPort 
     private final static String MSG_AGENCIA_E_CONTA_CORRENTES_EXISTENTES = "Verifique se o número da agência e o número da conta já foram cadastrados em um cadastro anterior.";
 
     private final static String MSG_CODIGO_CONTA_CORRENTE = "Não existe uma conta corrente com o código: ";
+
+    private final static String MSG_CODIGO_CONTA_CORRENTE_NAO_EXISTE = "Conta Corrente inexistente";
 
     @Override
     public ContaCorrente saveContaCorrente(ContaCorrente contaCorrente) {
@@ -43,7 +47,7 @@ public class ContaCorrentePersistenceAdapter implements ContaCorrenteOutputPort 
         Optional<ContaCorrenteEntity> optionalContaCorrente = repository.findById(codigo);
 
         if (optionalContaCorrente.isEmpty()) {
-            throw new ContaCorrenteNotFoundException(MSG_CODIGO_CONTA_CORRENTE + codigo);
+                throw new ContaCorrenteNotFoundException(MSG_CODIGO_CONTA_CORRENTE + codigo);
         }
         ContaCorrente contaCorrente = contaCorrenteMapper.toContaBancaria(optionalContaCorrente.get());
 
@@ -54,5 +58,26 @@ public class ContaCorrentePersistenceAdapter implements ContaCorrenteOutputPort 
     public List<ContaCorrente> getContasCorrentes() {
         return repository.findAll().stream().map(contaCorrenteMapper::toContaBancaria)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ContaCorrente updateContaBancaria(ContaCorrente contaCorrente) {
+
+            if (contaCorrente.getCodigo() == null) {
+                throw new ContaCorrenteNotFoundException(MSG_CODIGO_CONTA_CORRENTE_NAO_EXISTE);
+            }
+
+            Optional<ContaCorrenteEntity> optionalContaCorrente = repository.findById(contaCorrente.getCodigo());
+
+            if (optionalContaCorrente.isEmpty()) {
+                throw new ContaCorrenteNotFoundException(MSG_CODIGO_CONTA_CORRENTE + contaCorrente.getCodigo());
+            }
+
+            ContaCorrenteEntity contaCorrenteEntity = optionalContaCorrente.get();
+            BeanUtils.copyProperties(contaCorrente, contaCorrenteEntity);
+
+            repository.save(contaCorrenteEntity);
+
+            return contaCorrenteMapper.toContaBancaria(contaCorrenteEntity);
     }
 }
