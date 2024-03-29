@@ -9,5 +9,6 @@ public interface ContaCorrenteOutputPort {
     ContaCorrente saveContaCorrente(ContaCorrente contaCorrente);
     Optional<ContaCorrente> getContaCorrenteByCodigo(Long codigo);
     List<ContaCorrente> getContasCorrentes();
+    ContaCorrente updateContaBancaria(ContaCorrente contaCorrente);
 
 }
