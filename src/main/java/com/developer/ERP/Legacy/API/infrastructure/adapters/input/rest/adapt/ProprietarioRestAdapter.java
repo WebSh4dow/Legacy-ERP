@@ -32,12 +32,14 @@ public class ProprietarioRestAdapter {
     public ResponseEntity<ProprietarioResponse> createProprietario(@RequestBody ProprietarioRequest proprietarioRequest) {
         Proprietario proprietario = mapper.map(proprietarioRequest, Proprietario.class);
         proprietario = createProprietarioUseCase.createProprietario(proprietario);
+
         return new ResponseEntity<>(mapper.map(proprietario,ProprietarioResponse.class), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/proprietarios/{codigo}")
     public ResponseEntity<ProprietarioResponse> getProprietarioByCodigo(@PathVariable Long codigo) {
         Proprietario proprietario = getProprietarioUseCase.getProprietarioByCodigo(codigo);
+
         return new ResponseEntity<>(mapper.map(proprietario, ProprietarioResponse.class),HttpStatus.OK);
     }
 

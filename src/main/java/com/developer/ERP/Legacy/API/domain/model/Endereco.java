@@ -24,8 +24,6 @@ public class Endereco {
 
     private String bairro;
 
-    private String celular;
-
     private String cidade;
 
     private UF uf;
