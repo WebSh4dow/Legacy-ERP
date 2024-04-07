@@ -44,6 +44,10 @@ public class ProprietarioEntity implements Serializable {
     @JoinColumn(name = "codigo_honorario")
     private HonorarioEntity honorario;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "codigo_conjugue")
+    private ConjugueEntity conjugue;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "codigo_endereco")
     private EnderecoEntity endereco;
@@ -56,8 +60,17 @@ public class ProprietarioEntity implements Serializable {
     @JoinColumn(name = "proprietario_codigo")
     private List<ContaCorrenteEntity> contasBancarias;
 
+    @ManyToMany
+    @JoinTable(
+            name = "proprietario_imovel",
+            joinColumns = @JoinColumn(name = "codigo_proprietario"),
+            inverseJoinColumns = @JoinColumn(name = "codigo_imovel")
+    )
+    private List<ImovelEntity> imoveis;
+
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
-
+    @Transient
+    private List<ImovelEntity> historicoImoveis;
 }

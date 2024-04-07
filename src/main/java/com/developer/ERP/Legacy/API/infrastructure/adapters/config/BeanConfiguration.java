@@ -2,8 +2,8 @@ package com.developer.ERP.Legacy.API.infrastructure.adapters.config;
 
 import com.developer.ERP.Legacy.API.domain.service.ContaCorrenteService;
 import com.developer.ERP.Legacy.API.domain.service.ProprietarioService;
-import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.ContaCorrentePersistenceAdapter;
-import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.ProprietarioPersistenceAdapter;
+import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.persistentAdapters.ContaCorrentePersistenceAdapter;
+import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.persistentAdapters.ProprietarioPersistenceAdapter;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.mapper.*;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.repository.ContaCorrenteRepository;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.repository.ProprietarioRepository;
@@ -45,6 +45,21 @@ public class BeanConfiguration {
     }
 
     @Bean
+    public ImovelMapper imovelMapper() {
+        return new ImovelMapper();
+    }
+
+    @Bean
+    public ConjugueMapper conjugueMapper() {
+        return new ConjugueMapper();
+    }
+
+    @Bean
+    public EmpreendimentoMapper empreendimentoMapper() {
+        return new EmpreendimentoMapper();
+    }
+
+    @Bean
     public ProprietarioPersistenceAdapter proprietarioPersistenceAdapter(ProprietarioRepository proprietarioRepository, ProprietarioMapper proprietarioMapper) {
         return new ProprietarioPersistenceAdapter(proprietarioRepository, proprietarioMapper);
     }
@@ -63,5 +78,4 @@ public class BeanConfiguration {
     public ContaCorrenteService contaCorrenteService(ContaCorrentePersistenceAdapter contaCorrentePersistenceAdapter) {
         return new ContaCorrenteService(contaCorrentePersistenceAdapter);
     }
-
 }

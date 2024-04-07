@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence;
+package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.persistentAdapters;
 
 import com.developer.ERP.Legacy.API.application.ports.output.ContaCorrenteOutputPort;
 import com.developer.ERP.Legacy.API.domain.exception.ContaCorrenteNotFoundException;

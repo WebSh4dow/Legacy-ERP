@@ -3,6 +3,7 @@ package com.developer.ERP.Legacy.API.domain.service;
 import com.developer.ERP.Legacy.API.application.ports.input.CreateProprietarioUseCase;
 import com.developer.ERP.Legacy.API.application.ports.input.GetProprietarioByCodigoUseCase;
 import com.developer.ERP.Legacy.API.application.ports.input.GetProprietariosUseCase;
+import com.developer.ERP.Legacy.API.application.ports.input.UpdateProprietarioUseCase;
 import com.developer.ERP.Legacy.API.application.ports.output.ProprietarioOutputPort;
 import com.developer.ERP.Legacy.API.domain.exception.ProprietarioNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Proprietario;
@@ -10,7 +11,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor
-public class ProprietarioService implements CreateProprietarioUseCase, GetProprietarioByCodigoUseCase, GetProprietariosUseCase {
+public class ProprietarioService implements CreateProprietarioUseCase, GetProprietarioByCodigoUseCase, GetProprietariosUseCase, UpdateProprietarioUseCase {
 
     private final ProprietarioOutputPort proprietarioOutputPort;
 
@@ -30,5 +31,10 @@ public class ProprietarioService implements CreateProprietarioUseCase, GetPropri
     @Override
     public List<Proprietario> getProprietarios() {
         return proprietarioOutputPort.getProprietarios();
+    }
+
+    @Override
+    public Proprietario updateProprietario(Proprietario proprietario) {
+        return proprietarioOutputPort.updateProprietario(proprietario);
     }
 }

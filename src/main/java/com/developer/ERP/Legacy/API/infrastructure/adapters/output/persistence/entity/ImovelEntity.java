@@ -1,6 +1,7 @@
 package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.entity;
 
 import com.developer.ERP.Legacy.API.domain.enums.TipoImovel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,16 +24,6 @@ public class ImovelEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
-    private String codAnuncio;
-
-    private BigDecimal valorVenda = BigDecimal.ZERO;
-
-    private BigDecimal valorLocalcao = BigDecimal.ZERO;
-
-    private BigDecimal valorIptu = BigDecimal.ZERO;
-
-    private BigDecimal valorCondominio = BigDecimal.ZERO;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "codigo_endereco")
     private EnderecoEntity endereco;
@@ -41,17 +32,27 @@ public class ImovelEntity {
     @JoinColumn(name = "codigo_empreendimentos")
     private List<EmpreendimentoEntity> empreendimentos;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "codigo_proprietarios")
+    @ManyToMany(mappedBy = "imoveis",cascade = CascadeType.ALL)
     private List<ProprietarioEntity> proprietarios;
 
     @Enumerated(EnumType.STRING)
     private TipoImovel tipoImovel;
 
-    @DateTimeFormat
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date captacaoEm;
 
+    private String codAnuncio;
+
     private String exclusividadeAte;
+
+    private BigDecimal valorVenda = BigDecimal.ZERO;
+
+    private BigDecimal valorLocalcao = BigDecimal.ZERO;
+
+    private BigDecimal valorIptu = BigDecimal.ZERO;
+
+    private BigDecimal valorCondominio = BigDecimal.ZERO;
 
     private boolean fiador;
 
@@ -72,6 +73,5 @@ public class ImovelEntity {
     private boolean altoPadrao;
 
     private boolean temporada;
-
 
 }
