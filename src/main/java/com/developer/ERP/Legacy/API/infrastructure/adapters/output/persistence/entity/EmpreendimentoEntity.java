@@ -23,8 +23,4 @@ public class EmpreendimentoEntity {
     private String porteiro;
 
     private String zelador;
-
-    @ManyToOne
-    @JoinColumn(name="codigo_imovel", nullable=false)
-    private ImovelEntity imovel;
 }

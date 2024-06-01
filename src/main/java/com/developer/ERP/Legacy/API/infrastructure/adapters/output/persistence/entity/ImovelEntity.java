@@ -24,15 +24,15 @@ public class ImovelEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_endereco")
     private EnderecoEntity endereco;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_empreendimentos")
     private List<EmpreendimentoEntity> empreendimentos;
 
-    @ManyToMany(mappedBy = "imoveis",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "imoveis",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProprietarioEntity> proprietarios;
 
     @Enumerated(EnumType.STRING)

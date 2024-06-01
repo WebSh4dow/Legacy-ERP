@@ -9,7 +9,6 @@ import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.m
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.repository.ContaCorrenteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

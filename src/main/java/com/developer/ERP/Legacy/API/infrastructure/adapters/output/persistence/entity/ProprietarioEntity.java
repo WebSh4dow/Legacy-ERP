@@ -40,27 +40,27 @@ public class ProprietarioEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private Nacionalidade nacionalidade;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_honorario")
     private HonorarioEntity honorario;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_conjugue")
     private ConjugueEntity conjugue;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_endereco")
     private EnderecoEntity endereco;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_dados_pessoais")
     private DadosPessoaisEntity dadosPessoais;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "proprietario_codigo")
     private List<ContaCorrenteEntity> contasBancarias;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "proprietario_imovel",
             joinColumns = @JoinColumn(name = "codigo_proprietario"),

@@ -14,5 +14,4 @@ public class EmpreendimentoResponse {
     private String descricao;
     private String porteiro;
     private String zelador;
-    private ImovelResponse imovel;
 }

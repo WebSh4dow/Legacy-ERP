@@ -42,7 +42,5 @@ public class ProprietarioResponse  {
 
     private List<ImovelResponse> imoveis;
 
-    private List<ImovelResponse> historicoImoveis;
-
     private Genero genero;
 }

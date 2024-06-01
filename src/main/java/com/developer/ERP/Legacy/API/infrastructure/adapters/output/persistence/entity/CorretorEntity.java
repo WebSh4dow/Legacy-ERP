@@ -57,11 +57,11 @@ public class CorretorEntity {
 
     private boolean promotor;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_contatos")
     private List<DadosPessoaisEntity> contatos;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CorretorEntity> corretores;
 
     @Enumerated(EnumType.STRING)

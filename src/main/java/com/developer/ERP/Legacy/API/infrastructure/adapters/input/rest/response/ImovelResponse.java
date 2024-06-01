@@ -22,7 +22,6 @@ public class ImovelResponse {
     private Long codigo;
     private EnderecoEntity endereco;
     private List<EmpreendimentoResponse> empreendimentos;
-    private List<ProprietarioResponse> proprietarios;
     private TipoImovel tipoImovel;
     private Date captacaoEm;
     private String codAnuncio;
