@@ -1,6 +1,6 @@
 package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.entity;
 
-import com.developer.ERP.Legacy.API.domain.enums.UF;
+import com.developer.ERP.Legacy.API.domain.enums.Nacionalidade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,28 +9,33 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "endereco")
+@Table(name = "conjugue")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EnderecoEntity {
+public class ConjugueEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
-    private String descricao;
+    private String nome;
 
-    private String cep;
+    private String cpf;
 
-    private String numero;
+    private String rg;
 
-    private String complemento;
+    private String dataNascimento;
 
-    private String bairro;
-
-    private String cidade;
+    private String natura;
 
     @Enumerated(EnumType.STRING)
-    private UF uf;
+    private Nacionalidade nacionalidade;
+
+    private String regimeBens;
+
+    private String certNascimento;
+
+    private String profissao;
+
 }

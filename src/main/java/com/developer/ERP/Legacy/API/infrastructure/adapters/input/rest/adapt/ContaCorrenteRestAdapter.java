@@ -35,6 +35,7 @@ public class ContaCorrenteRestAdapter {
     public ResponseEntity<ContaCorrenteResponse> createContaCorrente(@RequestBody ContaCorrenteRequest contaCorrenteRequest) {
         ContaCorrente contaCorrente = mapper.map(contaCorrenteRequest, ContaCorrente.class);
         contaCorrente = createContaCorrenteUseCase.createContaBancaria(contaCorrente);
+
         return new ResponseEntity<>(mapper.map(contaCorrente, ContaCorrenteResponse.class), HttpStatus.CREATED);
     }
 
@@ -51,8 +52,8 @@ public class ContaCorrenteRestAdapter {
     @GetMapping(value = "/contas-correntes/{codigo}")
     public ResponseEntity<ContaCorrenteResponse> getContaCorrenteByCodigo(@PathVariable Long codigo) {
         ContaCorrente contaCorrente = getContaCorrenteByCodigoUseCase.getContaCorrenteByCodigo(codigo);
-        return new ResponseEntity<>(mapper.map(contaCorrente, ContaCorrenteResponse.class), HttpStatus.OK);
 
+        return new ResponseEntity<>(mapper.map(contaCorrente, ContaCorrenteResponse.class), HttpStatus.OK);
     }
 
     @GetMapping(value = "/contas-correntes")

@@ -9,4 +9,5 @@ public interface ProprietarioOutputPort {
     Proprietario saveProprietario(Proprietario proprietario);
     Optional<Proprietario> getProprietarioByCodigo(Long codigo);
     List<Proprietario> getProprietarios();
+    Proprietario updateProprietario(Proprietario proprietario);
 }

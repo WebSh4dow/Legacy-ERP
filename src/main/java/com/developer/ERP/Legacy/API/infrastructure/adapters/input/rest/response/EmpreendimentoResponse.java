@@ -1,6 +1,5 @@
 package com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.response;
 
-import com.developer.ERP.Legacy.API.domain.enums.UF;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,19 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EnderecoResponse {
-
+public class EmpreendimentoResponse {
+    private Long codigo;
     private String descricao;
-
-    private String cep;
-
-    private String numero;
-
-    private String complemento;
-
-    private String bairro;
-
-    private String cidade;
-
-    private UF uf;
+    private String porteiro;
+    private String zelador;
 }

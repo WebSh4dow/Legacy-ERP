@@ -29,9 +29,6 @@ public class EnderecoRequest {
     private String bairro;
 
     @NotBlank
-    private String celular;
-
-    @NotBlank
     private String cidade;
 
     private UF uf;

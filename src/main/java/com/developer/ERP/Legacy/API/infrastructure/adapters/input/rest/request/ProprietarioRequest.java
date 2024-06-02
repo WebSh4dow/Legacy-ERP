@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Builder
 @Data
@@ -39,6 +40,12 @@ public class ProprietarioRequest {
     private Nacionalidade nacionalidade;
 
     private HonorarioRequest honorario;
+
+    private ConjugueRequest conjugue;
+
+    private List<ImovelRequest> imoveis;
+
+    private List<ImovelRequest> historicoImoveis;
 
     private DadosPessoaisRequest dadosPessoais;
 

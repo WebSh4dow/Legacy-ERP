@@ -1,4 +1,4 @@
-package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence;
+package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.persistentAdapters;
 
 import com.developer.ERP.Legacy.API.application.ports.output.ContaCorrenteOutputPort;
 import com.developer.ERP.Legacy.API.domain.exception.ContaCorrenteNotFoundException;
@@ -9,7 +9,6 @@ import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.m
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.repository.ContaCorrenteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

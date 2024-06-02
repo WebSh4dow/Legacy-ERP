@@ -27,7 +27,7 @@ public class ContaCorrenteEntity {
 
     private BigDecimal saldoInicial = BigDecimal.ZERO;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_banco")
     private BancoEntity banco;
 
