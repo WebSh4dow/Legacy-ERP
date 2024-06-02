@@ -2,6 +2,7 @@ package com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.response
 
 import com.developer.ERP.Legacy.API.domain.enums.Genero;
 import com.developer.ERP.Legacy.API.domain.enums.Nacionalidade;
+import com.developer.ERP.Legacy.API.domain.model.ContaCorrente;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,6 +42,10 @@ public class ProprietarioResponse  {
     private EnderecoResponse endereco;
 
     private List<ImovelResponse> imoveis;
+
+    private List<ImovelResponse> historicoImoveis;
+
+    private List<ContaCorrenteResponse> contasBancarias;
 
     private Genero genero;
 }
