@@ -8,7 +8,6 @@ import com.developer.ERP.Legacy.API.domain.model.Proprietario;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.request.ProprietarioRequest;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.response.ProprietarioResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

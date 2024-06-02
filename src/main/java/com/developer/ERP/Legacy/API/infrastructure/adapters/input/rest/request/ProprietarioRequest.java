@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -46,6 +45,8 @@ public class ProprietarioRequest {
     private List<ImovelRequest> imoveis;
 
     private List<ImovelRequest> historicoImoveis;
+
+    private List<ContaCorrenteRequest> contasBancarias;
 
     private DadosPessoaisRequest dadosPessoais;
 
