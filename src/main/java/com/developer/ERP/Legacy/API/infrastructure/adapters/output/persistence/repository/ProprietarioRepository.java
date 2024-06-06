@@ -12,13 +12,13 @@ public interface ProprietarioRepository extends JpaRepository<ProprietarioEntity
     boolean existsProprietarioByCpfAndRgIgnoreCase(String cpf, String rg);
 
     @Query(value = CONSULTAR_PROPRIETARIO_POR_CPF)
-    Proprietario consultarProprietarioPorCpf(String cpf);
+    ProprietarioEntity consultarProprietarioPorCpf(String cpf);
 
-    @Query(value = CONSULTAR_PROPRIETARIO_PROFISSAO)
-    List<Proprietario> consultarProprietariosPorProfissao(String profissao);
+    @Query(value = CONSULTAR_PROPRIETARIO_POR_PROFISSAO)
+    List<ProprietarioEntity> consultarProprietariosPorProfissao(String profissao);
 
     @Query(value = CONSULTAR_PROPRIETARIO_POR_NOME)
-    List<Proprietario> consultarProprietarioPorNome(String nome);
+    List<ProprietarioEntity> consultarProprietarioPorNome(String nome);
 
 
 }
