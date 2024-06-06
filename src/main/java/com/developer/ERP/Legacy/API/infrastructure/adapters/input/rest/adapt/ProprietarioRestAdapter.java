@@ -1,9 +1,6 @@
 package com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.adapt;
 
-import com.developer.ERP.Legacy.API.application.ports.input.CreateProprietarioUseCase;
-import com.developer.ERP.Legacy.API.application.ports.input.GetProprietarioByCodigoUseCase;
-import com.developer.ERP.Legacy.API.application.ports.input.GetProprietariosUseCase;
-import com.developer.ERP.Legacy.API.application.ports.input.UpdateProprietarioUseCase;
+import com.developer.ERP.Legacy.API.application.ports.input.*;
 import com.developer.ERP.Legacy.API.domain.model.Proprietario;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.request.ProprietarioRequest;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.response.ProprietarioResponse;
@@ -27,6 +24,12 @@ public class ProprietarioRestAdapter {
 
     private final GetProprietariosUseCase getProprietariosUseCase;
 
+    private final GetProprietariosPorProfissaoUseCase getProprietariosPorProfissaoUseCase;
+
+    private final GetProprietarioPorNomeUseCase getProprietarioPorNomeUseCase;
+
+    private final GetProprietariosPorCpfUseCase getProprietariosPorCpfUseCase;
+
     private final UpdateProprietarioUseCase updateProprietarioUseCase;
 
     private final ModelMapper mapper;
@@ -48,6 +51,11 @@ public class ProprietarioRestAdapter {
         return new ResponseEntity<>(mapper.map(proprietario, ProprietarioResponse.class), HttpStatus.OK);
     }
 
+    @GetMapping("/proprietarios/consultar-por/cpf")
+    public ResponseEntity<ProprietarioResponse> getProprietarioPorCpf(@RequestParam String cpf) {
+        Proprietario proprietario = getProprietariosPorCpfUseCase.consultarProprietarioPorCpf(cpf);
+        return new ResponseEntity<>(mapper.map(proprietario, ProprietarioResponse.class), HttpStatus.OK);
+    }
 
     @GetMapping(value = "/proprietarios/{codigo}")
     public ResponseEntity<ProprietarioResponse> getProprietarioByCodigo(@PathVariable Long codigo) {

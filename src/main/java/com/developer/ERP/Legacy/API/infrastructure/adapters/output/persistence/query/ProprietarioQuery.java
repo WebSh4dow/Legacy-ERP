@@ -7,6 +7,6 @@ public interface ProprietarioQuery {
     public static String CONSULTAR_PROPRIETARIO_POR_NOME =
             "FROM ProprietarioEntity as p WHERE p.nome LIKE %?1%";
 
-    public static String CONSULTAR_PROPRIETARIO_PROFISSAO =
+    public static String CONSULTAR_PROPRIETARIO_POR_PROFISSAO =
             "FROM ProprietarioEntity as p WHERE p.profissao = ?1 ";
 }

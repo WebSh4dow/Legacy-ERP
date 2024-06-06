@@ -1,17 +1,18 @@
 package com.developer.ERP.Legacy.API.domain.service;
 
-import com.developer.ERP.Legacy.API.application.ports.input.CreateProprietarioUseCase;
-import com.developer.ERP.Legacy.API.application.ports.input.GetProprietarioByCodigoUseCase;
-import com.developer.ERP.Legacy.API.application.ports.input.GetProprietariosUseCase;
-import com.developer.ERP.Legacy.API.application.ports.input.UpdateProprietarioUseCase;
+import com.developer.ERP.Legacy.API.application.ports.input.*;
 import com.developer.ERP.Legacy.API.application.ports.output.ProprietarioOutputPort;
-import com.developer.ERP.Legacy.API.domain.exception.ProprietarioNotFoundException;
+import com.developer.ERP.Legacy.API.domain.exception.notifyException.ProprietarioNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Proprietario;
 import lombok.AllArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor
-public class ProprietarioService implements CreateProprietarioUseCase, GetProprietarioByCodigoUseCase, GetProprietariosUseCase, UpdateProprietarioUseCase {
+public class ProprietarioService implements CreateProprietarioUseCase, GetProprietarioByCodigoUseCase, GetProprietariosUseCase,
+        GetProprietarioPorNomeUseCase,
+        GetProprietariosPorCpfUseCase,
+        GetProprietariosPorProfissaoUseCase,
+        UpdateProprietarioUseCase {
 
     private final ProprietarioOutputPort proprietarioOutputPort;
 
@@ -36,5 +37,20 @@ public class ProprietarioService implements CreateProprietarioUseCase, GetPropri
     @Override
     public Proprietario updateProprietario(Proprietario proprietario) {
         return proprietarioOutputPort.updateProprietario(proprietario);
+    }
+
+    @Override
+    public List<Proprietario> consultarProprietarioPorNome(String nome) {
+        return proprietarioOutputPort.consultarProprietarioPorNome(nome);
+    }
+
+    @Override
+    public List<Proprietario> consultarProprietarioPorProfissao(String profissao) {
+        return proprietarioOutputPort.consultarProprietarioPorProfissao(profissao);
+    }
+
+    @Override
+    public Proprietario consultarProprietarioPorCpf(String cpf) {
+        return proprietarioOutputPort.consultarProprietarioPorCpf(cpf);
     }
 }

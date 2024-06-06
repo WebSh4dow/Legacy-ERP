@@ -5,7 +5,7 @@ import com.developer.ERP.Legacy.API.application.ports.input.GetContaCorrenteByCo
 import com.developer.ERP.Legacy.API.application.ports.input.GetContasCorrenteUseCase;
 import com.developer.ERP.Legacy.API.application.ports.input.UpdateContaCorrenteUseCase;
 import com.developer.ERP.Legacy.API.application.ports.output.ContaCorrenteOutputPort;
-import com.developer.ERP.Legacy.API.domain.exception.ProprietarioNotFoundException;
+import com.developer.ERP.Legacy.API.domain.exception.notifyException.ProprietarioNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.ContaCorrente;
 import lombok.AllArgsConstructor;
 import java.util.List;

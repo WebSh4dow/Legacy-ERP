@@ -1,8 +1,8 @@
 package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.persistentAdapters;
 
 import com.developer.ERP.Legacy.API.application.ports.output.ContaCorrenteOutputPort;
-import com.developer.ERP.Legacy.API.domain.exception.ContaCorrenteNotFoundException;
-import com.developer.ERP.Legacy.API.domain.exception.ExisteUmaContaCadastradaException;
+import com.developer.ERP.Legacy.API.domain.exception.notifyException.ContaCorrenteNotFoundException;
+import com.developer.ERP.Legacy.API.domain.exception.notifyException.ExisteUmaContaCadastradaException;
 import com.developer.ERP.Legacy.API.domain.model.ContaCorrente;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.entity.ContaCorrenteEntity;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.mapper.ContaCorrenteMapper;
