@@ -5,10 +5,13 @@ import com.developer.ERP.Legacy.API.application.ports.input.GetProprietarioByCod
 import com.developer.ERP.Legacy.API.application.ports.input.GetProprietariosUseCase;
 import com.developer.ERP.Legacy.API.application.ports.input.UpdateProprietarioUseCase;
 import com.developer.ERP.Legacy.API.domain.model.Proprietario;
+import com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.builder.Log5wBuilder;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.request.ProprietarioRequest;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.input.rest.response.ProprietarioResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +32,21 @@ public class ProprietarioRestAdapter {
 
     private final UpdateProprietarioUseCase updateProprietarioUseCase;
 
+    private static final Logger log = LoggerFactory.getLogger(ProprietarioRestAdapter.class);
+
     private final ModelMapper mapper;
 
     @PostMapping(value = "/proprietarios/cadastrar",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProprietarioResponse> createProprietario(@RequestBody ProprietarioRequest proprietarioRequest) {
         Proprietario proprietario = mapper.map(proprietarioRequest, Proprietario.class);
-        proprietario = createProprietarioUseCase.createProprietario(proprietario);
+        Log5wBuilder
+                .Metodo
+                .metodo("createProprietario")
+                .oQueEstaAcontecendo(".........Cadastrando um novo proprietario.........")
+                .adicionaInfo("toString",proprietario.toString() )
+                .info(log);
 
+        proprietario = createProprietarioUseCase.createProprietario(proprietario);
         return new ResponseEntity<>(mapper.map(proprietario,ProprietarioResponse.class), HttpStatus.CREATED);
     }
 
@@ -43,6 +54,13 @@ public class ProprietarioRestAdapter {
     public ResponseEntity<ProprietarioResponse> updatePropritario(@RequestBody ProprietarioRequest proprietarioRequest, @PathVariable Long codigo){
         Proprietario proprietario = mapper.map(proprietarioRequest , Proprietario.class);
         proprietario.setCodigo(codigo);
+
+        Log5wBuilder
+                .Metodo
+                .metodo("updatePropritario")
+                .oQueEstaAcontecendo(".........Editando proprietario de codigo: " + codigo)
+                .adicionaInfo("toString",proprietario.toString() )
+                .info(log);
 
         proprietario = updateProprietarioUseCase.updateProprietario(proprietario);
         return new ResponseEntity<>(mapper.map(proprietario, ProprietarioResponse.class), HttpStatus.OK);
@@ -52,7 +70,6 @@ public class ProprietarioRestAdapter {
     @GetMapping(value = "/proprietarios/{codigo}")
     public ResponseEntity<ProprietarioResponse> getProprietarioByCodigo(@PathVariable Long codigo) {
         Proprietario proprietario = getProprietarioUseCase.getProprietarioByCodigo(codigo);
-
         return new ResponseEntity<>(mapper.map(proprietario, ProprietarioResponse.class),HttpStatus.OK);
     }
 

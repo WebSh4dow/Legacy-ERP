@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/default.xml"/>
-    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+   <appender name="json" class="ch.qos.logback.core.ConsoleAppender">
+       <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+           <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+               <prettyPrint>true</prettyPrint>
+           </jsonFormatter>
+           <timestampFormat> 'yyyy-MM-dd' 'HH:mm:ss.SS'</timestampFormat>
+       </layout>
+   </appender>
     <root level="INFO">
-        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="json"/>
     </root>
-    <logger name="org.hibernate.SQL" level="DEBUG"/>
-    <logger name="org.hibernate.type" level="TRACE"/>
 </configuration>
