@@ -1,8 +1,6 @@
 package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.persistentAdapters;
 
 import com.developer.ERP.Legacy.API.application.ports.output.ProprietarioOutputPort;
-import com.developer.ERP.Legacy.API.domain.exception.CpfCadastradoException;
-import com.developer.ERP.Legacy.API.domain.exception.ProprietarioNotFoundException;
 import com.developer.ERP.Legacy.API.domain.exception.notifyException.CpfCadastradoException;
 import com.developer.ERP.Legacy.API.domain.exception.notifyException.ProprietarioNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Proprietario;
@@ -33,7 +31,7 @@ public class ProprietarioPersistenceAdapter implements ProprietarioOutputPort {
         ProprietarioEntity proprietarioEntity = proprietarioMapper.toEntity(proprietario);
 
         if (repository.existsProprietarioByCpfAndRgIgnoreCase(proprietario.getCpf(), proprietario.getRg())) {
-            throw new CpfCadastradoException(MSG_CPF_CADASTRADO);
+            throw new CpfCadastradoException(MSG_CPF_CADASTRADO_PROPRIETARIO);
         }
 
         repository.save(proprietarioEntity);
