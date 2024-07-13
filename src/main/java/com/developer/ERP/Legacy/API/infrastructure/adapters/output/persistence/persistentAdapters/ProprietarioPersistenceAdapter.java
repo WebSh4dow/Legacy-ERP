@@ -3,6 +3,8 @@ package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.
 import com.developer.ERP.Legacy.API.application.ports.output.ProprietarioOutputPort;
 import com.developer.ERP.Legacy.API.domain.exception.CpfCadastradoException;
 import com.developer.ERP.Legacy.API.domain.exception.ProprietarioNotFoundException;
+import com.developer.ERP.Legacy.API.domain.exception.notifyException.CpfCadastradoException;
+import com.developer.ERP.Legacy.API.domain.exception.notifyException.ProprietarioNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Proprietario;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.entity.ProprietarioEntity;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.mapper.ProprietarioMapper;
@@ -20,7 +22,9 @@ public class ProprietarioPersistenceAdapter implements ProprietarioOutputPort {
 
     private final ProprietarioMapper proprietarioMapper;
 
-    private final static String MSG_CPF_CADASTRADO = "Existe um cpf ou rg já cadastrados em nosso sistema, tente outro diferente.";
+    private final static String MSG_CPF_CADASTRADO_PROPRIETARIO = "Existe um cpf ou rg já cadastrados em nosso sistema, tente outro diferente.";
+
+    private final static String MSG_CPF_CADASTRADO_CONJUGUE = "Existe Conjugue um cpf ou rg já cadastrados em nosso sistema, tente outro diferente.";
 
     private final static String MSG_PROPRIETARIO_NAO_EXISTE = "Proprietario inexistente ";
 
@@ -52,6 +56,30 @@ public class ProprietarioPersistenceAdapter implements ProprietarioOutputPort {
     public List<Proprietario> getProprietarios() {
         return repository.findAll().
                 stream().map(proprietarioMapper :: toProprietario)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Proprietario> consultarProprietarioPorProfissao(String profissao) {
+        return repository.consultarProprietariosPorProfissao(profissao)
+                .stream().map(proprietarioMapper :: toProprietario)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Proprietario consultarProprietarioPorCpf(String cpf) {
+        ProprietarioEntity proprietarioEntity = repository.consultarProprietarioPorCpf(cpf);
+
+        if (proprietarioEntity == null) {
+            throw new ProprietarioNotFoundException("A consulta atual não encontrou o usuário com o cpf informado.");
+        }
+        return proprietarioMapper.toProprietario(proprietarioEntity);
+    }
+
+    @Override
+    public List<Proprietario> consultarProprietarioPorNome(String nome) {
+        return repository.consultarProprietarioPorNome(nome)
+                .stream().map(proprietarioMapper :: toProprietario)
                 .collect(Collectors.toList());
     }
 
