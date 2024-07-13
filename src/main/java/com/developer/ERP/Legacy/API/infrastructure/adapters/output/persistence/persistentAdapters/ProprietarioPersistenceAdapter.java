@@ -1,17 +1,14 @@
 package com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.persistentAdapters;
 
 import com.developer.ERP.Legacy.API.application.ports.output.ProprietarioOutputPort;
-import com.developer.ERP.Legacy.API.domain.exception.ContaCorrenteNotFoundException;
 import com.developer.ERP.Legacy.API.domain.exception.CpfCadastradoException;
 import com.developer.ERP.Legacy.API.domain.exception.ProprietarioNotFoundException;
 import com.developer.ERP.Legacy.API.domain.model.Proprietario;
-import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.entity.ContaCorrenteEntity;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.entity.ProprietarioEntity;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.mapper.ProprietarioMapper;
 import com.developer.ERP.Legacy.API.infrastructure.adapters.output.persistence.repository.ProprietarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
